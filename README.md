@@ -1,2 +1,3 @@
-# purescript-cookbook
+# PureScript-Cookbook
+
 An unofficial Cookbook for PureScript
