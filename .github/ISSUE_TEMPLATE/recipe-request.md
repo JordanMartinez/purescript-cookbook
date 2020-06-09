@@ -11,7 +11,7 @@ assignees: ''
 
 Please provide a very clear description of your problem and what the recipe should do
 
-**Comparsion to other recipes**
+**Comparison to other recipes**
 
 How is this similar to and different from current recipes?
 
