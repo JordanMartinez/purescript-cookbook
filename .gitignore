@@ -1,8 +1,2 @@
-# Dependencies
-.psci_modules
-bower_components
-node_modules
-
-# Generated files
-.psci
+.psc*
 output
