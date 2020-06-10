@@ -1,0 +1,9 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "build": "spago build",
+    "routing-hash-halogen:serve": "parcel src/routing-hash-halogen/dev/index.html --out-dir src/routing-hash-halogen/dev-dist --open",
+    "routing-hash-halogen:prep-prod": "cp src/routing-hash-halogen/dev/index.html prod && rm -rf src/routing-hash-halogen/dist",
+    "routing-hash-halogen:build-prod": "npm run routing-hash-halogen:prep-prod && spago bundle-app --to src/routing-hash-halogen/prod/index.js && parcel build src/routing-hash-halogen/prod/index.html",
+  }
+}

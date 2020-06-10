@@ -9,6 +9,7 @@
     "build": "spago build",
     "serve": "parcel dev/index.html --out-dir dev-dist --open",
     "prep-prod": "cp dev/index.html prod && rm -rf dist",
-    "build-prod": "npm run prep-prod && spago bundle-app --to prod/index.js && parcel build prod/index.html"
+    "build-prod": "npm run prep-prod && spago bundle-app --to prod/index.js && parcel build prod/index.html",
+    "ci": "npm run build-prod"
   }
 }
