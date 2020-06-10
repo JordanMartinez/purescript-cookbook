@@ -7,11 +7,12 @@ Use this folder to create a new recipe by following these instructions:
 4. If needed, update the `packages.dhall` file to include more packages.
 5. Install needed dependencies via `spago install <packageName>`
 6. Write the solution to the problem via code
-7. Submit a PR and state that it "Fixes #X" where X refers to the issue you opened previously
+7. Update the copied folder's ReadMe to explain what the recipe does.
+8. Submit a PR and state that it "Fixes #X" where X refers to the issue you opened previously
 
 ## Problem Description
 
-This example shows how to run a simple "hello world" program
+This example shows how to run a simple "hello world" program.
 
 ## Core Libraries Used
 

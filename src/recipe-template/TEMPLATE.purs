@@ -1,4 +1,4 @@
-module Main where
+module Cookbook.TEMPLATE where
 
 import Prelude
 
