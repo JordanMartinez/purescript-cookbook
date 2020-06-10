@@ -1,4 +1,4 @@
-module Main where
+module Template.Main where
 
 import Prelude
 
