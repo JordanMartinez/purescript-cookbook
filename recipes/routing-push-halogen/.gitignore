@@ -1,0 +1,14 @@
+/bower_components/
+/node_modules/
+/.pulp-cache/
+/output/
+/generated-docs/
+/.psc-package/
+/.psc*
+/.purs*
+/.psa*
+/.spago
+/.cache/
+/dist/
+/dev-dist/
+/prod/*
