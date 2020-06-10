@@ -1,0 +1,17 @@
+{
+  "name": "cookbook",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "purescript": "^0.13.8",
+    "spago": "^0.15.2"
+  },
+  "config": {"recipe": "Template"},
+  "scripts": {
+    "build": "spago build",
+    "serve": "parcel src/$npm_package_config_recipe/dev/index.html --out-dir src/$npm_package_config_recipe/dev-dist --open",
+    "run": "spago run --main $npm_package_config_recipe.Main",
+    "prep-prod": "mkdir -p src/$npm_package_config_recipe/prod && cp src/$npm_package_config_recipe/dev/index.html src/$npm_package_config_recipe/prod/",
+    "build-prod": "npm run prep-prod --cookbook:recipe=$npm_package_config_recipe && spago bundle-app --main $npm_package_config_recipe.Main --to src/$npm_package_config_recipe/prod/index.js && parcel build src/$npm_package_config_recipe/prod/index.html --out-dir src/$npm_package_config_recipe/prod-dist"
+  }
+}
