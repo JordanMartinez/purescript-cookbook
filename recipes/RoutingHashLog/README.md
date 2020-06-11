@@ -2,7 +2,7 @@
 From the top repo directory, run:
 ```
 npm run build
-npm run serve --cookbook:recipe=RoutingHashLog
+npm run serve --recipe=RoutingHashLog
 ```
 
 Then open up the browser console, and click on the links.

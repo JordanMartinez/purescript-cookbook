@@ -4,8 +4,8 @@
 From the top repo directory, run:
 ```
 npm run build
-npm run run --cookbook:recipe=Template
-npm run serve --cookbook:recipe=Template
+npm run run --recipe=Template
+npm run serve --recipe=Template
 ```
 
 ## Problem Description
@@ -19,4 +19,3 @@ This example shows how to run a simple "hello world" program in either the node.
 - `purescript-prelude`
 - `purescript-effect`
 - `purescript-console`
-
