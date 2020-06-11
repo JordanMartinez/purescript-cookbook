@@ -1,16 +1,8 @@
 ---
-name: Meta Issue
-about: Any other issue not covered by the other issue templates
+name: Cookbook Issue
+about: Issues relating to cookbook strategy
 title: ''
-labels: meta
+labels: cookbook
 assignees: ''
 
 ---
-
-**Description of Problem**
-
-Please provide a very clear description of your problem and what the recipe should do
-
-**Additional context**
-
-Add any other context or screenshots about the feature request here.
