@@ -11,6 +11,14 @@ assignees: ''
 
 Please provide a very clear description of your problem and what the recipe should do
 
+**Proposed Name of Folder/Module**
+
+Each recipe's module and corresponding folder names cannot clash with other recipes' corresponding names. Thus, please propose a name for this recipe's module/folder below, so that others don't use it in their work.
+
+```
+Name:
+```
+
 **Comparison to other recipes**
 
 How is this similar to and different from current recipes?
