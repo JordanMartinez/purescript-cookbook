@@ -17,7 +17,7 @@ In other words, we do not allow anyone to override or add packages in the `packa
 
 Thus, if you want to use a package that's not in the package set, please add it to the package set. Any PRs that use packages not in the package set will not be merged until all of their packages are in the package set.
 
-By implication, recipes that use packages that get dropped from the package set will be moved to a temporary holding folder. If the recipe doesn't get updated within a month, the recipe will be dropped.
+By implication, recipes that use packages that get dropped from the package set will be moved to the `broken-recipes` folder.
 
 ### Instructions
 
