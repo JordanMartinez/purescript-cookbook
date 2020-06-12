@@ -1,0 +1,29 @@
+dist: bionic
+language: minimal
+  # Use `nvm` to install latest version of NodeJS
+
+# Unless we specify "sudo: false", build runs in VM, not container
+
+# Limit the number of commits it will clone
+git:
+  depth: 3
+
+# Only do CI for the default branch
+branches:
+  only:
+  - master
+
+before_install:
+  - nvm install node
+  - npm i -g npm
+
+install:
+  - npm i
+
+script:
+  - npm run build
+
+cache:
+  directories:
+    - .spago
+    - node_modules
