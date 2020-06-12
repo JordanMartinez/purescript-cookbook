@@ -10,8 +10,14 @@ The recipes folder contains all the recipes in this repo in no particular order.
 
 #### Only use packages in the latest package set release
 
-In other words, we do not allow anyone to override or add packages in the `packages.dhall` file. If one overrided a given package to make Recipe A work, it might break Recipe B that also relies upon that package. If one added a package that isn't later maintained, it might prevent our CI from passing, which can delay new recipes from being added to this cookbook.
-Thus, if you want to use a package that's not in the package set, please add it to the package set. If you want to override a package, please update it in the package set. No exceptions.
+In other words, we do not allow anyone to override or add packages in the `packages.dhall` file for the following reasons:
+- Reduces the burden of maintenance for maintainers of this repo
+- Overriding package A to make Recipe X work now might prevent Recipe Y from working (which doesn't need the override)
+- Somewhat reduces the attack surface of malicious recipes (e.g. including a malicious package via addition/override)
+
+Thus, if you want to use a package that's not in the package set, please add it to the package set. Any PRs that use packages not in the package set will not be merged until all of their packages are in the package set.
+
+By implication, recipes that use packages that get dropped from the package set will be moved to a temporary holding folder. If the recipe doesn't get updated within a month, the recipe will be dropped.
 
 ### Instructions
 
