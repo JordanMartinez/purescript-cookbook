@@ -2,7 +2,7 @@
 From the top repo directory, run:
 ```
 npm run build
-npm run serve --recipe=RoutingPushHalogen
+npm run serve --cookbook:recipe=RoutingPushHalogen
 ```
 
 When you click on the links, you should see:
