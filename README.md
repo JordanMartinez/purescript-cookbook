@@ -6,19 +6,6 @@ The recipes folder contains all the recipes in this repo in no particular order.
 
 ## Contributing new recipes
 
-### Principles
-
-#### Only use packages in the latest package set release
-
-In other words, we do not allow anyone to override or add packages in the `packages.dhall` file for the following reasons:
-- Reduces the burden of maintenance for maintainers of this repo
-- Overriding package A to make Recipe X work now might prevent Recipe Y from working (which doesn't need the override)
-- Somewhat reduces the attack surface of malicious recipes (e.g. including a malicious package via addition/override)
-
-Thus, if you want to use a package that's not in the package set, please add it to the package set. Any PRs that use packages not in the package set will not be merged until all of their packages are in the package set.
-
-By implication, recipes that use packages that get dropped from the package set will be moved to the `broken-recipes` folder.
-
 ### Instructions
 
 Follow these instructions for contributing new recipes:
@@ -31,3 +18,16 @@ Follow these instructions for contributing new recipes:
 1. Implement your recipe
 1. Rember to update your recipe's readme
 1. Submit a PR
+
+### Principles
+
+#### Only use packages in the latest package set release
+
+In other words, we do not allow anyone to override or add packages in the `packages.dhall` file for the following reasons:
+- Reduces the burden of maintenance for maintainers of this repo
+- Overriding package A to make Recipe X work now might prevent Recipe Y from working (which doesn't need the override)
+- Somewhat reduces the attack surface of malicious recipes (e.g. including a malicious package via addition/override)
+
+Thus, if you want to use a package that's not in the package set, please add it to the package set. Any PRs that use packages not in the package set will not be merged until all of their packages are in the package set.
+
+By implication, recipes that use packages that get dropped from the package set will be moved to the `broken-recipes` folder.
