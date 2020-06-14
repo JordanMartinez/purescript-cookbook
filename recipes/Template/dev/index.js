@@ -1,1 +1,1 @@
-require("../../../output/Template.Main/index.js").main();
+require("../../../output/HelloWorld.Main/index.js").main();
