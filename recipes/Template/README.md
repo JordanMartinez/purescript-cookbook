@@ -1,11 +1,11 @@
-# Recipe Template
+# Recipe HelloWorld
 
 ### Quick Start
 From the top repo directory, run:
 ```
 npm run build
-npm run run --cookbook:recipe=Template
-npm run serve --cookbook:recipe=Template
+npm run run --cookbook:recipe=HelloWorld
+npm run serve --cookbook:recipe=HelloWorld
 ```
 
 ## Problem Description
