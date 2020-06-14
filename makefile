@@ -4,7 +4,16 @@
 export PATH := node_modules/.bin:$(PATH)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: build info
+.PHONY: list build info
+
+# Prints all the recipes one could run via make and clarifying text.
+# For now, we assume that each recipe has a `run` and `serve` command,
+# but not all of these will work.
+list:
+	@echo Use \"make RecipeName-target\" to run a recipe
+	@echo
+	@echo === RECIPES ===
+	@echo $(foreach r,$(recipes),make_$(r)-{run,serve}) | tr ' ' '\n' | tr '_' ' '
 
 # Builds everything. No recipe required.
 # A build is necessary before parcel commands.
