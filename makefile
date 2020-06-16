@@ -59,6 +59,7 @@ recipesBuildProd := $(foreach r,$(recipes),$(r)-buildProd)
 # Helper functions for generating paths
 main = $1.Main
 recipeDir = recipes/$1
+recipeSpago = recipes/$1/spago.dhall
 
 devDir = $(call recipeDir,$1)/dev
 devHtml = $(call devDir,$1)/index.html
@@ -71,7 +72,7 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 
 # Runs recipe as node.js console app
 %-run: $(call recipeDir,%)
-	spago run --main $(call main,$*)
+	spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Launches recipe in browser
 %-serve: $(call recipeDir,%) build
@@ -94,7 +95,7 @@ recipes/%/prod/index.html: $(call prodDir,%)
 # Creates a minified production build.
 # For reference.
 %-buildProd: $(call recipeDir,%) $(call prodHtml,%)
-	spago bundle-app --main $(call main,$*) --to $(call prodJs,$*)
+	spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 	parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
 # Creates all dev builds - for CI
