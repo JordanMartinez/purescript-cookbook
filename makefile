@@ -4,7 +4,7 @@
 export PATH := node_modules/.bin:$(PATH)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: list build info
+.PHONY: list info
 
 # Prints all the recipes one could run via make and clarifying text.
 # For now, we assume that each recipe has a `run` and `serve` command,
@@ -14,13 +14,6 @@ list:
 	@echo
 	@echo === RECIPES ===
 	@echo $(foreach r,$(recipes),make_$(r)-{run,serve}) | tr ' ' '\n' | tr '_' ' '
-
-# Builds everything. No recipe required.
-# A build is necessary before parcel commands.
-# Users could just run `spago build` instead of `make build`,
-# unless they want local npm version and don't want to run `npx spago build`.
-build:
-	spago build
 
 # Prints version and path information.
 # For troubleshooting version mismatches.
@@ -48,13 +41,14 @@ recipes/%:
 
 # Targets for all recipe build operations
 recipes := $(shell ls recipes)
+recipesBuild := $(foreach r,$(recipes),$(r)-build)
 recipesRun := $(foreach r,$(recipes),$(r)-run)
 recipesServe := $(foreach r,$(recipes),$(r)-serve)
 recipesBuildDev := $(foreach r,$(recipes),$(r)-buildDev)
 recipesBuildProd := $(foreach r,$(recipes),$(r)-buildProd)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: recipesRun recipesServe recipesBuildDev recipesBuildProd buildAllDev buildAllProd
+.PHONY: recipesBuild recipesRun recipesServe recipesBuildDev recipesBuildProd buildAllDev buildAllProd
 
 # Helper functions for generating paths
 main = $1.Main
@@ -70,18 +64,22 @@ prodHtml = $(call prodDir,$1)/index.html
 prodJs = $(call prodDir,$1)/index.js
 prodDistDir = $(call recipeDir,$1)/prod-dist
 
+# Builds a single recipe. A build is necessary before parcel commands.
+%-build:
+	spago -x $(call recipeSpago,$*) build
+
 # Runs recipe as node.js console app
 %-run: $(call recipeDir,%)
 	spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Launches recipe in browser
-%-serve: $(call recipeDir,%) build
+%-serve: $(call recipeDir,%) $(call $*-build,%)
 	parcel $(call devHtml,$*) --out-dir $(call devDistDir,$*) --open
 
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
 %-buildDev: export NODE_ENV=development
-%-buildDev: build $(call recipeDir,%)
+%-buildDev: $(call $*-build,%) $(call recipeDir,%)
 	parcel build $(call devHtml,$*) --out-dir $(call devDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
