@@ -42,13 +42,13 @@ recipes/%:
 # Targets for all recipe build operations
 recipes := $(shell ls recipes)
 recipesBuild := $(foreach r,$(recipes),$(r)-build)
-recipesRun := $(foreach r,$(recipes),$(r)-run)
-recipesServe := $(foreach r,$(recipes),$(r)-serve)
+recipesNode := $(foreach r,$(recipes),$(r)-node)
+recipesBrowser := $(foreach r,$(recipes),$(r)-browser)
 recipesBuildDev := $(foreach r,$(recipes),$(r)-buildDev)
 recipesBuildProd := $(foreach r,$(recipes),$(r)-buildProd)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: recipesBuild recipesRun recipesServe recipesBuildDev recipesBuildProd buildAll buildAllDev buildAllProd
+.PHONY: recipesBuild recipesNode recipesBrowser recipesBuildDev recipesBuildProd buildAll buildAllDev buildAllProd
 
 # Helper functions for generating paths
 main = $1.Main
@@ -69,11 +69,11 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 	spago -x $(call recipeSpago,$*) build
 
 # Runs recipe as node.js console app
-%-run: $(call recipeDir,%)
+%-node: $(call recipeDir,%)
 	spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Launches recipe in browser
-%-serve: $(call recipeDir,%) $(call $*-build,%)
+%-browser: $(call recipeDir,%) $(call $*-build,%)
 	parcel $(call devHtml,$*) --out-dir $(call devDistDir,$*) --open
 
 # Uses parcel to quickly create an unminified build.
