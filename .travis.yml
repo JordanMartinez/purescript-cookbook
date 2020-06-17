@@ -6,3 +6,7 @@ install:
 script:
   - make buildAll
   - make buildAllDev
+cache:
+  directories:
+   - output
+   - .spago
