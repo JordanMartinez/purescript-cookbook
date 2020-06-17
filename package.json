@@ -1,18 +1,8 @@
 {
-  "name": "cookbook",
   "license": "MIT",
   "devDependencies": {
     "parcel": "^1.12.4",
     "purescript": "^0.13.8",
-    "spago": "^0.15.2"
-  },
-  "config": {"recipe": "RecipeNameMissing"},
-  "scripts": {
-    "build": "spago build",
-    "run": "spago run --main $npm_package_config_recipe.Main",
-    "serve": "parcel recipes/$npm_package_config_recipe/dev/index.html --out-dir recipes/$npm_package_config_recipe/dev-dist --open",
-    "build-dev": "NODE_ENV=development parcel build recipes/$npm_package_config_recipe/dev/index.html --out-dir recipes/$npm_package_config_recipe/dev-dist --no-minify --no-source-maps",
-    "prep-prod": "mkdir -p recipes/$npm_package_config_recipe/prod && cp recipes/$npm_package_config_recipe/dev/index.html recipes/$npm_package_config_recipe/prod/",
-    "build-prod": "npm run prep-prod --cookbook:recipe=$npm_package_config_recipe && spago bundle-app --main $npm_package_config_recipe.Main --to recipes/$npm_package_config_recipe/prod/index.js && parcel build recipes/$npm_package_config_recipe/prod/index.html --out-dir recipes/$npm_package_config_recipe/prod-dist"
+    "spago": "^0.15.3"
   }
 }

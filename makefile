@@ -48,12 +48,12 @@ recipesBuildDev := $(foreach r,$(recipes),$(r)-buildDev)
 recipesBuildProd := $(foreach r,$(recipes),$(r)-buildProd)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: recipesBuild recipesRun recipesServe recipesBuildDev recipesBuildProd buildAllDev buildAllProd
+.PHONY: recipesBuild recipesRun recipesServe recipesBuildDev recipesBuildProd buildAll buildAllDev buildAllProd
 
 # Helper functions for generating paths
 main = $1.Main
 recipeDir = recipes/$1
-recipeSpago = recipes/$1/spago.dhall
+recipeSpago = $(call recipeDir,$1)/spago.dhall
 
 devDir = $(call recipeDir,$1)/dev
 devHtml = $(call devDir,$1)/index.html
@@ -96,8 +96,11 @@ recipes/%/prod/index.html: $(call prodDir,%)
 	spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 	parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
-# Creates all dev builds - for CI
+# All purs builds - for CI
+buildAll: $(recipesBuild)
+
+# All dev builds - for CI
 buildAllDev: $(recipesBuildDev)
 
-# Creates all prod builds - for CI
+# All prod builds - for CI
 buildAllProd: $(recipesBuildProd)
