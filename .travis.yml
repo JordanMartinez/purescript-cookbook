@@ -4,5 +4,5 @@ node_js: 12
 install:
   - npm install
 script:
-  - npm run build
+  - make buildAll
   - make buildAllDev
