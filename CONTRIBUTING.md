@@ -13,7 +13,7 @@ Follow these instructions for contributing new recipes:
 1. Install needed dependencies via `spago recipes/RecipeName/spago.dhall install <packageName>`
 1. Implement your recipe
 1. Rember to update your recipe's readme
-1. Regenerate the table of recipes by running `./scripts/generateRecipeTable.sh > RecipeTable.md`
+1. Regenerate the table of recipes by running `make readme`
 1. Submit a PR
 
 ### Principles
