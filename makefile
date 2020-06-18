@@ -3,8 +3,7 @@
 # Favor local npm devDependencies if they are installed
 export PATH := node_modules/.bin:$(PATH)
 
-# Use the `>` character rather than tabs (cleaner diffs and stops some editors
-# from using spaces rather than tabs)
+# Use the `>` character rather than tabs for indentation
 ifeq ($(origin .RECIPEPREFIX), undefined)
   $(error This Make does not support .RECIPEPREFIX. Please use GNU Make 4.0 or later)
 endif
