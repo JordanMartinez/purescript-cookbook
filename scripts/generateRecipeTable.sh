@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Output the unchanging part of the ReadMe first
+cat scripts/ReadmeContent.md
+echo
+
+# Then output the Recipe ToC
 echo "# Recipes"
 echo
 echo "| Recipe | Description | Node | Browser |"

@@ -4,7 +4,7 @@
 export PATH := node_modules/.bin:$(PATH)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: list info
+.PHONY: list readme info
 
 # Prints all the recipes one could run via make and clarifying text.
 # For now, we assume that each recipe has a `node` and `browser` command,
@@ -14,6 +14,12 @@ list:
 	@echo
 	@echo === RECIPES ===
 	@echo $(foreach r,$(recipes),make_$(r)-{node,browser}) | tr ' ' '\n' | tr '_' ' '
+
+# Regenerate the ReadMe and its Recipe ToC using the current list of recipes
+readme:
+	@echo Recreating the repo\'s README.md file...
+	@./scripts/generateRecipeTable.sh > README.md
+	@echo Done!
 
 # Prints version and path information.
 # For troubleshooting version mismatches.
