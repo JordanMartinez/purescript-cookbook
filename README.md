@@ -8,9 +8,9 @@ If you want to contribute a new recipe, see the [CONTRIBUTING.md](./CONTRIBUTING
 
 ## Recipes
 
-| Recipe | Description | Node | Browser |
+| Node | Browser | Recipe | Description |
 | - | - | - | - |
-| [HelloWorld](./recipes/HelloWorld) | Prints "Hello World" to console | x | x |
-| [RoutingHashHalogen](./recipes/RoutingHashHalogen) | Do hash-based routing in a Halogen SPA |   | x |
-| [RoutingPushHalogen](./recipes/RoutingPushHalogen) | Do push-state-based routing in a Halogen SPA |   | x |
-| [RoutingHashLog](./recipes/RoutingHashLog) | Log the routes created via the `routing` library | x | x |
+| :heavy_check_mark: | :heavy_check_mark: | [HelloWorld](recipes/HelloWorld) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
+|   | :heavy_check_mark: | [RoutingHashHalogen](recipes/RoutingHashHalogen) | This recipe shows how to use `purescript-routing` to do client-side hash-based routing in a Halogen-based single-page application (SPA). |
+| :heavy_check_mark: | :heavy_check_mark: | [RoutingHashLog](recipes/RoutingHashLog) | This recipe demonstrates hash-based routing with `purescript-routing`. No web framework is used. |
+|   | :heavy_check_mark: | [RoutingPushHalogen](recipes/RoutingPushHalogen) | This recipe shows how to use `purescript-routing` to do client-side push-state routing in a Halogen-based single-page application (SPA). |
