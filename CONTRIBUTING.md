@@ -12,7 +12,8 @@ Follow these instructions for contributing new recipes:
 1. Use your recipe name to prefix all modules. Do a quick search to find all instances of the old recipe name to replace (e.g. `grep -r RoutingPushHalogen .`).
 1. Install needed dependencies via `spago recipes/RecipeName/spago.dhall install <packageName>`
 1. Implement your recipe
-1. Rember to update your recipe's readme
+1. Update your recipe's `README.md` file.
+     - Put the fully summary of your recipe on the 3rd line without any newlines. This is what will appear in the repo's Recipe section's Table of Contents.
 1. Regenerate the table of recipes by running `make readme`
 1. Submit a PR
 
