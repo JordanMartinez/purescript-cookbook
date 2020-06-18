@@ -8,9 +8,9 @@ If you want to contribute a new recipe, see the [CONTRIBUTING.md](./CONTRIBUTING
 
 ## Recipes
 
-| Recipe | Description | Packages | Node | Browser |
-| - | - | - | - | - |
-| [HelloWorld](./recipes/HelloWorld) | Prints "Hello World" to console | `effect`, `console`| x | x |
-| [RoutingHashHalogen](./recipes/RoutingHashHalogen) | Do hash-based routing in a Halogen SPA | `routing`, `generics-rep`, `halogen`, `effect`, `console` |   | x |
-| [RoutingPushHalogen](./recipes/RoutingPushHalogen) | Do push-state-based routing in a Halogen SPA | `routing`, `generics-rep`, `halogen`, `effect`, `console` |   | x |
-| [RoutingLog](./recipes/RoutingLog) | Log the routes created via the `rouing` library | `routing`, `generics-rep`, `effect`, `console` | x | x |
+| Recipe | Description | Node | Browser |
+| - | - | - | - |
+| [HelloWorld](./recipes/HelloWorld) | Prints "Hello World" to console | x | x |
+| [RoutingHashHalogen](./recipes/RoutingHashHalogen) | Do hash-based routing in a Halogen SPA |   | x |
+| [RoutingPushHalogen](./recipes/RoutingPushHalogen) | Do push-state-based routing in a Halogen SPA |   | x |
+| [RoutingHashLog](./recipes/RoutingHashLog) | Log the routes created via the `routing` library | x | x |
