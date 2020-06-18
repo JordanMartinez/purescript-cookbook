@@ -3,6 +3,13 @@
 # Favor local npm devDependencies if they are installed
 export PATH := node_modules/.bin:$(PATH)
 
+# Use the `>` character rather than tabs (cleaner diffs and stops some editors
+# from using spaces rather than tabs)
+ifeq ($(origin .RECIPEPREFIX), undefined)
+  $(error This Make does not support .RECIPEPREFIX. Please use GNU Make 4.0 or later)
+endif
+.RECIPEPREFIX = >
+
 # Use `PHONY` because target name is not an actual file
 .PHONY: list readme info
 
@@ -10,31 +17,31 @@ export PATH := node_modules/.bin:$(PATH)
 # For now, we assume that each recipe has a `node` and `browser` command,
 # but not all of these will work.
 list:
-	@echo Use \"make RecipeName-target\" to run a recipe
-	@echo
-	@echo === RECIPES ===
-	@echo $(foreach r,$(recipes),make_$(r)-{node,browser}) | tr ' ' '\n' | tr '_' ' '
+> @echo Use \"make RecipeName-target\" to run a recipe
+> @echo
+> @echo === RECIPES ===
+> @echo $(foreach r,$(recipes),make_$(r)-{node,browser}) | tr ' ' '\n' | tr '_' ' '
 
 # Regenerate the ReadMe and its Recipe ToC using the current list of recipes
 readme:
-	@echo Recreating the repo\'s README.md file...
-	./scripts/generateRecipeTable.sh > README.md
-	@echo Done!
+> @echo Recreating the repo\'s README.md file...
+> ./scripts/generateRecipeTable.sh > README.md
+> @echo Done!
 
 # Prints version and path information.
 # For troubleshooting version mismatches.
 info:
-	which purs
-	purs --version
-	which spago
-	spago version
-	which parcel
-	parcel --version
+> which purs
+> purs --version
+> which spago
+> spago version
+> which parcel
+> parcel --version
 
 # Tests if recipe actually exists.
 # This should be a dependency of all entry targets
 recipes/%:
-	test -d $* || { echo "Recipe $* does not exist"; exit 1;}
+> test -d $* || { echo "Recipe $* does not exist"; exit 1;}
 
 # -------- Pattern matching strategy -----------
 
@@ -72,35 +79,35 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 
 # Builds a single recipe. A build is necessary before parcel commands.
 %-build:
-	spago -x $(call recipeSpago,$*) build
+> spago -x $(call recipeSpago,$*) build
 
 # Runs recipe as node.js console app
 %-node: $(call recipeDir,%)
-	spago -x $(call recipeSpago,$*) run --main $(call main,$*)
+> spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Launches recipe in browser
 %-browser: $(call recipeDir,%) $(call $*-build,%)
-	parcel $(call devHtml,$*) --out-dir $(call devDistDir,$*) --open
+> parcel $(call devHtml,$*) --out-dir $(call devDistDir,$*) --open
 
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
 %-buildDev: export NODE_ENV=development
 %-buildDev: $(call $*-build,%) $(call recipeDir,%)
-	parcel build $(call devHtml,$*) --out-dir $(call devDistDir,$*) --no-minify --no-source-maps
+> parcel build $(call devHtml,$*) --out-dir $(call devDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
 $(call prodDir,$(recipes)):
-	mkdir -p $@
+> mkdir -p $@
 
 # How to make prodHtml
 recipes/%/prod/index.html: $(call prodDir,%)
-	cp $(call devHtml,$*) $(call prodDir,$*)
+> cp $(call devHtml,$*) $(call prodDir,$*)
 
 # Creates a minified production build.
 # For reference.
 %-buildProd: $(call recipeDir,%) $(call prodHtml,%)
-	spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
-	parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+> spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
+> parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
 # All purs builds - for CI
 buildAll: $(recipesBuild)
