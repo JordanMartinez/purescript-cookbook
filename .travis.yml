@@ -4,6 +4,7 @@ node_js: 12
 install:
   - npm install
 script:
+  - diff README.md <(scripts/generateRecipeTable.sh)
   - make buildAll
   - make buildAllDev
 cache:
