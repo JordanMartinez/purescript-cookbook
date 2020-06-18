@@ -7,13 +7,13 @@ export PATH := node_modules/.bin:$(PATH)
 .PHONY: list info
 
 # Prints all the recipes one could run via make and clarifying text.
-# For now, we assume that each recipe has a `run` and `serve` command,
+# For now, we assume that each recipe has a `node` and `browser` command,
 # but not all of these will work.
 list:
 	@echo Use \"make RecipeName-target\" to run a recipe
 	@echo
 	@echo === RECIPES ===
-	@echo $(foreach r,$(recipes),make_$(r)-{run,serve}) | tr ' ' '\n' | tr '_' ' '
+	@echo $(foreach r,$(recipes),make_$(r)-{node,browser}) | tr ' ' '\n' | tr '_' ' '
 
 # Prints version and path information.
 # For troubleshooting version mismatches.
@@ -34,8 +34,8 @@ recipes/%:
 
 # Usage:
 #
-# make Template-run
-# make Template-serve
+# make Template-node
+# make Template-browser
 # make Template-buildDev
 # make Template-buildProd
 
