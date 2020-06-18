@@ -5,7 +5,7 @@ cat scripts/ReadmeContent.md
 echo
 
 # Then output the Recipe ToC
-echo "# Recipes"
+echo "## Recipes"
 echo
 echo "| Recipe | Description | Node | Browser |"
 echo "| - | - | - | - |"
