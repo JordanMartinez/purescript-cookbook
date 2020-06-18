@@ -7,7 +7,7 @@ echo
 # Then output the Recipe ToC
 echo "## Recipes"
 echo
-echo "| Recipe | Description | Node | Browser |"
+echo "| Node | Browser | Recipe | Description |"
 echo "| - | - | - | - |"
 for d in recipes/*; do
   base=$(basename $d)
@@ -20,5 +20,5 @@ for d in recipes/*; do
   if [ -d $d/dev ]; then
     browser=":heavy_check_mark:"
   fi
-  echo "| [$base]($d) | $description | $node | $browser |"
+  echo "| $node | $browser | [$base]($d) | $description |"
 done
