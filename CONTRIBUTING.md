@@ -1,6 +1,6 @@
 # Contributing new recipes
 
-The instructions appear first with the rationale behind them appearing later.
+The instructions for adding a new recipe appear first with the rationale behind them appearing later. After that, we explain why we decided to use `make` as our build tool and provide a few resources to help developers get more familiar with it. Note: learning `make` isn't required to add a recipe. Those who are curious can learn more from this repo's example.
 
 ### Instructions
 
@@ -33,3 +33,25 @@ By implication, recipes that use packages that get dropped from the package set 
 #### All Recipes are Licensed under This Repo's License (MIT)
 
 All recipes are licensed under MIT. If you want to submit a new recipe but cannot agree to these terms, please open an issue to discuss it further. Unless you have special circumstances that provide a strong enough rationale to change how we should handle recipe licensing, we will not merge your PR.
+
+## Using `Make` as our build tool
+
+There are three parties whose concerns we wanted to keep in mind:
+1. End users of this library - make it easy to run recipes
+1. Recipe-writers - make it easy to add new recipes
+1. Maintainers of this cookbook - make it easy to test CI and remove broken or outdated recipes
+
+We considered the following build tools:
+- npm scripts: already installed on most end-users' computers but not very flexible or powerful for what we had in mind
+- `scriptlauncher`: nicer UI than npm scripts but still suffered from the same lack of power
+- `make`: already installed on most users' computers, powerful, and a bit of a learning curve
+
+`make` seemed like the best choice between these options. We didn't consider other options for better or worse.
+
+See these sources for help in understanding what the `makefile` is doing:
+- [Official Manual (somewhat hard to read/understand)](https://www.gnu.org/software/make/manual/make.html)
+- [Makefile tutorial (quick summary of manual with missing parts)](https://makefiletutorial.com/)
+- [Make Guide (slides)](http://martinvseticka.eu/temp/make/normal.html)
+- [Make Cheatsheet](http://eduardolezcano.com/wp-content/uploads/2016/06/make_cheatsheet.pdf)
+- [Automatic Variables (i.e. what `$*`, `$%`, `$@`, etc. mean)](https://www.gnu.org/software/make/manual/make.html#Automatic-Variables)
+- [Your Makefiles are wrong](https://tech.davis-hansson.com/p/make/)
