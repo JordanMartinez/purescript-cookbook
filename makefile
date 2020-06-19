@@ -9,6 +9,10 @@ ifeq ($(origin .RECIPEPREFIX), undefined)
 endif
 .RECIPEPREFIX = >
 
+# Make's default shell is `sh`. Setting this to `bash` enables
+# the shell flags below to work.
+SHELL := bash
+
 # set -e = bash immediately exits if any command has a non-zero exit status.
 # set -u = a reference to any shell variable you haven't previously
 #    defined -- with the exceptions of $* and $@ -- is an error, and causes
@@ -17,7 +21,7 @@ endif
 #    pipeline (e.g. `cat file.txt | grep 'foo'`) will be used as the exit
 #    code for the entire pipeline. If all exit codes of a pipeline are zero,
 #    the pipeline will emit an exit code of 0.
-.SHELLFLAGS := -eu -o pipefail
+.SHELLFLAGS := -eu -o pipefail -c
 
 # Emits a warning if you are referring to Make variables that don’t exist.
 MAKEFLAGS += --warn-undefined-variables
