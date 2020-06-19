@@ -6,4 +6,4 @@ Equivalent to `HelloWorld` recipe, but just targets node.js environment (not the
 
 ### Node.js
 
-Prints "Hello world!" to console.
+Prints "Hello node!" to console.

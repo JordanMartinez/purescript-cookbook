@@ -10,6 +10,6 @@
 /.spago
 /.cache/
 /dist/
-/dev-dist/
+/web-dist/
 /prod-dist/
 /prod/

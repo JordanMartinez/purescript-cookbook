@@ -9,6 +9,6 @@
 /.psa*
 /.spago
 /.cache/
-/dev-dist/
+/web-dist/
 /prod-dist/
 /prod/
