@@ -6,7 +6,8 @@ install:
 script:
   - diff README.md <(scripts/generateRecipeTable.sh)
   - make buildAll
-  - make buildAllDev
+  - make runAllNode
+  - make buildAllWeb
 cache:
   directories:
    - output

@@ -32,13 +32,16 @@ MAKEFLAGS += --no-builtin-rules
 .PHONY: list readme info
 
 # Prints all the recipes one could run via make and clarifying text.
-# For now, we assume that each recipe has a `node` and `browser` command,
+# For now, we assume that each recipe has a `node` and `web` command,
 # but not all of these will work.
 list:
 > @echo Use \"make RecipeName-target\" to run a recipe
 > @echo
-> @echo === RECIPES ===
-> @echo $(foreach r,$(recipes),make_$(r)-{node,browser}) | tr ' ' '\n' | tr '_' ' '
+> @echo === Node Recipes ===
+> @echo $(foreach t,$(targetsNode),make_$(t)) | tr ' ' '\n' | tr '_' ' '
+> @echo
+> @echo === Web Recipes ===
+> @echo $(foreach t,$(targetsWeb),make_$(t)) | tr ' ' '\n' | tr '_' ' '
 
 # Regenerate the ReadMe and its Recipe ToC using the current list of recipes
 readme:
@@ -57,25 +60,38 @@ info:
 > parcel --version
 
 # Tests if recipe actually exists.
-# This should be a dependency of all entry targets
 recipes/%:
-> test -d $* || { echo "Recipe $* does not exist"; exit 1;}
+> @test -d $* || { echo "Recipe $* does not exist"; exit 1;}
+
+# Test if recipe is compatible with node
+recipes/%/nodeSupported.md:
+> @test -f $* || { echo "Recipe $* is not compatible with Node.js backend"; exit 1;}
+
+# Test if recipe is compatible with web
+recipes/%/dev:
+> @test -f $* || { echo "Recipe $* is not compatible with web browser backend"; exit 1;}
 
 # Targets for all recipe build operations
+
 recipes := $(shell ls recipes)
-recipesBuild := $(foreach r,$(recipes),$(r)-build)
-recipesNode := $(foreach r,$(recipes),$(r)-node)
-recipesBrowser := $(foreach r,$(recipes),$(r)-browser)
-recipesBuildDev := $(foreach r,$(recipes),$(r)-buildDev)
-recipesBuildProd := $(foreach r,$(recipes),$(r)-buildProd)
+targetsBuild := $(foreach r,$(recipes),$(r)-build)
+
+targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
+
+recipesWeb := $(patsubst recipes/%/dev,%,$(wildcard recipes/*/dev))
+targetsWeb := $(foreach r,$(recipesWeb),$(r)-web)
+targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
+targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: recipesBuild recipesNode recipesBrowser recipesBuildDev recipesBuildProd buildAll buildAllDev buildAllProd
+.PHONY: targetsBuild targetsNode targetsWeb targetsBuildWeb targetsBuildProd buildAll runAllNode buildAllWeb buildAllProd
 
 # Helper functions for generating paths
 main = $1.Main
 recipeDir = recipes/$1
 recipeSpago = $(call recipeDir,$1)/spago.dhall
+
+nodeCompat = $(call recipeDir,$1)/nodeSupported.md
 
 devDir = $(call recipeDir,$1)/dev
 devHtml = $(call devDir,$1)/index.html
@@ -91,17 +107,17 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 > spago -x $(call recipeSpago,$*) build
 
 # Runs recipe as node.js console app
-%-node: $(call recipeDir,%)
+%-node: $(call nodeCompat,%)
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
-# Launches recipe in browser
-%-browser: $(call recipeDir,%) $(call $*-build,%)
+# Launches recipe in web browser
+%-web: $(call devDir,%) $(call $*-build,%)
 > parcel $(call devHtml,$*) --out-dir $(call devDistDir,$*) --open
 
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
-%-buildDev: export NODE_ENV=development
-%-buildDev: $(call $*-build,%) $(call recipeDir,%)
+%-buildWeb: export NODE_ENV=development
+%-buildWeb: $(call $*-build,%) $(call recipeDir,%)
 > parcel build $(call devHtml,$*) --out-dir $(call devDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
@@ -119,10 +135,13 @@ recipes/%/prod/index.html: $(call prodDir,%)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
 # All purs builds - for CI
-buildAll: $(recipesBuild)
+buildAll: $(targetsBuild)
+
+# All node executions - for CI
+runAllNode: $(targetsNode)
 
 # All dev builds - for CI
-buildAllDev: $(recipesBuildDev)
+buildAllWeb: $(targetsBuildWeb)
 
 # All prod builds - for CI
-buildAllProd: $(recipesBuildProd)
+buildAllProd: $(targetsBuildProd)
