@@ -9,6 +9,10 @@ ifeq ($(origin .RECIPEPREFIX), undefined)
 endif
 .RECIPEPREFIX = >
 
+# Make's default shell is `sh`. Setting this to `bash` enables
+# the shell flags below to work.
+SHELL := bash
+
 # set -e = bash immediately exits if any command has a non-zero exit status.
 # set -u = a reference to any shell variable you haven't previously
 #    defined -- with the exceptions of $* and $@ -- is an error, and causes
