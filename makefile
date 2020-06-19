@@ -68,7 +68,7 @@ recipes/%/nodeSupported.md:
 > @test -f $* || { echo "Recipe $* is not compatible with Node.js backend"; exit 1;}
 
 # Test if recipe is compatible with web
-recipes/%/dev:
+recipes/%/web:
 > @test -f $* || { echo "Recipe $* is not compatible with web browser backend"; exit 1;}
 
 # Targets for all recipe build operations
@@ -78,7 +78,7 @@ targetsBuild := $(foreach r,$(recipes),$(r)-build)
 
 targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
 
-recipesWeb := $(patsubst recipes/%/dev,%,$(wildcard recipes/*/dev))
+recipesWeb := $(patsubst recipes/%/web,%,$(wildcard recipes/*/web))
 targetsWeb := $(foreach r,$(recipesWeb),$(r)-web)
 targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
 targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
@@ -93,9 +93,9 @@ recipeSpago = $(call recipeDir,$1)/spago.dhall
 
 nodeCompat = $(call recipeDir,$1)/nodeSupported.md
 
-devDir = $(call recipeDir,$1)/dev
-devHtml = $(call devDir,$1)/index.html
-devDistDir = $(call recipeDir,$1)/dev-dist
+webDir = $(call recipeDir,$1)/web
+webHtml = $(call webDir,$1)/index.html
+webDistDir = $(call recipeDir,$1)/web-dist
 
 prodDir = $(call recipeDir,$1)/prod
 prodHtml = $(call prodDir,$1)/index.html
@@ -111,14 +111,14 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Launches recipe in web browser
-%-web: $(call recipeDir,%) $(call devDir,%) $(call $*-build,%)
-> parcel $(call devHtml,$*) --out-dir $(call devDistDir,$*) --open
+%-web: $(call recipeDir,%) $(call webDir,%) $(call $*-build,%)
+> parcel $(call webHtml,$*) --out-dir $(call webDistDir,$*) --open
 
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
 %-buildWeb: export NODE_ENV=development
-%-buildWeb: $(call $*-build,%) $(call recipeDir,%) $(call devDir,%)
-> parcel build $(call devHtml,$*) --out-dir $(call devDistDir,$*) --no-minify --no-source-maps
+%-buildWeb: $(call $*-build,%) $(call recipeDir,%) $(call webDir,%)
+> parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
 $(call prodDir,$(recipes)):
@@ -126,7 +126,7 @@ $(call prodDir,$(recipes)):
 
 # How to make prodHtml
 recipes/%/prod/index.html: $(call prodDir,%)
-> cp $(call devHtml,$*) $(call prodDir,$*)
+> cp $(call webHtml,$*) $(call prodDir,$*)
 
 # Creates a minified production build.
 # For reference.
@@ -140,7 +140,7 @@ buildAll: $(targetsBuild)
 # All node executions - for CI
 runAllNode: $(targetsNode)
 
-# All dev builds - for CI
+# All web builds - for CI
 buildAllWeb: $(targetsBuildWeb)
 
 # All prod builds - for CI
