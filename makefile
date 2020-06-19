@@ -19,6 +19,13 @@ endif
 #    the pipeline will emit an exit code of 0.
 .SHELLFLAGS := -eu -o pipefail
 
+# Emits a warning if you are referring to Make variables that don’t exist.
+MAKEFLAGS += --warn-undefined-variables
+
+# Removes a large number of built-in rules. Remove "magic" and only do
+#    what we tell Make to do.
+MAKEFLAGS += --no-builtin-rules
+
 # Use `PHONY` because target name is not an actual file
 .PHONY: list readme info
 
