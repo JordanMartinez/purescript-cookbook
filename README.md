@@ -8,7 +8,7 @@ If you want to contribute a new recipe, see the [CONTRIBUTING.md](./CONTRIBUTING
 
 ## Recipes
 
-| Node | Browser | Recipe | Description |
+| Node | Web Browser | Recipe | Description |
 | - | - | - | - |
 | :heavy_check_mark: |   | [HelloNode](recipes/HelloNode) | Equivalent to `HelloWorld` recipe, but just targets node.js environment (not the browser too). For CI testing until another node-only recipe is created. |
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorld](recipes/HelloWorld) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
