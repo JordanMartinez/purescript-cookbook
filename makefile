@@ -9,6 +9,16 @@ ifeq ($(origin .RECIPEPREFIX), undefined)
 endif
 .RECIPEPREFIX = >
 
+# set -e = bash immediately exits if any command has a non-zero exit status.
+# set -u = a reference to any shell variable you haven't previously
+#    defined -- with the exceptions of $* and $@ -- is an error, and causes
+#    the program to immediately exit with non-zero code.
+# set -o pipefail = the first non-zero exit code emitted in one part of a
+#    pipeline (e.g. `cat file.txt | grep 'foo'`) will be used as the exit
+#    code for the entire pipeline. If all exit codes of a pipeline are zero,
+#    the pipeline will emit an exit code of 0.
+.SHELLFLAGS := -eu -o pipefail
+
 # Use `PHONY` because target name is not an actual file
 .PHONY: list readme info
 
