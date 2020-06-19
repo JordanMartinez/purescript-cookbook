@@ -1,5 +1,3 @@
-# ------------- Common --------------
-
 # Favor local npm devDependencies if they are installed
 export PATH := node_modules/.bin:$(PATH)
 
@@ -62,15 +60,6 @@ info:
 # This should be a dependency of all entry targets
 recipes/%:
 > test -d $* || { echo "Recipe $* does not exist"; exit 1;}
-
-# -------- Pattern matching strategy -----------
-
-# Usage:
-#
-# make Template-node
-# make Template-browser
-# make Template-buildDev
-# make Template-buildProd
 
 # Targets for all recipe build operations
 recipes := $(shell ls recipes)
