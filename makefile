@@ -111,13 +111,13 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Launches recipe in web browser
-%-web: $(call recipeDir,%) $(call webDir,%) $(call $*-build,%)
+%-web: $(call recipeDir,%) $(call webDir,%) %-build
 > parcel $(call webHtml,$*) --out-dir $(call webDistDir,$*) --open
 
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
 %-buildWeb: export NODE_ENV=development
-%-buildWeb: $(call $*-build,%) $(call recipeDir,%) $(call webDir,%)
+%-buildWeb: $(call recipeDir,%) $(call webDir,%) %-build
 > parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
