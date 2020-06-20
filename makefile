@@ -28,12 +28,13 @@ MAKEFLAGS += --warn-undefined-variables
 #    what we tell Make to do.
 MAKEFLAGS += --no-builtin-rules
 
-# Use `PHONY` because target name is not an actual file
-.PHONY: list readme info
+# Note: usages of `.PHONY: <target>` mean the target name is not an actual file
+# .PHONY: targetName
 
 # Prints all the recipes one could run via make and clarifying text.
 # For now, we assume that each recipe has a `node` and `web` command,
 # but not all of these will work.
+.PHONY: list
 list:
 > @echo Use \"make RecipeName-target\" to run a recipe
 > @echo
@@ -44,6 +45,7 @@ list:
 > @echo $(foreach t,$(targetsWeb),make_$(t)) | tr ' ' '\n' | tr '_' ' '
 
 # Regenerate the ReadMe and its Recipe ToC using the current list of recipes
+.PHONY: readme
 readme:
 > @echo Recreating the repo\'s README.md file...
 > ./scripts/generateRecipeTable.sh > README.md
@@ -51,6 +53,7 @@ readme:
 
 # Prints version and path information.
 # For troubleshooting version mismatches.
+.PHONY: info
 info:
 > which purs
 > purs --version
