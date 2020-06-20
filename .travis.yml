@@ -7,8 +7,9 @@ branches:
 install:
   - npm install
 script:
-  - diff README.md <(scripts/generateRecipeTable.sh)
   - make testAllCommands
+  - echo "\n\n\n"
+  - diff README.md <(scripts/generateRecipeTable.sh)
   - make testAllCI
 cache:
   directories:
