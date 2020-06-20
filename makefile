@@ -142,19 +142,22 @@ recipes/%/web:
 %-buildWeb: $(call recipeDir,%) $(call webDir,%) %-build
 > parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
 
+# Note: `%-buildProd` and its related commands were commented out
+# because the command doesn't currently work.
+
 # How to make prodDir
-recipes/%/prod:
-> mkdir -p $@
+# recipes/%/prod:
+# > mkdir -p $@
 
 # How to make prodHtml
-recipes/%/prod/index.html: $(call prodDir,%)
-> cp $(call webHtml,$*) $(call prodDir,$*)
+# recipes/%/prod/index.html: $(call prodDir,%)
+# > cp $(call webHtml,$*) $(call prodDir,$*)
 
 # Creates a minified production build.
 # For reference.
-%-buildProd: $(call recipeDir,%) $(call webDir,%) $(call prodHtml,%)
-> spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
-> parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+# %-buildProd: $(call recipeDir,%) $(call webDir,%) $(call prodHtml,%)
+# > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
+# > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
 # ===== Makefile - CI Commands =====
 
@@ -192,4 +195,4 @@ testAllCommands:
 > $(MAKE) HelloWorld-build
 > $(MAKE) HelloWorld-buildWeb
 > $(MAKE) HelloWorld-testCI
-> $(MAKE) HelloWorld-buildProd
+# > $(MAKE) HelloWorld-buildProd
