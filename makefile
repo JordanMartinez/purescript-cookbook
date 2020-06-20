@@ -102,10 +102,11 @@ recipeSpago = $(call recipeDir,$1)/spago.dhall
 
 # Functions for Node.js-comptabile recipes that help generate paths
 nodeCompat = $(call recipeDir,$1)/nodeSupported.md
+nodeCompatSkipCI = $(call recipeDir,$1)/nodeSupportedSkipCI.md
 
 # Tests whether recipe can be run on Node.js backend
-recipes/%/nodeSupported.md:
-> @if [ ! -f $(call nodeCompat,$*) ]
+%-nodeCompatible:
+> @if [ ! -f $(call nodeCompat,$*) ] && [ ! -f $(call nodeCompatSkipCI,$*) ]
 > then
 >   echo
 >   echo Recipe $* is not compatible with Node.js backend
@@ -114,7 +115,7 @@ recipes/%/nodeSupported.md:
 > fi
 
 # Runs recipe as node.js console app
-%-node: $(call recipeDir,%) $(call nodeCompat,%)
+%-node: $(call recipeDir,%) %-nodeCompatible
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Functions for browser-comptabile recipes that help generate paths
@@ -179,6 +180,14 @@ recipes/%/web:
 >   spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 >   echo
 >   echo == $* - Succeeded on Node.js
+>   echo
+> fi
+> @if [ -f $(call nodeCompatSkipCI,$*) ]
+> then
+>   echo Compiling $* on the Node.js backend
+>   spago -x $(call recipeSpago,$*) build
+>   echo
+>   echo == $* - Compiled for Node.js
 >   echo
 > fi
 > @if [ -d $(call webDir,$*) ]
