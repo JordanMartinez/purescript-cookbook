@@ -86,9 +86,6 @@ targetsWeb := $(foreach r,$(recipesWeb),$(r)-web)
 targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
 targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
 
-# Use `PHONY` because target name is not an actual file
-.PHONY: targetsBuild targetsNode targetsWeb targetsBuildWeb targetsBuildProd
-
 # Helper functions for generating paths
 main = $1.Main
 recipeDir = recipes/$1
