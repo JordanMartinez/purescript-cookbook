@@ -41,7 +41,9 @@ MAKEFLAGS += --no-builtin-rules
 #
 #   wildcard = expand globs and add a space in-between each one
 #   patsubst = patsubst(textToFind,replaceItWithThisText,originalText)
-targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
+targetsNodeWithCI := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
+targetsNodeSkipCI := $(patsubst recipes/%/nodeSupportedSkipCI.md,%-node,$(wildcard recipes/*/nodeSupportedSkipCI.md))
+targetsNode := $(targetsNodeWithCI) $(targetsNodeSkipCI)
 targetsWeb := $(patsubst recipes/%/web,%-web,$(wildcard recipes/*/web))
 
 # Note: usages of `.PHONY: <target>` mean the target name is not an actual file
