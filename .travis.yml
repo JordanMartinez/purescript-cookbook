@@ -8,9 +8,8 @@ install:
   - npm install
 script:
   - diff README.md <(scripts/generateRecipeTable.sh)
-  - make buildAll
-  - make runAllNode
-  - make buildAllWeb
+  - make testAllCI
+  - make testAllCommands
 cache:
   directories:
    - output

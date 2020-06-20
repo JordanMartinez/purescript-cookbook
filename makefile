@@ -9,6 +9,10 @@ ifeq ($(origin .RECIPEPREFIX), undefined)
 endif
 .RECIPEPREFIX = >
 
+# Use one shell to run all commands in a given target rather than using
+# the default setting of running each command in a separate shell
+.ONESHELL:
+
 # Make's default shell is `sh`. Setting this to `bash` enables
 # the shell flags below to work.
 SHELL := bash
@@ -70,34 +74,40 @@ info:
 
 # Tests if recipe actually exists.
 recipes/%:
-> @test -d $* || { echo "Recipe $* does not exist"; exit 1;}
+> @if [ ! -d $* ]
+> then
+>   echo
+>   echo Recipe $* does not exist
+>   echo
+>   exit 1
+> fi
 
-# Test if recipe is compatible with node
-recipes/%/nodeSupported.md:
-> @test -f $* || { echo "Recipe $* is not compatible with Node.js backend"; exit 1;}
-
-# Test if recipe is compatible with web
-recipes/%/web:
-> @test -f $* || { echo "Recipe $* is not compatible with web browser backend"; exit 1;}
-
-# Variables for all recipes' operations
-
+# Variables shared across most targets
 recipes := $(shell ls recipes)
 
-targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
-recipesWeb := $(patsubst recipes/%/web,%,$(wildcard recipes/*/web))
-
-targetsBuild := $(foreach r,$(recipes),$(r)-build)
-targetsWeb := $(foreach r,$(recipesWeb),$(r)-web)
-targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
-targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
-
-# Helper functions for generating paths
+# Functions shared across most targets that help generate paths
 main = $1.Main
 recipeDir = recipes/$1
 recipeSpago = $(call recipeDir,$1)/spago.dhall
 
+# Functions for Node.js-comptabile recipes that help generate paths
 nodeCompat = $(call recipeDir,$1)/nodeSupported.md
+
+# Tests whether recipe can be run on Node.js backend
+recipes/%/nodeSupported.md:
+> @if [ ! -f $(call nodeCompat,$*) ]
+> then
+>   echo
+>   echo Recipe $* is not compatible with Node.js backend
+>   echo
+>   exit 1
+> fi
+
+# Runs recipe as node.js console app
+%-node: $(call recipeDir,%) $(call nodeCompat,%)
+> spago -x $(call recipeSpago,$*) run --main $(call main,$*)
+
+# Functions for browser-comptabile recipes that help generate paths
 
 webDir = $(call recipeDir,$1)/web
 webHtml = $(call webDir,$1)/index.html
@@ -112,9 +122,15 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 %-build:
 > spago -x $(call recipeSpago,$*) build
 
-# Runs recipe as node.js console app
-%-node: $(call recipeDir,%) $(call nodeCompat,%)
-> spago -x $(call recipeSpago,$*) run --main $(call main,$*)
+# Tests whether recipe can be run on web browser backend
+recipes/%/web:
+> @if [ ! -d $(call webDir,$*) ]
+> then
+>   echo
+>   echo Recipe $* is not compatible with the web browser backend
+>   echo
+>   exit 1
+> fi
 
 # Launches recipe in web browser
 %-web: $(call recipeDir,%) $(call webDir,%) %-build
@@ -127,7 +143,7 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 > parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
-$(call prodDir,$(recipes)):
+recipes/%/prod:
 > mkdir -p $@
 
 # How to make prodHtml
@@ -136,22 +152,44 @@ recipes/%/prod/index.html: $(call prodDir,%)
 
 # Creates a minified production build.
 # For reference.
-%-buildProd: $(call recipeDir,%) $(call prodHtml,%)
+%-buildProd: $(call recipeDir,%) $(call webDir,%) $(call prodHtml,%)
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
 # ===== Makefile - CI Commands =====
 
-.PHONY: buildAll runAllNode buildAllWeb buildAllProd
+# Runs a single recipe's CI.
+%-testCI: $(call recipeDir,%)
+> @if [ -f $(call nodeCompat,$*) ]
+> then
+>   echo Testing $* on the Node.js backend
+>   spago -x $(call recipeSpago,$*) run --main $(call main,$*)
+>   echo
+>   echo == $* - Succeeded on Node.js
+>   echo
+> fi
+> @if [ -d $(call webDir,$*) ]
+> then
+>   echo Attempting to build $* for the browser backend
+>   export NODE_ENV=development
+>   parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
+>   echo
+>   echo == $* - Built for browser
+>   echo
+> fi
 
-# All purs builds - for CI
-buildAll: $(targetsBuild)
+targetsAllCI := $(foreach r,$(recipes),$(r)-testCI)
 
-# All node executions - for CI
-runAllNode: $(targetsNode)
+# Run all recipes CI
+.PHONY: testAllCI
+testAllCI: $(targetsAllCI)
 
-# All web builds - for CI
-buildAllWeb: $(targetsBuildWeb)
-
-# All prod builds - for CI
-buildAllProd: $(targetsBuildProd)
+# Verifies that running all the above commands for a single
+# recipe actually works.
+testAllCommands:
+> $(MAKE)
+> $(MAKE) HelloWorld-node
+> $(MAKE) HelloWorld-build
+> $(MAKE) HelloWorld-buildWeb
+> $(MAKE) HelloWorld-testCI
+> $(MAKE) HelloWorld-buildProd
