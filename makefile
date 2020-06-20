@@ -87,7 +87,7 @@ targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
 targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
 
 # Use `PHONY` because target name is not an actual file
-.PHONY: targetsBuild targetsNode targetsWeb targetsBuildWeb targetsBuildProd buildAll runAllNode buildAllWeb buildAllProd
+.PHONY: targetsBuild targetsNode targetsWeb targetsBuildWeb targetsBuildProd
 
 # Helper functions for generating paths
 main = $1.Main
@@ -136,6 +136,8 @@ recipes/%/prod/index.html: $(call prodDir,%)
 %-buildProd: $(call recipeDir,%) $(call prodHtml,%)
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+
+.PHONY: buildAll runAllNode buildAllWeb buildAllProd
 
 # All purs builds - for CI
 buildAll: $(targetsBuild)
