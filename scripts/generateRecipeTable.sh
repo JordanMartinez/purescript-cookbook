@@ -13,7 +13,7 @@ for d in recipes/*; do
   base=$(basename $d)
   description=$(sed '3q;d' $d/README.md)
   node=" "
-  if [ -f $d/nodeSupported.md ]; then
+  if [ -f $d/nodeSupported.md ] || [ -f $d/nodeSupportedSkipCI.md ]; then
     node=":heavy_check_mark:"
   fi
   browser=" "
