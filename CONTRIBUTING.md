@@ -40,6 +40,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
         1. Return to the root directory: `cd ../..`
     - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more contxt).
 1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
+    - Run `spago -x recipes/MyNewRecipe/spago.dhall build -w` while in the root folder for faster iteration while developing
 1. Update your recipe's `README.md` file by doing the following things:
     1. Write a full sumary of your recipe on the 3rd line (i.e. don't use any newlines). This is what will appear in the repo's Recipe section's Table of Contents.
     1. Update the "Expected Behavior" section to describe in more detail what should occur when users run your recipe.
