@@ -74,14 +74,14 @@ recipes/%/nodeSupported.md:
 recipes/%/web:
 > @test -f $* || { echo "Recipe $* is not compatible with web browser backend"; exit 1;}
 
-# Targets for all recipe build operations
+# Variables for all recipes' operations
 
 recipes := $(shell ls recipes)
-targetsBuild := $(foreach r,$(recipes),$(r)-build)
 
 targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
-
 recipesWeb := $(patsubst recipes/%/web,%,$(wildcard recipes/*/web))
+
+targetsBuild := $(foreach r,$(recipes),$(r)-build)
 targetsWeb := $(foreach r,$(recipesWeb),$(r)-web)
 targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
 targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
