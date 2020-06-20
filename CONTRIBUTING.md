@@ -64,6 +64,10 @@ By implication, recipes that use packages that get dropped from the package set 
 
 All recipes are licensed under MIT. If you want to submit a new recipe but cannot agree to these terms, please open an issue to discuss it further. Unless you have special circumstances that provide a strong enough rationale to change how we should handle recipe licensing, we will not merge your PR.
 
+#### Link to Learning Resources Rather than Explaining Here Pedagogical
+
+A cookbook demonstrates how to do X. It does not explain why X works, the concepts that X uses to work, or anything else that could bloat a recipe with very long explanations. Rather, it provides links to resources that users can read if they want to learn more.
+
 ## Using `Make` as our build tool
 
 There are three parties whose concerns we wanted to keep in mind:
