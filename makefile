@@ -1,3 +1,5 @@
+# ===== Makefile Configuration =====
+
 # Favor local npm devDependencies if they are installed
 export PATH := node_modules/.bin:$(PATH)
 
@@ -28,12 +30,15 @@ MAKEFLAGS += --warn-undefined-variables
 #    what we tell Make to do.
 MAKEFLAGS += --no-builtin-rules
 
-# Use `PHONY` because target name is not an actual file
-.PHONY: list readme info
+# ===== Makefile - Repo Commands =====
+
+# Note: usages of `.PHONY: <target>` mean the target name is not an actual file
+# .PHONY: targetName
 
 # Prints all the recipes one could run via make and clarifying text.
 # For now, we assume that each recipe has a `node` and `web` command,
 # but not all of these will work.
+.PHONY: list
 list:
 > @echo Use \"make RecipeName-target\" to run a recipe
 > @echo
@@ -44,6 +49,7 @@ list:
 > @echo $(foreach t,$(targetsWeb),make_$(t)) | tr ' ' '\n' | tr '_' ' '
 
 # Regenerate the ReadMe and its Recipe ToC using the current list of recipes
+.PHONY: readme
 readme:
 > @echo Recreating the repo\'s README.md file...
 > ./scripts/generateRecipeTable.sh > README.md
@@ -51,6 +57,7 @@ readme:
 
 # Prints version and path information.
 # For troubleshooting version mismatches.
+.PHONY: info
 info:
 > which purs
 > purs --version
@@ -58,6 +65,8 @@ info:
 > spago version
 > which parcel
 > parcel --version
+
+# ===== Makefile - Recipe-related Commands =====
 
 # Tests if recipe actually exists.
 recipes/%:
@@ -71,20 +80,17 @@ recipes/%/nodeSupported.md:
 recipes/%/web:
 > @test -f $* || { echo "Recipe $* is not compatible with web browser backend"; exit 1;}
 
-# Targets for all recipe build operations
+# Variables for all recipes' operations
 
 recipes := $(shell ls recipes)
-targetsBuild := $(foreach r,$(recipes),$(r)-build)
 
 targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
-
 recipesWeb := $(patsubst recipes/%/web,%,$(wildcard recipes/*/web))
+
+targetsBuild := $(foreach r,$(recipes),$(r)-build)
 targetsWeb := $(foreach r,$(recipesWeb),$(r)-web)
 targetsBuildWeb := $(foreach r,$(recipesWeb),$(r)-buildWeb)
 targetsBuildProd := $(foreach r,$(recipesWeb),$(r)-buildProd)
-
-# Use `PHONY` because target name is not an actual file
-.PHONY: targetsBuild targetsNode targetsWeb targetsBuildWeb targetsBuildProd buildAll runAllNode buildAllWeb buildAllProd
 
 # Helper functions for generating paths
 main = $1.Main
@@ -133,6 +139,10 @@ recipes/%/prod/index.html: $(call prodDir,%)
 %-buildProd: $(call recipeDir,%) $(call prodHtml,%)
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+
+# ===== Makefile - CI Commands =====
+
+.PHONY: buildAll runAllNode buildAllWeb buildAllProd
 
 # All purs builds - for CI
 buildAll: $(targetsBuild)
