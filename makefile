@@ -1,3 +1,5 @@
+# ===== Makefile Configuration =====
+
 # Favor local npm devDependencies if they are installed
 export PATH := node_modules/.bin:$(PATH)
 
@@ -27,6 +29,8 @@ MAKEFLAGS += --warn-undefined-variables
 # Removes a large number of built-in rules. Remove "magic" and only do
 #    what we tell Make to do.
 MAKEFLAGS += --no-builtin-rules
+
+# ===== Makefile - Repo Commands =====
 
 # Note: usages of `.PHONY: <target>` mean the target name is not an actual file
 # .PHONY: targetName
@@ -61,6 +65,8 @@ info:
 > spago version
 > which parcel
 > parcel --version
+
+# ===== Makefile - Recipe-related Commands =====
 
 # Tests if recipe actually exists.
 recipes/%:
@@ -133,6 +139,8 @@ recipes/%/prod/index.html: $(call prodDir,%)
 %-buildProd: $(call recipeDir,%) $(call prodHtml,%)
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+
+# ===== Makefile - CI Commands =====
 
 .PHONY: buildAll runAllNode buildAllWeb buildAllProd
 
