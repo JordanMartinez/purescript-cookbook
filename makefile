@@ -36,6 +36,14 @@ MAKEFLAGS += --no-builtin-rules
 
 # ===== Makefile - Repo Commands =====
 
+# Variables get that a list of all recipes that can be run on
+# Node.js or browser backends
+#
+#   wildcard = expand globs and add a space in-between each one
+#   patsubst = patsubst(textToFind,replaceItWithThisText,originalText)
+targetsNode := $(patsubst recipes/%/nodeSupported.md,%-node,$(wildcard recipes/*/nodeSupported.md))
+targetsWeb := $(patsubst recipes/%/web,%-web,$(wildcard recipes/*/web))
+
 # Note: usages of `.PHONY: <target>` mean the target name is not an actual file
 # .PHONY: targetName
 
