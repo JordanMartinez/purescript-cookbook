@@ -4,18 +4,49 @@ The instructions for adding a new recipe appear first with the rationale behind 
 
 ### Instructions
 
-Follow these instructions for contributing new recipes:
-1. Open a new issue making a request for a recipe. This helps avoid two developers working on the same recipe independently.
-1. Pick an existing recipe to duplicate as a starting point. The `HelloWorld` recipe is probably the simplest.
-1. Rename the copied folder to a short description of the problem you're trying to solve using PascalCase (e.g. RoutingPushHalogen)
-1. If your recipe is incompatible with the browser enviornment (e.g. reading local files with node), delete the `dev` directory. Note that just logging to the console **is** supported in the browser.
-1. Use your recipe name to prefix all modules. Do a quick search to find all instances of the old recipe name to replace (e.g. `grep -r RoutingPushHalogen .`).
-1. Install needed dependencies via `spago -x recipes/RecipeName/spago.dhall install <packageName>`
-1. Implement your recipe
-1. Update your recipe's `README.md` file.
-     - Put the fully summary of your recipe on the 3rd line without any newlines. This is what will appear in the repo's Recipe section's Table of Contents.
-1. Regenerate the table of recipes by running `make readme`
-1. Submit a PR
+Follow these instructions for contributing new recipes. The Goal headers indicate the outcome achieved by following them:
+
+#### Goal 1: Claim and Start Working on a Recipe Request
+
+1. Search currently open "Recipe Request" issues. If there isn't one for your recipe, open a new "Recipe Request" issue for it. This is where you'll find the "Unique Recipe Name" (i.e. short description of the problem using PascalCase, such as "HelloWorld")
+1. State on the issue that you'll be implementing the recipe and how long we should wait before following up with you if you haven't finished it yet. If you do not post this, we will assume that you will have it done within two weeks.
+    - This helps avoid two issues. First, it prevents two developers from working on the same recipe independently. Second, one developer who wants to implement the recipe may think someone else who has started work on it and then abandoned it is still working on it.
+
+#### Goal 2: Setup a New Recipe's Boilerplate by Copying a Current Similar One
+
+1. Pick an existing recipe to duplicate as a starting point. The `HelloWorld` recipe is the simplest and is set up to work on both Node.js and Browser backends.
+    - In the examples that follow, we'll assume that you copied the `HelloWorld` recipe and wish to use the "Unique Recipe Name" of `MyNewRecipe`
+1. Rename the copied folder to the "Unique Recipe Name" assigned in the original issue.
+    - `cp -r recipes/HelloWorld recipes/MyNewRecipe`
+1. Depending on the backend-compatibility of your recipe, follow the instructions below:
+    1. If your recipe is incompatible with the browser enviornment, delete the `web` directory.
+        - If your recipe uses `node-*` libraries, it is incompatible with the browser.
+        - Logging to the console **is** supported in the browser.
+    1. If your recipe is incompatible with the Node.js backend, delete the `nodeSupported.md` file.
+    1. If your recipe is compatible with Node.js, but the resulting program should not be run during CI (e.g. a program that parses command-line arguments), then rename `nodeSupported.md` to `nodeSupportedSkipCI.md`.
+1. Replace all usages of the original recipe's "Unique Recipe Name" with your recipe's "Unique Recipe Name." To find all instances, `cd` into your recipe folder and run `grep -r RecipeName`. For example, "HelloWorld" would be replaced with "MyNewRecipe" in the following files (as of this writing):
+    - `recipes/MyNewRecipe/spago.dhall`
+    - `recipes/MyNewRecipe/README.md`
+    - `recipes/MyNewRecipe/src/Main.purs`
+    - `recipes/MyNewRecipe/web/index.html`
+    - `recipes/MyNewRecipe/web/index.js`
+
+#### Goal 3: Implement and Submit the Recipe
+
+1. Install needed dependencies via `spago`.
+    - Due to a [bug in Spago (#654)](https://github.com/purescript/spago/issues/654), follow these instructions:
+        1. Change directory into your recipe folder: `cd recipes/MyRecipeName`
+        1. Install dependencies as normal: `spago install <packageName>`
+        1. Return to the root directory: `cd ../..`
+    - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more contxt).
+1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
+    - Run `spago -x recipes/MyNewRecipe/spago.dhall build -w` while in the root folder for faster iteration while developing
+1. Update your recipe's `README.md` file by doing the following things:
+    1. Write a full sumary of your recipe on the 3rd line (i.e. don't use any newlines). This is what will appear in the repo's Recipe section's Table of Contents.
+    1. Update the "Expected Behavior" section to describe in more detail what should occur when users run your recipe.
+    1. Link to any other resources that a reader might find helpful. Do not explain things further.
+1. Regenerate the table of recipes by running `make readme` while in the root folder
+1. Submit a PR. The first line should read `Fixes #X` where `X` refers to the original "Recipe Request" issue you claimed.
 
 ### Principles
 
@@ -33,6 +64,10 @@ By implication, recipes that use packages that get dropped from the package set 
 #### All Recipes are Licensed under This Repo's License (MIT)
 
 All recipes are licensed under MIT. If you want to submit a new recipe but cannot agree to these terms, please open an issue to discuss it further. Unless you have special circumstances that provide a strong enough rationale to change how we should handle recipe licensing, we will not merge your PR.
+
+#### Link to Learning Resources Rather than Explaining Here Pedagogical
+
+A cookbook demonstrates how to do X. It does not explain why X works, the concepts that X uses to work, or anything else that could bloat a recipe with very long explanations. Rather, it provides links to resources that users can read if they want to learn more.
 
 ## Using `Make` as our build tool
 
