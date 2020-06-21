@@ -1,4 +1,5 @@
 {
+  "name": "purescript-cookbook",
   "license": "MIT",
   "devDependencies": {
     "parcel": "^1.12.4",
