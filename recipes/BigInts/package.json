@@ -1,4 +1,5 @@
 {
+  "name": "purescript-cookbook-BigInts",
   "license": "MIT",
   "dependencies": {
     "big-integer": "^1.6.48"
