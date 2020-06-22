@@ -1,12 +1,11 @@
 {
-  "name": "purescript-cookbook",
   "license": "MIT",
+  "dependencies": {
+    "big-integer": "^1.6.48"
+  },
   "devDependencies": {
     "parcel": "^1.12.4",
     "purescript": "^0.13.8",
     "spago": "^0.15.3"
-  },
-  "scripts": {
-    "preinstall": "npx only-allow pnpm"
   }
 }
