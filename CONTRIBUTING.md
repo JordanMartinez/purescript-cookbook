@@ -33,18 +33,21 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 
 #### Goal 3: Implement and Submit the Recipe
 
-1. Install needed dependencies via `spago`.
+1. Install needed PureScript dependencies via `spago`.
     - Due to a [bug in Spago (#654)](https://github.com/purescript/spago/issues/654), follow these instructions:
         1. Change directory into your recipe folder: `cd recipes/MyRecipeName`
         1. Install dependencies as normal: `spago install <packageName>`
         1. Return to the root directory: `cd ../..`
     - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more contxt).
+1. Install needed `npm` dependencies via `npm install <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
+    - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
 1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
     - Run `spago -x recipes/MyNewRecipe/spago.dhall build -w` while in the root folder for faster iteration while developing
 1. Update your recipe's `README.md` file by doing the following things:
     1. Write a full sumary of your recipe on the 3rd line (i.e. don't use any newlines). This is what will appear in the repo's Recipe section's Table of Contents.
     1. Update the "Expected Behavior" section to describe in more detail what should occur when users run your recipe.
     1. Link to any other resources that a reader might find helpful. Do not explain things further.
+    1. List the `npm` dependencies your recipe uses (if any).
 1. Regenerate the table of recipes by running `make readme` while in the root folder
 1. Submit a PR. The first line should read `Fixes #X` where `X` refers to the original "Recipe Request" issue you claimed.
 
