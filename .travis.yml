@@ -5,7 +5,7 @@ branches:
   only:
   - master
 before_install:
-  - curl -L https://unpkg.com/@pnpm/self-installer | node
+  - npm i pnpm
   - pnpm config set store-dir ~/.pnpm-store
 install:
   - pnpm install
