@@ -32,6 +32,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 
 #### Goal 3: Implement and Submit the Recipe
 
+1. Install all the tools (e.g. `purescript`, `spago`, `parcel`, `pnpm`) used in this repo by running `make installDeps`.
 1. Install needed PureScript dependencies via `spago`.
     - Due to a [bug in Spago (#654)](https://github.com/purescript/spago/issues/654), follow these instructions:
         1. Change directory into your recipe folder: `cd recipes/MyRecipeName`
