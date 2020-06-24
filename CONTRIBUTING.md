@@ -24,7 +24,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
         - Logging to the console **is** supported in the browser.
     1. If your recipe is incompatible with the Node.js backend, delete the `nodeSupported.md` file.
     1. If your recipe is compatible with Node.js, but the resulting program should not be run during CI (e.g. a program that parses command-line arguments), then rename `nodeSupported.md` to `nodeSupportedSkipCI.md`.
-1. Replace all usages of the original recipe's "Unique Recipe Name" with your recipe's "Unique Recipe Name." To find all instances, `cd` into your recipe folder and run `grep -r RecipeName`. For example, "HelloWorld" would be replaced with "MyNewRecipe" in the following files (as of this writing):
+1. Replace all usages of the original recipe's "Unique Recipe Name" with your recipe's "Unique Recipe Name." To find all instances, `cd` into your recipe folder and run `grep -r <originalUniqueRecipeName>`. For example, `HelloWorld` would be replaced with `MyNewRecipe` in the following files (as of this writing):
     - `recipes/MyNewRecipe/spago.dhall`
     - `recipes/MyNewRecipe/README.md`
     - `recipes/MyNewRecipe/src/Main.purs`
