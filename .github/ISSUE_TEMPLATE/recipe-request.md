@@ -13,10 +13,10 @@ Please provide a very clear description of your problem and what the recipe shou
 
 **Proposed Name of Folder/Module**
 
-Each recipe's module and corresponding folder names cannot clash with other recipes' corresponding names. Thus, please propose a name for this recipe's module/folder below, so that others don't use it in their work.
+Each recipe's module and corresponding folder names cannot clash with other recipes' corresponding names. Thus, please propose a name for this recipe's module/folder below, so that others don't use it in their work. Use PascalCase (e.g. `MyRecipeName`).
 
 ```
-Name:
+Unique Recipe Name:
 ```
 
 **Comparison to other recipes**

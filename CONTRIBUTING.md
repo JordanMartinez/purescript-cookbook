@@ -17,14 +17,13 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 1. Pick an existing recipe to duplicate as a starting point. The `HelloWorld` recipe is the simplest and is set up to work on both Node.js and Browser backends.
     - In the examples that follow, we'll assume that you copied the `HelloWorld` recipe and wish to use the "Unique Recipe Name" of `MyNewRecipe`
 1. Rename the copied folder to the "Unique Recipe Name" assigned in the original issue.
-    - `cp -r recipes/HelloWorld recipes/MyNewRecipe`
 1. Depending on the backend-compatibility of your recipe, follow the instructions below:
     1. If your recipe is incompatible with the browser enviornment, delete the `web` directory.
         - If your recipe uses `node-*` libraries, it is incompatible with the browser.
         - Logging to the console **is** supported in the browser.
     1. If your recipe is incompatible with the Node.js backend, delete the `nodeSupported.md` file.
     1. If your recipe is compatible with Node.js, but the resulting program should not be run during CI (e.g. a program that parses command-line arguments), then rename `nodeSupported.md` to `nodeSupportedSkipCI.md`.
-1. Replace all usages of the original recipe's "Unique Recipe Name" with your recipe's "Unique Recipe Name." To find all instances, `cd` into your recipe folder and run `grep -r RecipeName`. For example, "HelloWorld" would be replaced with "MyNewRecipe" in the following files (as of this writing):
+1. Replace all usages of the original recipe's "Unique Recipe Name" with your recipe's "Unique Recipe Name." To find all instances, `cd` into your recipe folder and run `grep -r <originalUniqueRecipeName>`. For example, `HelloWorld` would be replaced with `MyNewRecipe` in the following files (as of this writing):
     - `recipes/MyNewRecipe/spago.dhall`
     - `recipes/MyNewRecipe/README.md`
     - `recipes/MyNewRecipe/src/Main.purs`
@@ -33,13 +32,14 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 
 #### Goal 3: Implement and Submit the Recipe
 
+1. Install all the tools (e.g. `purescript`, `spago`, `parcel`, `pnpm`) used in this repo by running `make installDeps`.
 1. Install needed PureScript dependencies via `spago`.
     - Due to a [bug in Spago (#654)](https://github.com/purescript/spago/issues/654), follow these instructions:
         1. Change directory into your recipe folder: `cd recipes/MyRecipeName`
         1. Install dependencies as normal: `spago install <packageName>`
         1. Return to the root directory: `cd ../..`
     - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more contxt).
-1. Install needed `npm` dependencies via `npm install <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
+1. Install needed `npm` dependencies via `npx pnpm i <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
     - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
 1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
     - Run `spago -x recipes/MyNewRecipe/spago.dhall build -w` while in the root folder for faster iteration while developing
