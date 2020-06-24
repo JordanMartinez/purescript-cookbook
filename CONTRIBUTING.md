@@ -17,7 +17,6 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 1. Pick an existing recipe to duplicate as a starting point. The `HelloWorld` recipe is the simplest and is set up to work on both Node.js and Browser backends.
     - In the examples that follow, we'll assume that you copied the `HelloWorld` recipe and wish to use the "Unique Recipe Name" of `MyNewRecipe`
 1. Rename the copied folder to the "Unique Recipe Name" assigned in the original issue.
-    - `cp -r recipes/HelloWorld recipes/MyNewRecipe`
 1. Depending on the backend-compatibility of your recipe, follow the instructions below:
     1. If your recipe is incompatible with the browser enviornment, delete the `web` directory.
         - If your recipe uses `node-*` libraries, it is incompatible with the browser.
