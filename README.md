@@ -15,13 +15,9 @@ Install GNU Make, and verify installation with:
 make --version
 ```
 
-Install npm dependencies either globally:
+Install all dependencies locally:
 ```
-npm install -g parcel purescript spago
-```
-Or locally:
-```
-npm install
+make installDeps
 ```
 
 ### Running Recipes
