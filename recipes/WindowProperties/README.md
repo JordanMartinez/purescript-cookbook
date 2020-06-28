@@ -1,15 +1,11 @@
 # WindowProperties
 
-This recipe shows how to get and modify various properties in the browser's `window` object.
+This recipe shows how to get and print various properties in the browser's `window` object.
 
 ## Expected Behavior:
 
-### Node.js
-
-Prints "Hello world!" to console.
-
 ### Browser
 
-Prints "Hello world!" to console when the page is loaded.
+Prints a window's height/width/scroll values and opens a modal window.
 
 Make sure to open the console with dev tools first, then reload/refresh the page.
