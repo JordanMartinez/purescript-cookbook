@@ -195,7 +195,7 @@ recipes/%/prod/index.html: $(call prodDir,%)
 .PHONY: %-testCI
 # Runs a single recipe's CI.
 %-testCI: $(call recipeDir,%)
-> $(MAKE) $*-build
+> @$(MAKE) $*-build
 > @if [ -f $(call nodeCompat,$*) ]
 > then
 >   echo Testing $* on the Node.js backend
