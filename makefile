@@ -200,23 +200,22 @@ recipes/%/prod/index.html: $(call prodDir,%)
 > then
 >   echo Testing $* on the Node.js backend
 >   spago -x $(call recipeSpago,$*) run --main $(call main,$*)
+>   $(MAKE) $*-node
 >   echo
 >   echo == $* - Succeeded on Node.js
 >   echo
-> fi
-> @if [ -f $(call nodeCompatSkipCI,$*) ]
+> @elif [ -f $(call nodeCompatSkipCI,$*) ]
 > then
->   echo Compiling $* on the Node.js backend
->   spago -x $(call recipeSpago,$*) build
+>   echo Building $*
+>   $(MAKE) $*-build
 >   echo
->   echo == $* - Compiled for Node.js
+>   echo == $* - Built
 >   echo
 > fi
 > @if [ -d $(call webDir,$*) ]
 > then
->   echo Attempting to build $* for the browser backend
->   export NODE_ENV=development
->   parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
+>   echo Building $* for the browser backend
+>   $(MAKE) $*-buildWeb
 >   echo
 >   echo == $* - Built for browser
 >   echo
