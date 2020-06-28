@@ -40,3 +40,4 @@ Then simply copy and paste one of the listed commands.
 |   | :heavy_check_mark: | [RoutingHashHalogen](recipes/RoutingHashHalogen) | This recipe shows how to use `purescript-routing` to do client-side hash-based routing in a Halogen-based single-page application (SPA). |
 |   | :heavy_check_mark: | [RoutingHashLog](recipes/RoutingHashLog) | This recipe demonstrates hash-based routing with `purescript-routing`. No web framework is used. |
 |   | :heavy_check_mark: | [RoutingPushHalogen](recipes/RoutingPushHalogen) | This recipe shows how to use `purescript-routing` to do client-side push-state routing in a Halogen-based single-page application (SPA). |
+|   | :heavy_check_mark: | [WindowProperties](recipes/WindowProperties) | This recipe shows how to get and modify various properties in the browser's `window` object. |
