@@ -122,6 +122,7 @@ nodeCompat = $(call recipeDir,$1)/nodeSupported.md
 nodeCompatSkipCI = $(call recipeDir,$1)/nodeSupportedSkipCI.md
 
 # Tests whether recipe can be run on Node.js backend
+.PHONY: %-nodeCompatible
 %-nodeCompatible:
 > @if [ ! -f $(call nodeCompat,$*) ] && [ ! -f $(call nodeCompatSkipCI,$*) ]
 > then
@@ -131,6 +132,7 @@ nodeCompatSkipCI = $(call recipeDir,$1)/nodeSupportedSkipCI.md
 >   exit 1
 > fi
 
+.PHONY: %-node
 # Runs recipe as node.js console app
 %-node: $(call recipeDir,%) %-nodeCompatible
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
@@ -147,6 +149,7 @@ prodJs = $(call prodDir,$1)/index.js
 prodDistDir = $(call recipeDir,$1)/prod-dist
 
 # Builds a single recipe. A build is necessary before parcel commands.
+.PHONY: %-build
 %-build:
 > spago -x $(call recipeSpago,$*) build
 
@@ -160,10 +163,12 @@ recipes/%/web:
 >   exit 1
 > fi
 
+.PHONY: %-web
 # Launches recipe in web browser
 %-web: $(call recipeDir,%) $(call webDir,%) %-build
 > parcel $(call webHtml,$*) --out-dir $(call webDistDir,$*) --open
 
+.PHONY: %-buildWeb
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
 %-buildWeb: export NODE_ENV=development
@@ -178,6 +183,7 @@ recipes/%/prod:
 recipes/%/prod/index.html: $(call prodDir,%)
 > cp $(call webHtml,$*) $(call prodDir,$*)
 
+.PHONY: %-buildProd
 # Creates a minified production build.
 # For reference.
 %-buildProd: $(call recipeDir,%) $(call webDir,%) $(call prodHtml,%)
@@ -186,8 +192,10 @@ recipes/%/prod/index.html: $(call prodDir,%)
 
 # ===== Makefile - CI Commands =====
 
+.PHONY: %-testCI
 # Runs a single recipe's CI.
 %-testCI: $(call recipeDir,%)
+> $(MAKE) $*-build
 > @if [ -f $(call nodeCompat,$*) ]
 > then
 >   echo Testing $* on the Node.js backend
@@ -220,6 +228,7 @@ targetsAllCI := $(foreach r,$(recipes),$(r)-testCI)
 .PHONY: testAllCI
 testAllCI: $(targetsAllCI)
 
+.PHONY: testAllCommands
 # Verifies that running all the above commands for a single
 # recipe actually works.
 testAllCommands:
