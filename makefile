@@ -199,7 +199,6 @@ recipes/%/prod/index.html: $(call prodDir,%)
 > @if [ -f $(call nodeCompat,$*) ]
 > then
 >   echo Testing $* on the Node.js backend
->   spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 >   $(MAKE) $*-node
 >   echo
 >   echo == $* - Succeeded on Node.js
