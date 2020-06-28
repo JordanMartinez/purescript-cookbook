@@ -46,6 +46,11 @@ targetsNodeSkipCI := $(patsubst recipes/%/nodeSupportedSkipCI.md,%-node,$(wildca
 targetsNode := $(targetsNodeWithCI) $(targetsNodeSkipCI)
 targetsWeb := $(patsubst recipes/%/web,%-web,$(wildcard recipes/*/web))
 
+# Targets for CI
+targetsNodeBuildOnlyCI := $(patsubst %-node,%-build,$(targetsNodeSkipCI))
+targetsWebBuildOnlyCI := $(patsubst %-web,%-buildWeb,$(targetsWeb))
+targetsAllCI := $(targetsNodeWithCI) $(targetsNodeBuildOnlyCI) $(targetsWebBuildOnlyCI)
+
 # Note: usages of `.PHONY: <target>` mean the target name is not an actual file
 # .PHONY: targetName
 
@@ -135,6 +140,7 @@ nodeCompatSkipCI = $(call recipeDir,$1)/nodeSupportedSkipCI.md
 .PHONY: %-node
 # Runs recipe as node.js console app
 %-node: $(call recipeDir,%) %-nodeCompatible
+> @echo === Running $* on the Node.js backend ===
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
 
 # Functions for browser-comptabile recipes that help generate paths
@@ -151,6 +157,7 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 # Builds a single recipe. A build is necessary before parcel commands.
 .PHONY: %-build
 %-build:
+> @echo === Building $* ===
 > spago -x $(call recipeSpago,$*) build
 
 # Tests whether recipe can be run on web browser backend
@@ -166,6 +173,7 @@ recipes/%/web:
 .PHONY: %-web
 # Launches recipe in web browser
 %-web: $(call recipeDir,%) $(call webDir,%) %-build
+> @echo === Launching $* in the web browser ===
 > parcel $(call webHtml,$*) --out-dir $(call webDistDir,$*) --open
 
 .PHONY: %-buildWeb
@@ -173,6 +181,7 @@ recipes/%/web:
 # For CI purposes.
 %-buildWeb: export NODE_ENV=development
 %-buildWeb: $(call recipeDir,%) $(call webDir,%) %-build
+> @echo === Building $* for the web browser backend ===
 > parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
 
 # How to make prodDir
@@ -187,40 +196,11 @@ recipes/%/prod/index.html: $(call prodDir,%)
 # Creates a minified production build.
 # For reference.
 %-buildProd: $(call recipeDir,%) $(call webDir,%) $(call prodHtml,%)
+> @echo === Building $* for production ===
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
 
 # ===== Makefile - CI Commands =====
-
-.PHONY: %-testCI
-# Runs a single recipe's CI.
-%-testCI: $(call recipeDir,%)
-> @$(MAKE) $*-build
-> @if [ -f $(call nodeCompat,$*) ]
-> then
->   echo Testing $* on the Node.js backend
->   $(MAKE) $*-node
->   echo
->   echo == $* - Succeeded on Node.js
->   echo
-> @elif [ -f $(call nodeCompatSkipCI,$*) ]
-> then
->   echo Building $*
->   $(MAKE) $*-build
->   echo
->   echo == $* - Built
->   echo
-> fi
-> @if [ -d $(call webDir,$*) ]
-> then
->   echo Building $* for the browser backend
->   $(MAKE) $*-buildWeb
->   echo
->   echo == $* - Built for browser
->   echo
-> fi
-
-targetsAllCI := $(foreach r,$(recipes),$(r)-testCI)
 
 # Run all recipes CI
 .PHONY: testAllCI
