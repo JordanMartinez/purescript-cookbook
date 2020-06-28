@@ -1,4 +1,4 @@
-module DiceLog.Main where
+module DiceCLI.Main where
 
 import Prelude
 import Effect (Effect)

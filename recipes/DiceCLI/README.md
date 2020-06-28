@@ -1,4 +1,4 @@
-# DiceLog
+# DiceCLI
 
 This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6.
 

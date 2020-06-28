@@ -1,8 +1,8 @@
-{ name = "DiceLog"
+{ name = "DiceCLI"
 , dependencies =
   [ "console", "effect", "node-readline", "psci-support", "random" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/DiceLog/src/**/*.purs" ]
+, sources = [ "recipes/DiceCLI/src/**/*.purs" ]
 }
 {-
 sources does not work with paths relative to this config
