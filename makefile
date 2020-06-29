@@ -214,5 +214,4 @@ testAllCommands:
 > $(MAKE) HelloWorld-node
 > $(MAKE) HelloWorld-build
 > $(MAKE) HelloWorld-buildWeb
-> $(MAKE) HelloWorld-testCI
 > $(MAKE) HelloWorld-buildProd
