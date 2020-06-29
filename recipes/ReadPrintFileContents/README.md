@@ -6,4 +6,4 @@ Reads a file's contents and prints it to the console.
 
 ### Node.js
 
-Since this is run from the root folder, it will print the repo's README.md, not this recipe's README.md file.
+Prints the contents of this repo's LICENSE file. Note that this recipe is run from the repo's root directory.
