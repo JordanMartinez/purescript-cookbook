@@ -75,6 +75,8 @@ main = do
               listener
               false -- use bubble phase, not capture phase
               buttonMain
+
+            Ref.write Nothing ref
           Nothing -> do
             log "No listener installed. Click 'Add Listener' button to add it."
 
