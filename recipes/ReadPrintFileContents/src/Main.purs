@@ -11,5 +11,5 @@ import Node.FS.Aff (readTextFile)
 
 main :: Effect Unit
 main = launchAff_ do
-  fileContents <- readTextFile UTF8 "./README.md"
+  fileContents <- readTextFile UTF8 "./LICENSE"
   liftEffect $ log fileContents
