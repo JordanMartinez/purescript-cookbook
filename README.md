@@ -37,6 +37,8 @@ Then simply copy and paste one of the listed commands.
 | :heavy_check_mark: | :heavy_check_mark: | [BigInt](recipes/BigInt) | This recipe shows how to print, create, and use values of the `BigInt` type in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [FindDomElement](recipes/FindDomElement) | This recipe shows how to find elements in the DOM by using query selectors. |
 | :heavy_check_mark: |   | [DiceLog](recipes/DiceLog) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
+| :heavy_check_mark: |   | [DiceCLI](recipes/DiceCLI) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
+| :heavy_check_mark: | :heavy_check_mark: | [DiceLog](recipes/DiceLog) | This recipe shows how to log a random integer between 1 and 6 (representing a roll of a die) in either the node.js or web browser console. |
 | :heavy_check_mark: |   | [HelloNode](recipes/HelloNode) | Equivalent to `HelloWorld` recipe, but just targets node.js environment (not the browser too). For CI testing until another node-only recipe is created. |
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorld](recipes/HelloWorld) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
 | :heavy_check_mark: |   | [ReadPrintFileContents](recipes/ReadPrintFileContents) | Reads a file's contents and prints it to the console. |
