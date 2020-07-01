@@ -1,4 +1,4 @@
-module HelloHalogen.Main where
+module NumbersHalogen.Main where
 
 import Prelude
 
