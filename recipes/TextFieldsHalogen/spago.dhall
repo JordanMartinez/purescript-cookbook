@@ -1,6 +1,6 @@
-{ name = "HelloHalogen"
+{ name = "TextFieldsHalogen"
 , dependencies =
   [ "console", "effect", "halogen-hooks", "psci-support" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/HelloHalogen/src/**/*.purs" ]
+, sources = [ "recipes/TextFieldsHalogen/src/**/*.purs" ]
 }
