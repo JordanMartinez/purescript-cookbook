@@ -162,13 +162,8 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 
 # Tests whether recipe can be run on web browser backend
 recipes/%/web:
-> @if [ ! -d $(call webDir,$*) ]
-> then
->   echo
->   echo Recipe $* is not compatible with the web browser backend
->   echo
->   exit 1
-> fi
+> @echo Recipe $* is not compatible with the web browser backend
+> exit 1
 
 .PHONY: %-web
 # Launches recipe in web browser
