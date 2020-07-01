@@ -31,8 +31,9 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
       [ HH.input
         [ HP.placeholder "Text to reverse"
         , HP.value state
-        , HE.onValueInput \newValue -> Just $ Hooks.put stateIdx (reverse newValue)
+        , HE.onValueInput \newValue -> Just $ Hooks.put stateIdx newValue
         ]
+      , HH.div_ [ HH.text $ reverse state ]
       ]
 
 reverse :: String -> String
