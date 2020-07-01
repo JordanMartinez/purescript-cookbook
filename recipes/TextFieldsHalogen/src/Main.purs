@@ -2,7 +2,10 @@ module HelloHalogen.Main where
 
 import Prelude
 
+import Data.Array as Array
 import Data.Maybe (Maybe(..))
+import Data.String (fromCodePointArray, toCodePointArray)
+import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Halogen as H
 import Halogen.Aff as HA
@@ -22,10 +25,15 @@ hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
-  state /\ stateIdx <- useState ""
+  state /\ stateIdx <- Hooks.useState ""
   Hooks.pure $
     HH.div_
       [ HH.input
         [ HP.placeholder "Text to reverse"
         , HP.value state
-        , HE.onInput \newValue -> Just $ Hooks.put stateIdx (?reverseString newValue)
+        , HE.onValueInput \newValue -> Just $ Hooks.put stateIdx (reverse newValue)
+        ]
+      ]
+
+reverse :: String -> String
+reverse = fromCodePointArray <<< Array.reverse <<< toCodePointArray
