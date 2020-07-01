@@ -1,9 +1,9 @@
 # CardsHalogen
 
-A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples).
 
 ## Expected Behavior:
 
 ### Browser
 
-Shows the current random die roll. If the user clicks the "Roll" button, the next result is shown.
+If the user clicks the "Draw" button, a random card will be displayed. Note: the Elm example uses a uniform generator whereas this example does not because PureScript does not have an out-of-box uniform generator.
