@@ -1,2 +1,2 @@
 "use strict";
-require("../../../output/HelloWorld.Main/index.js").main();
+require("../../../output/TextFieldsHalogen.Main/index.js").main();
