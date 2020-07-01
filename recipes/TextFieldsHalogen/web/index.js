@@ -1,2 +1,2 @@
 "use strict";
-require("../../../output/TextFieldsHalogen.Main/index.js").main();
+require("../../../output/OopsTextFieldsHalogen.Main/index.js").main();
