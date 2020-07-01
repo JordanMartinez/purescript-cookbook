@@ -33,7 +33,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
         , HP.value state
         , HE.onValueInput \newValue -> Just $ Hooks.put stateIdx newValue
         ]
-      , HH.div_ [ HH.text $ reverse state ]
+      , HH.div_ [ HH.text $ ?broken state ]
       ]
 
 reverse :: String -> String
