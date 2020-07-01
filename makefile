@@ -147,6 +147,7 @@ nodeCompatSkipCI = $(call recipeDir,$1)/nodeSupportedSkipCI.md
 
 webDir = $(call recipeDir,$1)/web
 webHtml = $(call webDir,$1)/index.html
+webJs = $(call webDir,$1)/index.js
 webDistDir = $(call recipeDir,$1)/web-dist
 
 prodDir = $(call recipeDir,$1)/prod
@@ -165,9 +166,18 @@ recipes/%/web:
 > @echo Recipe $* is not compatible with the web browser backend
 > exit 1
 
+# Check if index.js points to another recipe.
+%-indexCheck:
+> @if ! grep "require(\"../../../output/$*.Main/index.js\").main();" $(call webJs,$*) --quiet
+> then
+>   echo Error: $(call webJs,$*) points to another recipe:
+>   cat $(call webJs,$*)
+>   exit 1
+> fi
+
 .PHONY: %-web
 # Launches recipe in web browser
-%-web: $(call recipeDir,%) $(call webDir,%) %-build
+%-web: $(call recipeDir,%) $(call webDir,%) %-indexCheck %-build
 > @echo === Launching $* in the web browser ===
 > parcel $(call webHtml,$*) --out-dir $(call webDistDir,$*) --open
 
@@ -175,7 +185,7 @@ recipes/%/web:
 # Uses parcel to quickly create an unminified build.
 # For CI purposes.
 %-buildWeb: export NODE_ENV=development
-%-buildWeb: $(call recipeDir,%) $(call webDir,%) %-build
+%-buildWeb: $(call recipeDir,%) $(call webDir,%) %-indexCheck %-build
 > @echo === Building $* for the web browser backend ===
 > parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
 
