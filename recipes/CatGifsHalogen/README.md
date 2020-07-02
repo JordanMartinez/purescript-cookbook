@@ -1,4 +1,4 @@
-# CatGIFsHalogen
+# CatGifsHalogen
 
 A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples).
 

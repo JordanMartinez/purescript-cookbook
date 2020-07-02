@@ -1,4 +1,4 @@
-{ name = "CatGIFsHalogen"
+{ name = "CatGifsHalogen"
 , dependencies =
   [ "console"
   , "effect"
@@ -12,5 +12,5 @@
   , "halogen-css"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/CatGIFsHalogen/src/**/*.purs" ]
+, sources = [ "recipes/CatGifsHalogen/src/**/*.purs" ]
 }
