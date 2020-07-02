@@ -6,4 +6,4 @@ A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples)
 
 ### Browser
 
-The browser will display a text field. When the user types content into the field, a text value will appear with a reversed version of what the user inputs.
+The browser will display the current time in UTC, not the end-user's computer's time zone.
