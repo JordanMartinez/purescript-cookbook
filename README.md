@@ -24,7 +24,7 @@ make installDeps
 
 See a list of available recipe launch commands by running `make list`:
 ```
-> make list           
+> make list
 Use "make RecipeName-target" to run a recipe
 
 === Node Recipes ===
@@ -51,7 +51,7 @@ Hello world!
 
 Running a web-compatible recipe:
 ```
-> make HelloWorld-web 
+> make HelloWorld-web
 === Building HelloWorld ===
 [info] Installation complete.
 [info] Build succeeded.
