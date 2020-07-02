@@ -22,9 +22,39 @@ make installDeps
 
 ### Running Recipes
 
-See a list of available recipe launch commands by running:
+See a list of available recipe launch commands by running `make list`:
 ```
-make list
+> make list
+Use "make RecipeName-target" to run a recipe
+
+=== Node Recipes ===
+make ReadPrintFileContents-node
+make HelloWorld-node
+...
+
+=== Web Recipes ===
+make WindowProperties-web
+make HelloWorld-web
+...
 ```
 
-Then simply copy and paste one of the listed commands.
+Then simply copy and paste one of the listed commands. For example:
+
+Running a node-compatible recipe:
+```
+> make HelloWorld-node
+=== Running HelloWorld on the Node.js backend ===
+[info] Installation complete.
+[info] Build succeeded.
+Hello world!
+```
+
+Running a web-compatible recipe:
+```
+> make HelloWorld-web
+=== Building HelloWorld ===
+[info] Installation complete.
+[info] Build succeeded.
+=== Launching HelloWorld in the web browser ===
+...
+```
