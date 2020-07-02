@@ -8,7 +8,7 @@ echo
 echo "## Recipes"
 echo
 echo "| Node | Web Browser | Recipe | Description |"
-echo "| - | - | - | - |"
+echo "| :-: | :-: | - | - |"
 for d in recipes/*; do
   base=$(basename $d)
   description=$(sed '3q;d' $d/README.md)

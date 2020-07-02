@@ -62,7 +62,7 @@ Running a web-compatible recipe:
 ## Recipes
 
 | Node | Web Browser | Recipe | Description |
-| - | - | - | - |
+| :-: | :-: | - | - |
 |   | :heavy_check_mark: | [AddRemoveEventListener](recipes/AddRemoveEventListener) | This recipe shows how to add and remove an event listener to an HTML element. |
 | :heavy_check_mark: | :heavy_check_mark: | [BigInt](recipes/BigInt) | This recipe shows how to print, create, and use values of the `BigInt` type in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [ButtonsHalogen](recipes/ButtonsHalogen) | A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples). |
