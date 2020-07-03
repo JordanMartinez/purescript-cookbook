@@ -28,7 +28,7 @@ main = do
 
 mkTextField :: Component {}
 mkTextField = do
-  component "Buttons" \_ -> React.do
+  component "TextField" \_ -> React.do
     content /\ setContent <- useState ""
     let
       onChange = handler targetValue (setContent <<< const <<< fromMaybe "")
