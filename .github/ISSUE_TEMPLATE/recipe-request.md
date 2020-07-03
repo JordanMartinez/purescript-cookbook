@@ -1,28 +1,20 @@
 ---
 name: Recipe Request
-about: Explain what recipe you want added to this repo
+about: Request a recipe be added this repo
 title: ''
 labels: recipe-request
 assignees: ''
 
 ---
 
-**Description of Problem**
-
-Please provide a very clear description of your problem and what the recipe should do
-
-**Proposed Name of Folder/Module**
-
-Each recipe's module and corresponding folder names cannot clash with other recipes' corresponding names. Thus, please propose a name for this recipe's module/folder below, so that others don't use it in their work. Use PascalCase (e.g. `MyRecipeName`).
+**Recipe Name**
 
 ```
-Unique Recipe Name:
+MyUniqueRecipeName
 ```
 
-**Comparison to other recipes**
+Each recipe name must be unique. Use PascalCase.
 
-How is this similar to and different from current recipes?
+**Recipe Description**
 
-**Additional context**
-
-Add any other context or screenshots about the feature request here.
+What should this recipe do?
