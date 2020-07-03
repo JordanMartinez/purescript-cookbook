@@ -75,6 +75,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [GroceriesHalogen](recipes/GroceriesHalogen) | A Halogen port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [HelloHalogen](recipes/HelloHalogen) | A Halogen port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
 | :heavy_check_mark: |   | [HelloNode](recipes/HelloNode) | Equivalent to `HelloWorld` recipe, but just targets node.js environment (not the browser too). For CI testing until another node-only recipe is created. |
+|   | :heavy_check_mark: | [HelloReact](recipes/HelloReact) | A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorld](recipes/HelloWorld) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [NumbersHalogen](recipes/NumbersHalogen) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [PositionsHalogen](recipes/PositionsHalogen) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples). |
