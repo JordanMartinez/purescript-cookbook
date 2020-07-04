@@ -37,6 +37,7 @@ render state =
       , renderLink "/posts/8" "View post 8"
       , renderLink "/posts/8/edit" "Edit post 8"
       , renderLink "/posts/browse/2004/June" "Browse 2004 June"
+      , renderLink "/posts/?b=2&a=1" "Set 'a' and 'b' query parameters"
       ]
 
 handleQuery ∷ forall a ac o m. Query a → H.HalogenM State ac () o m (Maybe a)
