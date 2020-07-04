@@ -3,6 +3,7 @@ module BookReact.Main where
 import Prelude
 import Affjax as Affjax
 import Affjax.ResponseFormat as ResponseFormat
+import Affjax.StatusCode (StatusCode(..))
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
@@ -41,8 +42,9 @@ mkBookComponent = do
     useAff unit do
       result <- Affjax.get ResponseFormat.string url
       liftEffect case result of
-        Left _ -> setTextState Failure
-        Right response -> setTextState (Success response.body)
+        Right response
+          | response.status == StatusCode 200 -> setTextState (Success response.body)
+        _ -> setTextState Failure
     pure case textState of
       Failure -> R.text "I was unable to load your book."
       Loading -> R.text "Loading..."
