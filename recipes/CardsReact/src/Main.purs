@@ -61,9 +61,9 @@ main = do
 
 mkCardsComponent :: Component {}
 mkCardsComponent = do
+  let
+    initialGenState = { newSeed: mkSeed 3, size: 1 }
   component "Cards" \_ -> React.do
-    let
-      initialGenState = { newSeed: mkSeed 3, size: 1 }
     (card /\ _) /\ setCardState <- useState (runGen cardGenerator initialGenState)
     let
       onClick =
