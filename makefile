@@ -51,6 +51,9 @@ targetsNodeBuildOnlyCI := $(patsubst %-node,%-build,$(targetsNodeSkipCI))
 targetsWebBuildOnlyCI := $(patsubst %-web,%-buildWeb,$(targetsWeb))
 targetsAllCI := $(targetsNodeWithCI) $(targetsNodeBuildOnlyCI) $(targetsWebBuildOnlyCI)
 
+# Build everything. For editor tags.
+targetsBuild := $(patsubst recipes/%/,%-build,$(wildcard recipes/*/))
+
 # Note: usages of `.PHONY: <target>` mean the target name is not an actual file
 # .PHONY: targetName
 
@@ -204,6 +207,10 @@ recipes/%/prod/index.html: $(call prodDir,%)
 > @echo === Building $* for production ===
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
 > parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+
+# Build everything. For editor tags.
+.PHONY: buildAll
+buildAll: $(targetsBuild)
 
 # ===== Makefile - CI Commands =====
 
