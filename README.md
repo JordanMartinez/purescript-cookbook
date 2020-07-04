@@ -66,6 +66,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [AddRemoveEventListener](recipes/AddRemoveEventListener) | This recipe shows how to add and remove an event listener to an HTML element. |
 | :heavy_check_mark: | :heavy_check_mark: | [BigInt](recipes/BigInt) | This recipe shows how to print, create, and use values of the `BigInt` type in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [BookHalogen](recipes/BookHalogen) | A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [BookReact](recipes/BookReact) | A React port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book). |
 |   | :heavy_check_mark: | [ButtonsHalogen](recipes/ButtonsHalogen) | A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [ButtonsReact](recipes/ButtonsReact) | A React port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples/buttons). |
 |   | :heavy_check_mark: | [CardsHalogen](recipes/CardsHalogen) | A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples). |
