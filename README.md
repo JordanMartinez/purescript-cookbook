@@ -81,6 +81,7 @@ Running a web-compatible recipe:
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorld](recipes/HelloWorld) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [NumbersHalogen](recipes/NumbersHalogen) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [PositionsHalogen](recipes/PositionsHalogen) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [PositionsReact](recipes/PositionsReact) | A React port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions). |
 | :heavy_check_mark: |   | [ReadPrintFileContents](recipes/ReadPrintFileContents) | Reads a file's contents and prints it to the console. |
 |   | :heavy_check_mark: | [RoutingHashHalogen](recipes/RoutingHashHalogen) | This recipe shows how to use `purescript-routing` to do client-side hash-based routing in a Halogen-based single-page application (SPA). |
 |   | :heavy_check_mark: | [RoutingHashLog](recipes/RoutingHashLog) | This recipe demonstrates hash-based routing with `purescript-routing`. No web framework is used. |
