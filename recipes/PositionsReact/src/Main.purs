@@ -40,8 +40,8 @@ mkPositions = do
           , style:
               css
                 { position: "absolute"
-                , top: (show x) <> "px"
-                , left: (show y) <> "px"
+                , top: show x <> "px"
+                , left: show y <> "px"
                 }
           , children: [ R.text "Click me!" ]
           }
