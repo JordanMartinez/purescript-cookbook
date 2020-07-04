@@ -71,6 +71,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [CardsHalogen](recipes/CardsHalogen) | A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [CardsReact](recipes/CardsReact) | A React port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
 |   | :heavy_check_mark: | [CatGifsHalogen](recipes/CatGifsHalogen) | A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [CatGifsReact](recipes/CatGifsReact) | A React port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 | :heavy_check_mark: |   | [DiceCLI](recipes/DiceCLI) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
 | :heavy_check_mark: | :heavy_check_mark: | [DiceLog](recipes/DiceLog) | This recipe shows how to log a random integer between 1 and 6 (representing a roll of a die) in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [FindDomElement](recipes/FindDomElement) | This recipe shows how to find elements in the DOM by using query selectors. |
