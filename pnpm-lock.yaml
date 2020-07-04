@@ -4,7 +4,7 @@ dependencies:
   react-dom: 16.13.1_react@16.13.1
 devDependencies:
   parcel: 1.12.4
-  pnpm: 5.2.6
+  pnpm: 5.2.8
   purescript: 0.13.8
   spago: 0.15.3
 lockfileVersion: 5.1
@@ -4158,13 +4158,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
-  /pnpm/5.2.6:
+  /pnpm/5.2.8:
     dev: true
     engines:
       node: '>=10.13'
     hasBin: true
     resolution:
-      integrity: sha512-7PFzPm0l14hzio59fufxpGgWRcMmtC2JZmYbRdkrJmm/f4iExXFhGklB/IrdQidhTi5helNZrBY48/9Ows4naA==
+      integrity: sha512-CQ7TPbmp2wM4FrzxwFbqQJyt9FICKvkS2kduBZx3ffYPOWj53l0yU01MafOFGm6UzFS6roKsXnTqG2HHhTpEUw==
   /posix-character-classes/0.1.1:
     dev: true
     engines:
@@ -5944,7 +5944,7 @@ packages:
 specifiers:
   big-integer: ^1.6.48
   parcel: ^1.12.4
-  pnpm: ^5.2.6
+  pnpm: ^5.2.8
   purescript: ^0.13.8
   react: ^16.13.1
   react-dom: ^16.13.1
