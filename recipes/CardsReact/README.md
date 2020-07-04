@@ -6,7 +6,7 @@ A React port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples
 
 ### Browser
 
-If the user clicks the "Draw" button, a random card will be displayed. **Note:** the Elm example uses a uniform generator whereas this example does not because PureScript does not have an out-of-box uniform generator.
+If the user clicks the "Draw" button, a random card will be drawn from a deck of 13 spades and displayed.
 
 ## Dependencies Used:
 

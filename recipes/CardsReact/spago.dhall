@@ -2,9 +2,10 @@
 , dependencies =
   [ "console"
   , "effect"
+  , "nonempty"
   , "psci-support"
+  , "quickcheck"
   , "react-basic-hooks"
-  , "random"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/CardsReact/src/**/*.purs" ]
