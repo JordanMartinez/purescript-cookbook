@@ -51,7 +51,7 @@ mkCardsComponent = do
     pure
       $ R.div_
           [ R.button { onClick, children: [ R.text "Draw" ] }
-          , R.div { style: css { fontSize: "12em" }, children: [ R.text (viewCard Ace) ] }
+          , R.div { style: css { fontSize: "12em" }, children: [ R.text (viewCard card) ] }
           ]
 
 intToCard :: Int -> Card
