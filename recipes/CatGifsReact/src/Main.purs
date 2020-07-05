@@ -40,10 +40,7 @@ reducer state = case _ of
     , effects: [ (singleton <<< GotGif) <$> getRandomCatGif ]
     }
   GotGif result -> case result of
-    Right url ->
-      { state: Success url
-      , effects: []
-      }
+    Right url -> { state: Success url, effects: [] }
     Left _ -> { state: Failure, effects: [] }
 
 main :: Effect Unit
