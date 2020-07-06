@@ -1,4 +1,4 @@
-module BigInt.Main where
+module BigIntJs.Main where
 
 import Prelude
 

@@ -1,6 +1,6 @@
-# BigInt
+# BigIntJs
 
-This recipe shows how to print, create, and use values of the `BigInt` type in either the node.js or web browser console.
+This recipe shows how to print, create, and use values of the `BigIntJs` type in either the node.js or web browser console.
 
 ## Expected Behavior:
 
