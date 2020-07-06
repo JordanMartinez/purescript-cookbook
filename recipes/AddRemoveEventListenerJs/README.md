@@ -1,4 +1,4 @@
-# AddRemoveEventListener
+# AddRemoveEventListenerJs
 
 This recipe shows how to add and remove an event listener to an HTML element.
 

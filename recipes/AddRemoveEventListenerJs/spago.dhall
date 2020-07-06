@@ -1,4 +1,4 @@
-{ name = "AddRemoveEventListener"
+{ name = "AddRemoveEventListenerJs"
 , dependencies =
   [ "console"
   , "effect"
@@ -10,5 +10,5 @@
   , "web-uievents"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/AddRemoveEventListener/src/**/*.purs" ]
+, sources = [ "recipes/AddRemoveEventListenerJs/src/**/*.purs" ]
 }

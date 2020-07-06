@@ -1,4 +1,4 @@
-module AddRemoveEventListener.Main where
+module AddRemoveEventListenerJs.Main where
 
 import Prelude
 
