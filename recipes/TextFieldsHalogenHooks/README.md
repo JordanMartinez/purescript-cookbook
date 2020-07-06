@@ -1,4 +1,4 @@
-# TextFieldsHalogen
+# TextFieldsHalogenHooks
 
 A Halogen port of the ["User Interface - Text Fields" Elm Example](https://elm-lang.org/examples).
 

@@ -1,4 +1,4 @@
-module TextFieldsHalogen.Main where
+module TextFieldsHalogenHooks.Main where
 
 import Prelude
 
