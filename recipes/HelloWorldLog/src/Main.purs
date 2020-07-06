@@ -1,4 +1,4 @@
-module HelloWorld.Main where
+module HelloWorldLog.Main where
 
 import Prelude
 
