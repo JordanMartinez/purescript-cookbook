@@ -1,4 +1,4 @@
-module CardsHalogen.Main where
+module CardsHalogenHooks.Main where
 
 import Prelude
 

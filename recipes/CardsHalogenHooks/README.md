@@ -1,4 +1,4 @@
-# CardsHalogen
+# CardsHalogenHooks
 
 A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards).
 
