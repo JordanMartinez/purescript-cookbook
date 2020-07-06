@@ -1,4 +1,4 @@
-# HelloHalogen
+# HelloHalogenHooks
 
 A Halogen port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples).
 

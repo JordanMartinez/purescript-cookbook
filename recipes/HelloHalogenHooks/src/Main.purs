@@ -1,4 +1,4 @@
-module HelloHalogen.Main where
+module HelloHalogenHooks.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))

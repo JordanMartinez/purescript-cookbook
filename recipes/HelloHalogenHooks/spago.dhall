@@ -1,4 +1,4 @@
-{ name = "HelloHalogen"
+{ name = "HelloHalogenHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "psci-support"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/HelloHalogen/src/**/*.purs" ]
+, sources = [ "recipes/HelloHalogenHooks/src/**/*.purs" ]
 }
