@@ -1,4 +1,4 @@
-module NumbersReact.Main where
+module NumbersReactHooks.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))

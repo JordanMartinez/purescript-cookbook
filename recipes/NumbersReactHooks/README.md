@@ -1,4 +1,4 @@
-# NumbersReact
+# NumbersReactHooks
 
 A React port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers).
 

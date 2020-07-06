@@ -1,4 +1,4 @@
-{ name = "NumbersReact"
+{ name = "NumbersReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -7,5 +7,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/NumbersReact/src/**/*.purs" ]
+, sources = [ "recipes/NumbersReactHooks/src/**/*.purs" ]
 }
