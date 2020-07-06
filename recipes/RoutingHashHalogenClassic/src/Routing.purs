@@ -1,4 +1,4 @@
-module RoutingHashHalogen.MyRouting where
+module RoutingHashHalogenClassic.MyRouting where
 
 import Prelude
 import Data.Foldable (oneOf)

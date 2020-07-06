@@ -1,6 +1,6 @@
-{ name = "RoutingHashHalogen"
+{ name = "RoutingHashHalogenClassic"
 , dependencies =
   [ "console", "effect", "generics-rep", "halogen", "psci-support", "routing" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/RoutingHashHalogen/src/**/*.purs" ]
+, sources = [ "recipes/RoutingHashHalogenClassic/src/**/*.purs" ]
 }
