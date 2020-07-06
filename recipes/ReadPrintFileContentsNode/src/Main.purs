@@ -1,4 +1,4 @@
-module ReadPrintFileContents.Main where
+module ReadPrintFileContentsNode.Main where
 
 import Prelude
 
