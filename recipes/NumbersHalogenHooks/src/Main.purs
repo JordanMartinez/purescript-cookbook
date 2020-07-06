@@ -1,4 +1,4 @@
-module NumbersHalogen.Main where
+module NumbersHalogenHooks.Main where
 
 import Prelude
 
