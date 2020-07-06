@@ -1,4 +1,4 @@
-module BookHalogen.Main where
+module BookHalogenHooks.Main where
 
 import Prelude
 

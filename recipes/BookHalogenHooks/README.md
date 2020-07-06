@@ -1,4 +1,4 @@
-# BookHalogen
+# BookHalogenHooks
 
 A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples).
 

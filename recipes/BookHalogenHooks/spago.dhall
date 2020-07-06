@@ -1,4 +1,4 @@
-{ name = "BookHalogen"
+{ name = "BookHalogenHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -9,5 +9,5 @@
   , "affjax"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/BookHalogen/src/**/*.purs" ]
+, sources = [ "recipes/BookHalogenHooks/src/**/*.purs" ]
 }
