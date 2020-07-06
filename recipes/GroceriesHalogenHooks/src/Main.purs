@@ -1,4 +1,4 @@
-module GroceriesHalogenHooks.Main where
+module GroceriesReactHooksHooks.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))
