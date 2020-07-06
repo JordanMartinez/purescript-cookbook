@@ -10,7 +10,7 @@ If you want to contribute a new recipe, see the [CONTRIBUTING.md](./CONTRIBUTING
 
 ### Install Dependencies
 
-Install GNU Make, and verify installation with:
+Install GNU Make (version 4.0 or above), and verify installation with:
 ```
 make --version
 ```
