@@ -1,4 +1,4 @@
-# PositionsReact
+# PositionsReactHooks
 
 A React port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions).
 

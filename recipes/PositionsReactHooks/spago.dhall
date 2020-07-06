@@ -1,4 +1,4 @@
-{ name = "PositionsReact"
+{ name = "PositionsReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -7,5 +7,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/PositionsReact/src/**/*.purs" ]
+, sources = [ "recipes/PositionsReactHooks/src/**/*.purs" ]
 }
