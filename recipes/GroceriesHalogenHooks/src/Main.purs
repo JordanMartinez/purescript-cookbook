@@ -1,4 +1,4 @@
-module GroceriesHalogen.Main where
+module GroceriesHalogenHooks.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))
