@@ -1,4 +1,4 @@
-# WindowProperties
+# WindowPropertiesJs
 
 This recipe shows how to get and print various properties in the browser's `window` object.
 

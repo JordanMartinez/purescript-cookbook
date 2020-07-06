@@ -1,6 +1,6 @@
-{ name = "WindowProperties"
+{ name = "WindowPropertiesJs"
 , dependencies =
   [ "console", "effect", "interpolate", "psci-support", "web-html" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/WindowProperties/src/**/*.purs" ]
+, sources = [ "recipes/WindowPropertiesJs/src/**/*.purs" ]
 }

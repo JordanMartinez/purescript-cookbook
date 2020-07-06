@@ -1,4 +1,4 @@
-module WindowProperties.Main where
+module WindowPropertiesJs.Main where
 
 import Prelude
 
