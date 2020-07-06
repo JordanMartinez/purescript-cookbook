@@ -1,4 +1,4 @@
-# TextFieldsReact
+# TextFieldsReactHooks
 
 A React port of the ["User Interface - Text Fields" Elm Example](https://elm-lang.org/examples/text-fields).
 

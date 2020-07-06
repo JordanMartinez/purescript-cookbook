@@ -1,4 +1,4 @@
-{ name = "TextFieldsReact"
+{ name = "TextFieldsReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/TextFieldsReact/src/**/*.purs" ]
+, sources = [ "recipes/TextFieldsReactHooks/src/**/*.purs" ]
 }

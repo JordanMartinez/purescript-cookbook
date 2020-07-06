@@ -1,4 +1,4 @@
-module TextFieldsReact.Main where
+module TextFieldsReactHooks.Main where
 
 import Prelude
 import Data.Array as Array
