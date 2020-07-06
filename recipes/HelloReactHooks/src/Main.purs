@@ -1,4 +1,4 @@
-module HelloReact.Main where
+module HelloReactHooks.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))

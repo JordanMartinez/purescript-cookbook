@@ -1,4 +1,4 @@
-# HelloReact
+# HelloReactHooks
 
 A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples).
 

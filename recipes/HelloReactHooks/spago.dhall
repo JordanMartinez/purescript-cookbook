@@ -1,4 +1,4 @@
-{ name = "HelloReact"
+{ name = "HelloReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/HelloReact/src/**/*.purs" ]
+, sources = [ "recipes/HelloReactHooks/src/**/*.purs" ]
 }
