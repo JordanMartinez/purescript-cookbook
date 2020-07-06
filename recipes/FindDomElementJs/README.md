@@ -1,4 +1,4 @@
-# FindDomElement
+# FindDomElementJs
 
 This recipe shows how to find elements in the DOM by using query selectors.
 

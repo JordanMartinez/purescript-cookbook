@@ -1,4 +1,4 @@
-module FindDomElement.Main where
+module FindDomElementJs.Main where
 
 import Prelude
 

@@ -1,4 +1,4 @@
-{ name = "FindDomElement"
+{ name = "FindDomElementJs"
 , dependencies =
   [ "console"
   , "effect"
@@ -8,5 +8,5 @@
   , "web-html"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/FindDomElement/src/**/*.purs" ]
+, sources = [ "recipes/FindDomElementJs/src/**/*.purs" ]
 }
