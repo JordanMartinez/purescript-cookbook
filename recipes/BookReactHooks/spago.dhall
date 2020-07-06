@@ -1,4 +1,4 @@
-{ name = "BookReact"
+{ name = "BookReactHooks"
 , dependencies =
   [ "affjax"
   , "console"
@@ -7,5 +7,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/BookReact/src/**/*.purs" ]
+, sources = [ "recipes/BookReactHooks/src/**/*.purs" ]
 }

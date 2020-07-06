@@ -1,4 +1,4 @@
-# BookReact
+# BookReactHooks
 
 A React port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book).
 

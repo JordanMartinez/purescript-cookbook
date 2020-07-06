@@ -1,4 +1,4 @@
-module BookReact.Main where
+module BookReactHooks.Main where
 
 import Prelude
 import Affjax as Affjax
