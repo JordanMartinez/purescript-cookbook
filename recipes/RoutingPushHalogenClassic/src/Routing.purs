@@ -1,4 +1,4 @@
-module RoutingPushHalogen.MyRouting where
+module RoutingPushHalogenClassic.MyRouting where
 
 import Prelude
 import Data.Foldable (oneOf)

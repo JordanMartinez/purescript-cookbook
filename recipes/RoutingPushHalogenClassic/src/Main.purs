@@ -1,4 +1,4 @@
-module RoutingPushHalogen.Main where
+module RoutingPushHalogenClassic.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))
@@ -6,12 +6,12 @@ import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
-import RoutingPushHalogen.Example (Query(..))
-import RoutingPushHalogen.Example as Example
+import RoutingPushHalogenClassic.Example (Query(..))
+import RoutingPushHalogenClassic.Example as Example
 import Halogen as H
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
-import RoutingPushHalogen.MyRouting (myRoute)
+import RoutingPushHalogenClassic.MyRouting (myRoute)
 import Routing.PushState (makeInterface, matches)
 
 main :: Effect Unit

@@ -1,6 +1,6 @@
-{ name = "RoutingPushHalogen"
+{ name = "RoutingPushHalogenClassic"
 , dependencies =
   [ "console", "effect", "generics-rep", "halogen", "psci-support", "routing" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/RoutingPushHalogen/src/**/*.purs" ]
+, sources = [ "recipes/RoutingPushHalogenClassic/src/**/*.purs" ]
 }

@@ -1,11 +1,11 @@
-module RoutingPushHalogen.Example where
+module RoutingPushHalogenClassic.Example where
 
 import Prelude
 import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
-import RoutingPushHalogen.MyRouting (MyRoute)
+import RoutingPushHalogenClassic.MyRouting (MyRoute)
 
 type State
   = Maybe MyRoute
