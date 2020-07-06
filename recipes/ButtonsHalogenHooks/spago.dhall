@@ -1,4 +1,4 @@
-{ name = "ButtonsHalogen"
+{ name = "ButtonsHalogenHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "psci-support"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/ButtonsHalogen/src/**/*.purs" ]
+, sources = [ "recipes/ButtonsHalogenHooks/src/**/*.purs" ]
 }

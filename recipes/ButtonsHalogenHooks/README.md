@@ -1,4 +1,4 @@
-# ButtonsHalogen
+# ButtonsHalogenHooks
 
 A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples).
 
