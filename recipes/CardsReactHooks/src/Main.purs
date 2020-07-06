@@ -1,4 +1,4 @@
-module CardsReact.Main where
+module CardsReactHooks.Main where
 
 import Prelude
 import Data.Maybe (Maybe(..))

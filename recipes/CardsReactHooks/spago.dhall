@@ -1,4 +1,4 @@
-{ name = "CardsReact"
+{ name = "CardsReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -8,5 +8,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/CardsReact/src/**/*.purs" ]
+, sources = [ "recipes/CardsReactHooks/src/**/*.purs" ]
 }

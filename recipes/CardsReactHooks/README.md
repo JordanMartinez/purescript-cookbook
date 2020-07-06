@@ -1,4 +1,4 @@
-# CardsReact
+# CardsReactHooks
 
 A React port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards).
 
