@@ -1,4 +1,4 @@
-module PositionsHalogen.Main where
+module PositionsHalogenHooks.Main where
 
 import Prelude hiding (top)
 

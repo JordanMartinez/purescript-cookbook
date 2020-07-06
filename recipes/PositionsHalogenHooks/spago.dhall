@@ -1,8 +1,8 @@
-{ name = "PositionsHalogen"
+{ name = "PositionsHalogenHooks"
 , dependencies =
   [ "console", "effect", "psci-support", "random", "halogen-hooks", "halogen-css" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/PositionsHalogen/src/**/*.purs" ]
+, sources = [ "recipes/PositionsHalogenHooks/src/**/*.purs" ]
 }
 {-
 sources does not work with paths relative to this config
