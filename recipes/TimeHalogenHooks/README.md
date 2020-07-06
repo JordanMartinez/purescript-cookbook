@@ -1,4 +1,4 @@
-# TimeHalogen
+# TimeHalogenHooks
 
 A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples).
 

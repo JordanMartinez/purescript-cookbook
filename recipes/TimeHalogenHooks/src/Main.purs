@@ -1,4 +1,4 @@
-module TimeHalogen.Main where
+module TimeHalogenHooks.Main where
 
 import Prelude
 

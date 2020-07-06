@@ -1,4 +1,4 @@
-{ name = "TimeHalogen"
+{ name = "TimeHalogenHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -7,5 +7,5 @@
   , "psci-support"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/TimeHalogen/src/**/*.purs" ]
+, sources = [ "recipes/TimeHalogenHooks/src/**/*.purs" ]
 }
