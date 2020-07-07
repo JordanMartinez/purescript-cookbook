@@ -20,6 +20,13 @@ Install all dependencies locally:
 make installDeps
 ```
 
+Install for Nix users:
+```
+# Remove purescript and spago and removing traling , from package.json
+sed --in-place '/purescript\|spago/d' ./package.json && sed --in-place '$!N;s/,\n  }/\n  }/;P;D' package.json
+nix-shell
+```
+
 ### Running Recipes
 
 See a list of available recipe launch commands by running `make list`:
