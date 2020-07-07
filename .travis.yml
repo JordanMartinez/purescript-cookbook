@@ -6,6 +6,8 @@ branches:
   - master
 before_install:
   - npm i pnpm
+  - rm -rf node_modules/
+  - npm i pnpm
 install:
   - pnpm install
 script:
