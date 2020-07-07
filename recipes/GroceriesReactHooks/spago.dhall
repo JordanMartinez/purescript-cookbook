@@ -1,4 +1,4 @@
-{ name = "GroceriesReact"
+{ name = "GroceriesReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/GroceriesReact/src/**/*.purs" ]
+, sources = [ "recipes/GroceriesReactHooks/src/**/*.purs" ]
 }

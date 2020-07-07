@@ -1,4 +1,4 @@
-# GroceriesReact
+# GroceriesReactHooks
 
 A React port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples).
 
