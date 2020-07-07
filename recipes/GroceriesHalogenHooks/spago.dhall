@@ -1,4 +1,4 @@
-{ name = "GroceriesReactHooksHooks"
+{ name = "GroceriesHalogenHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "psci-support"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/GroceriesReactHooksHooks/src/**/*.purs" ]
+, sources = [ "recipes/GroceriesHalogenHooks/src/**/*.purs" ]
 }

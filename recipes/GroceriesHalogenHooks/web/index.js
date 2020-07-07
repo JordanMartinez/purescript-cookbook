@@ -1,2 +1,2 @@
 "use strict";
-require("../../../output/GroceriesReactHooksHooks.Main/index.js").main();
+require("../../../output/GroceriesHalogenHooks.Main/index.js").main();
