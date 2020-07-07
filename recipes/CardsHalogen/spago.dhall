@@ -4,8 +4,9 @@
   , "effect"
   , "halogen-css"
   , "halogen-hooks"
+  , "nonempty"
   , "psci-support"
-  , "random"
+  , "quickcheck"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/CardsHalogen/src/**/*.purs" ]

@@ -1,9 +1,9 @@
 # CardsHalogen
 
-A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards).
 
 ## Expected Behavior:
 
 ### Browser
 
-If the user clicks the "Draw" button, a random card will be displayed. Note: the Elm example uses a uniform generator whereas this example does not because PureScript does not have an out-of-box uniform generator.
+When the user clicks the "Draw" button, a random card is drawn from a deck of 13 spades and displayed.
