@@ -1,6 +1,6 @@
 # FileUploadHalogenHooks
 
-A Halogen port of the ["Files - Upload" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["Files - Upload" Elm Example](https://elm-lang.org/examples/upload).
 
 ## Expected Behavior:
 
