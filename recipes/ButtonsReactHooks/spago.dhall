@@ -1,4 +1,4 @@
-{ name = "ButtonsReact"
+{ name = "ButtonsReactHooks"
 , dependencies =
   [ "console"
   , "effect"
@@ -6,5 +6,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/ButtonsReact/src/**/*.purs" ]
+, sources = [ "recipes/ButtonsReactHooks/src/**/*.purs" ]
 }

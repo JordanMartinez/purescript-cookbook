@@ -1,4 +1,4 @@
-module CatGifsHalogen.Main where
+module CatGifsHalogenHooks.Main where
 
 import Prelude
 

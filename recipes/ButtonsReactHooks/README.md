@@ -1,4 +1,4 @@
-# ButtonsReact
+# ButtonsReactHooks
 
 A React port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples/buttons).
 
