@@ -2,7 +2,6 @@
   "license": "MIT",
   "devDependencies": {
     "parcel": "^1.12.4",
-    "pnpm": "^5.2.8",
     "purescript": "^0.13.8",
     "spago": "^0.15.3"
   },

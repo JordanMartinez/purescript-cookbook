@@ -4,11 +4,8 @@ node_js: 12
 branches:
   only:
   - master
-before_install:
-  - npm i pnpm
-  - pnpm config set store-dir ~/.pnpm-store
 install:
-  - pnpm install
+  - npm install
 script:
   - make testAllCommands
   - diff README.md <(scripts/generateRecipeTable.sh)
@@ -17,4 +14,3 @@ cache:
   directories:
    - output
    - .spago
-   - "~/.pnpm-store"
