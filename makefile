@@ -87,15 +87,14 @@ info:
 > spago version
 > which parcel
 > parcel --version
-> which pnpm
-> pnpm --version
+> which npm
+> npm --version
 
 # Downloads all dependencies and sets up cookbook, so that end-user doesn't
 # accidentally use `npm`.
 .PHONY: installDeps
 installDeps:
-> npm i pnpm
-> pnpm i
+> npm i
 > rm package-lock.json
 
 # ===== Makefile - Recipe-related Commands =====

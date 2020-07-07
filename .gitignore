@@ -9,5 +9,3 @@
 /.psa*
 /.spago
 /.cache
-
-pnpm-lock.yaml

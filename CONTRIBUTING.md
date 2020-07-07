@@ -32,14 +32,14 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 
 #### Goal 3: Implement and Submit the Recipe
 
-1. Install all the tools (e.g. `purescript`, `spago`, `parcel`, `pnpm`) used in this repo by running `make installDeps`.
+1. Install all the tools (e.g. `purescript`, `spago`, `parcel`) used in this repo by running `make installDeps`.
 1. Install needed PureScript dependencies via `spago`.
     - Due to a [bug in Spago (#654)](https://github.com/purescript/spago/issues/654), follow these instructions:
         1. Change directory into your recipe folder: `cd recipes/MyRecipeName`
         1. Install dependencies as normal: `spago install <packageName>`
         1. Return to the root directory: `cd ../..`
     - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more contxt).
-1. Install needed `npm` dependencies via `npx pnpm i <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
+1. Install needed `npm` dependencies via `npm i <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
     - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
 1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
     - Run `spago -x recipes/MyNewRecipe/spago.dhall build -w` while in the root folder for faster iteration while developing
