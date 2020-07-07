@@ -1,4 +1,4 @@
-module CatGifsReact.Main where
+module CatGifsReactHooks.Main where
 
 import Prelude
 import Affjax (printError)

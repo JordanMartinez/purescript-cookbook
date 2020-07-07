@@ -1,4 +1,4 @@
-{ name = "CatGifsReact"
+{ name = "CatGifsReactHooks"
 , dependencies =
   [ "affjax"
   , "argonaut-codecs"
@@ -8,5 +8,5 @@
   , "react-basic-hooks"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/CatGifsReact/src/**/*.purs" ]
+, sources = [ "recipes/CatGifsReactHooks/src/**/*.purs" ]
 }
