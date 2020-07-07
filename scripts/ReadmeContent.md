@@ -68,5 +68,6 @@ Running a web-compatible recipe:
 | `ReactClassic` | Component-style React via [react-basic](https://github.com/lumihq/purescript-react-basic) |
 | `ReactHooks` | Hooks-style React via [react-basic](https://github.com/lumihq/purescript-react-basic) |
 | `Js` | Run plain PureScript on the web without a web framework |
+| `Log` | Log content to both the browser's console and the terminal |
 | `Node` | Run PureScript on Node.js where no user interaction occurs |
 | `CLI` | Run PureScript on Node.js with user interaction |

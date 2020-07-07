@@ -68,6 +68,7 @@ Running a web-compatible recipe:
 | `ReactClassic` | Component-style React via [react-basic](https://github.com/lumihq/purescript-react-basic) |
 | `ReactHooks` | Hooks-style React via [react-basic](https://github.com/lumihq/purescript-react-basic) |
 | `Js` | Run plain PureScript on the web without a web framework |
+| `Log` | Log content to both the browser's console and the terminal |
 | `Node` | Run PureScript on Node.js where no user interaction occurs |
 | `CLI` | Run PureScript on Node.js with user interaction |
 
@@ -75,14 +76,14 @@ Running a web-compatible recipe:
 
 | Node | Web Browser | Recipe | Description |
 | :-: | :-: | - | - |
-|   | :heavy_check_mark: | [AddRemoveEventListener](recipes/AddRemoveEventListener) | This recipe shows how to add and remove an event listener to an HTML element. |
-| :heavy_check_mark: | :heavy_check_mark: | [BigInt](recipes/BigInt) | This recipe shows how to print, create, and use values of the `BigInt` type in either the node.js or web browser console. |
-|   | :heavy_check_mark: | [BookHalogen](recipes/BookHalogen) | A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples). |
-|   | :heavy_check_mark: | [BookReact](recipes/BookReact) | A React port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book). |
-|   | :heavy_check_mark: | [ButtonsHalogen](recipes/ButtonsHalogen) | A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [AddRemoveEventListenerJs](recipes/AddRemoveEventListenerJs) | This recipe shows how to add and remove an event listener to an HTML element. |
+| :heavy_check_mark: | :heavy_check_mark: | [BigIntJs](recipes/BigIntJs) | This recipe shows how to print, create, and use values of the `BigIntJs` type in either the node.js or web browser console. |
+|   | :heavy_check_mark: | [BookHalogenHooks](recipes/BookHalogenHooks) | A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [BookReactHooks](recipes/BookReactHooks) | A React port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book). |
+|   | :heavy_check_mark: | [ButtonsHalogenHooks](recipes/ButtonsHalogenHooks) | A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [ButtonsReact](recipes/ButtonsReact) | A React port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples/buttons). |
-|   | :heavy_check_mark: | [CardsHalogen](recipes/CardsHalogen) | A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
-|   | :heavy_check_mark: | [CardsReact](recipes/CardsReact) | A React port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
+|   | :heavy_check_mark: | [CardsHalogenHooks](recipes/CardsHalogenHooks) | A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
+|   | :heavy_check_mark: | [CardsReactHooks](recipes/CardsReactHooks) | A React port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
 |   | :heavy_check_mark: | [CatGifsHalogen](recipes/CatGifsHalogen) | A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [CatGifsReact](recipes/CatGifsReact) | A React port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 | :heavy_check_mark: |   | [DiceCLI](recipes/DiceCLI) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
