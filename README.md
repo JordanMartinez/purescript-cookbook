@@ -104,6 +104,7 @@ Running a web-compatible recipe:
 | :heavy_check_mark: |   | [HelloNode](recipes/HelloNode) | Equivalent to `HelloWorldLog` recipe, but just targets node.js environment (not the browser too). For CI testing until another node-only recipe is created. |
 |   | :heavy_check_mark: | [HelloReactHooks](recipes/HelloReactHooks) | A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorldLog](recipes/HelloWorldLog) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
+|   | :heavy_check_mark: | [ImagePreviewsHalogenHooks](recipes/ImagePreviewsHalogenHooks) | A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop). |
 |   | :heavy_check_mark: | [NumbersHalogenHooks](recipes/NumbersHalogenHooks) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [NumbersReactHooks](recipes/NumbersReactHooks) | A React port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
 |   | :heavy_check_mark: | [PositionsHalogenHooks](recipes/PositionsHalogenHooks) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples). |
