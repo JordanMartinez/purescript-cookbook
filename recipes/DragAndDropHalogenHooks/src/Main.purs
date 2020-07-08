@@ -2,7 +2,7 @@ module DragAndDropHalogenHooks.Main where
 
 import Prelude hiding (top)
 
-import CSS (alignItems, border, borderRadius, color, column, dashed, display, displayNone, flex, flexDirection, gray, height, justifyContent, margin, padding, purple, px, solid, width)
+import CSS (alignItems, backgroundColor, border, borderRadius, color, column, dashed, display, displayNone, flex, flexDirection, gray, height, justifyContent, lightblue, margin, padding, purple, px, solid, width)
 import CSS as CSS
 import CSS.Common (center)
 import DOM.HTML.Indexed.InputType (InputType(..))
@@ -69,40 +69,52 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
           mbFileList = DataTransfer.files $ dataTransfer e
           fileArray = maybe [] FileList.items mbFileList
         Hooks.put filesIdx fileArray
+        Hooks.put hoverIdx false
     ]
-    -- Note: Elm uses a button that, when clicked, will do the following:
-    -- 1. create an input element
-    -- 2. add it to the DOM
-    -- 3. create a mouse event
-    -- 4. dispatch the mouse event to the input element
-    -- 5. (implication) file dialogue appears
-    -- 6. user selects a file
-    -- 7. input event handler runs a callback using user's selected file
-    -- 8. input element is removed from DOM
-    --
-    -- The approach used below is based on this SO answer:
-    -- https://stackoverflow.com/a/47094148
     [ HH.label
-      [ HP.for "file-input" ]
-      [ HH.div
-        -- simulate button-like appearance
-        [ HC.style do
-            margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
-            border solid (px 2.0) gray
-            borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-            padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-        , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
-        ]
-        [ HH.text "Upload images" ]
+      -- simulate button-like appearance
+      [ HC.style do
+          margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
+          border solid (px 2.0) gray
+          borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+          padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+          backgroundColor lightblue
+      , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
       ]
-    , HH.input
-        [ HP.id_ "file-input"
-        , HC.style $ display displayNone
-        , HP.type_ InputFile
-        , HP.multiple true
-        , HE.onFileUpload \fileArray -> Just $ Hooks.put filesIdx fileArray
-        ]
+      [ HH.text "Upload images"
+      , HH.input
+          [ HC.style $ display displayNone
+          , HP.type_ InputFile
+          , HP.multiple true
+          , HE.onFileUpload \fileArray -> Just $ Hooks.put filesIdx fileArray
+          ]
+      ]
     , HH.span
-      [ HC.style $ color (CSS.fromInt 0xcccccc) ]
+      [ HC.style $ color $ CSS.fromInt 0xcccccc ]
       [ HH.text $ i "{ files = "(show $ map File.name files)", hover = "(toUpper $ show hover)" }" ]
     ]
+{-
+The easiest way to create a file input dialog is with the input element:
+
+  HH.input [ HP.type_ InputFile ]
+
+However, this interface cannot be styled like a regular button - A common problem:
+  https://stackoverflow.com/q/5813344
+  https://stackoverflow.com/q/21842274
+  https://stackoverflow.com/q/2048026
+
+The workaround used in this recipe is to put the `input` within a `label`
+and style the label to appear as a button. Unfortunately, we can't just reuse
+default button styling.
+
+Elm's workaround for custom file input styling is to use its runtime to
+let users call File.Select.files on button click, which performs the following:
+  1. create an input element
+  2. add it to the DOM
+  3. create a mouse event
+  4. dispatch the mouse event to the input element
+  5. (implication) file dialogue appears
+  6. user selects a file
+  7. input event handler runs a callback using user's selected file
+  8. input element is removed from DOM
+-}
