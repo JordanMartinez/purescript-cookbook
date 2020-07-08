@@ -5,9 +5,11 @@ import Prelude hiding (top)
 import CSS (alignItems, backgroundColor, border, borderRadius, color, column, dashed, display, displayNone, flex, flexDirection, gray, height, justifyContent, lightblue, margin, padding, purple, px, solid, width)
 import CSS as CSS
 import CSS.Common (center)
+import DOM.HTML.Indexed.InputAcceptType (mediaType)
 import DOM.HTML.Indexed.InputType (InputType(..))
 import Data.Interpolate (i)
 import Data.Maybe (Maybe(..), maybe)
+import Data.MediaType (MediaType(..))
 import Data.String (toUpper)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
@@ -86,6 +88,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
           [ HC.style $ display displayNone
           , HP.type_ InputFile
           , HP.multiple true
+          , HP.accept $ mediaType $ MediaType "image/*"
           , HE.onFileUpload \fileArray -> Just $ Hooks.put filesIdx fileArray
           ]
       ]
