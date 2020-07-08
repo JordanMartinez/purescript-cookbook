@@ -2,7 +2,7 @@ module DragAndDropHalogenHooks.Main where
 
 import Prelude hiding (top)
 
-import CSS (alignItems, backgroundColor, backgroundImage, border, borderRadius, color, column, darkgray, dashed, display, displayNone, flex, flexDirection, gray, height, justifyContent, lightgray, linearGradient, margin, padding, purple, px, solid, vGradient, width)
+import CSS (alignItems, border, borderRadius, color, column, dashed, display, displayNone, flex, flexDirection, gray, height, justifyContent, margin, padding, purple, px, solid, width)
 import CSS as CSS
 import CSS.Common (center)
 import DOM.HTML.Indexed.InputType (InputType(..))
