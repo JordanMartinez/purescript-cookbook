@@ -69,7 +69,7 @@ usingSpy = do
 usingTraceMInEffect :: Effect Unit
 usingTraceMInEffect = do
   log "usingTraceMInEffect"
-  log "But what if yo udon't want to depend on `console` to do temporary \
+  log "But what if you don't want to depend on `console` to do temporary \
       \printing-based debugging? We can use traceM instead."
   traceM "logging to the console without using `log`"
 
