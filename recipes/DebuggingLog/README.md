@@ -1,6 +1,6 @@
 # DebuggingLog
 
-This recipe shows how to do print-debugging using the `Debug` module's `spy` and `traceM` functions.
+This recipe shows how to do print-debugging using the `Debug` module's `spy` and `traceM` functions. The compiler will emit warnings to remind you to remove these debug functions before you ship production code.
 
 ## Expected Behavior:
 
