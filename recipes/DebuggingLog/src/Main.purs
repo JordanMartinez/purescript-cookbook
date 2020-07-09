@@ -54,6 +54,13 @@ usingSpy = do
     _ = spy "debug for me what x + y is" $ x + y
     arrayOfStrings = spy "debug some array" $ map show [1, 2, 3, 4, 5]
 
+    -- quickly drop-in `spy` to see every step of a recursive function
+    fact :: Int -> Int -> Int
+    fact 0 acc = acc
+    fact n acc = fact (spy "n" (n - 1)) (spy "acc" (acc * n))
+
+    _ = fact 5 1
+
   launchAff_ do
     let
       y = spy "y in Aff" 8
