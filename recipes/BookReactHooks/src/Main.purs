@@ -7,11 +7,10 @@ import Affjax.StatusCode (StatusCode(..))
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
-import Effect.Class (liftEffect)
 import Effect.Exception (throw)
 import React.Basic.DOM (render)
 import React.Basic.DOM as R
-import React.Basic.Hooks (Component, component, useState', (/\))
+import React.Basic.Hooks (Component, component)
 import React.Basic.Hooks as React
 import React.Basic.Hooks.Aff (useAff)
 import Web.DOM.NonElementParentNode (getElementById)
