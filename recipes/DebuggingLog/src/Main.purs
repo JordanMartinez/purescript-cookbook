@@ -32,6 +32,8 @@ main = do
 
   usingTraceM
 
+  compareSpyAndTraceM
+
 usingSpy :: Effect Unit
 usingSpy = do
   log "usingSpy"
@@ -82,3 +84,9 @@ usingTraceM = do
       ST.write (four + 2) localReference
 
   log $ "Local reference value is: " <> show (ST.run localMutationComputation)
+
+compareSpyAndTraceM :: Effect Unit
+compareSpyAndTraceM = do
+  let x = 5
+      _ = spy "x" x
+  traceM x
