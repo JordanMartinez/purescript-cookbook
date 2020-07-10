@@ -41,7 +41,7 @@ mkBookComponent = do
       result <- Affjax.get ResponseFormat.string url
       pure case result of
         Right response
-          | response.status == StatusCode 200 -> Just response.body
+          | response.status == StatusCode 200 -> Success response.body
         _ -> Failure
     pure case textState of
       Nothing -> R.text "Loading..."
