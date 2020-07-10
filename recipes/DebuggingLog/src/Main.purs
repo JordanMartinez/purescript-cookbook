@@ -32,7 +32,6 @@ main = do
 
   usingTraceMInEffect
   usingTraceMInST
-  usingTraceMInAff
   usingTraceMInAffRace
 
 usingSpy :: Effect Unit
@@ -81,13 +80,6 @@ usingTraceMInST = do
         traceM four
         ST.write (four + 2) localReference
   log $ "Local reference value is: " <> show localMutationResult
-
-usingTraceMInAff :: Effect Unit
-usingTraceMInAff = do
-  launchAff_ do
-    pure unit
-    traceM 5
-    pure unit
 
 usingTraceMInAffRace :: Effect Unit
 usingTraceMInAffRace = do
