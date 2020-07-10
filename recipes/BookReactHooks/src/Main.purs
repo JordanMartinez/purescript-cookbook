@@ -7,11 +7,10 @@ import Affjax.StatusCode (StatusCode(..))
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
-import Effect.Class (liftEffect)
 import Effect.Exception (throw)
 import React.Basic.DOM (render)
 import React.Basic.DOM as R
-import React.Basic.Hooks (Component, component, useState', (/\))
+import React.Basic.Hooks (Component, component)
 import React.Basic.Hooks as React
 import React.Basic.Hooks.Aff (useAff)
 import Web.DOM.NonElementParentNode (getElementById)
@@ -21,7 +20,6 @@ import Web.HTML.Window (document)
 
 data TextState
   = Failure
-  | Loading
   | Success String
 
 main :: Effect Unit
@@ -38,14 +36,13 @@ mkBookComponent = do
   let
     url = "https://elm-lang.org/assets/public-opinion.txt"
   component "Book" \_ -> React.do
-    (textState /\ setTextState) <- useState' Loading
-    useAff unit do
+    textState <- useAff unit do
       result <- Affjax.get ResponseFormat.string url
-      liftEffect case result of
+      pure case result of
         Right response
-          | response.status == StatusCode 200 -> setTextState (Success response.body)
-        _ -> setTextState Failure
+          | response.status == StatusCode 200 -> Success response.body
+        _ -> Failure
     pure case textState of
-      Failure -> R.text "I was unable to load your book."
-      Loading -> R.text "Loading..."
-      Success fullText -> R.pre_ [ R.text fullText ]
+      Nothing -> R.text "Loading..."
+      Just Failure -> R.text "I was unable to load your book."
+      Just (Success fullText) -> R.pre_ [ R.text fullText ]
