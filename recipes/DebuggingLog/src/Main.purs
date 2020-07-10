@@ -31,7 +31,6 @@ main = do
   usingSpy
 
   usingTraceM
-  usingTraceMInAffRace
 
 usingSpy :: Effect Unit
 usingSpy = do
@@ -76,34 +75,3 @@ usingTraceM = do
         traceM four
         ST.write (four + 2) localReference
   log $ "Local reference value is: " <> show localMutationResult
-
-usingTraceMInAffRace :: Effect Unit
-usingTraceMInAffRace = do
-  launchAff_ do
-    parSequence [ runXTimes 4 $ genValueTraceMNo $ spy "which fiber id" 1
-                , runXTimes 4 $ genValueTraceMYes 2
-                , runXTimes 4 $ genValueTraceMYes 3
-                , runXTimes 4 $ genValueTraceMYes 4
-                , runXTimes 4 $ genValueTraceMNo 5
-                , runXTimes 4 $ genValueSpy 5
-                ]
-
-  where
-    runXTimes 1 comp = comp
-    runXTimes n comp = comp *> runXTimes (n - 1) comp
-
-    genValueTraceMNo _ = do
-      randomValue <- liftEffect $ randomInt 1 10
-      delay $ Milliseconds $ toNumber randomValue
-      pure unit
-
-    genValueTraceMYes i = do
-      randomValue <- liftEffect $ randomInt 1 10
-      delay $ Milliseconds $ toNumber randomValue
-      traceM $ "Fiber: " <> show i <> " - random value: " <> show randomValue
-      pure unit
-
-    genValueSpy i = do
-      randomValue <- liftEffect $ randomInt 1 10
-      delay $ Milliseconds $ toNumber $ spy "(spy) random value" randomValue
-      pure unit
