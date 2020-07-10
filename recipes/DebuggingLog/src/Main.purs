@@ -61,17 +61,10 @@ usingSpy = do
 
     _ = fact 5 1
 
-  launchAff_ do
-    let
-      y = spy "y in Aff" 8
-      adt = spy "adt in Aff" $ MyADT 1 (Tuple 4 ["a", "b"]) { foo: "foo value" }
-      function = spy "function in Aff" $ \intValue -> show $ 4 + intValue
-    pure unit
-
   log $ "Thus, spying is an effective way of quickly adding debugging where \
         \you need it without affecting any other part of your code. \
-        \Note: you should not do this in production code. Use a proper logger \
-        \in production code."
+        \Note: you should not use `spy` to do logging in production code. \
+        \Use a proper logger in production code."
 
 usingTraceMInEffect :: Effect Unit
 usingTraceMInEffect = do
