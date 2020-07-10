@@ -3,15 +3,12 @@ module DebuggingLog.Main where
 import Prelude
 
 import Control.Monad.ST.Internal as ST
-import Control.Parallel (parSequence)
-import Data.Int (toNumber)
 import Data.Tuple (Tuple(..))
 import Debug.Trace (spy, traceM)
 import Effect (Effect)
-import Effect.Aff (Milliseconds(..), delay, launchAff_)
+import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
-import Effect.Random (randomInt)
 
 data MyADT = MyADT Int (Tuple Int (Array String)) { foo :: String }
 
