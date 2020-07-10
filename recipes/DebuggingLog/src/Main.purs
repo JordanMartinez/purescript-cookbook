@@ -2,7 +2,6 @@ module DebuggingLog.Main where
 
 import Prelude
 
-import Control.Monad.ST as ST
 import Control.Monad.ST.Internal as ST
 import Control.Parallel (parSequence)
 import Data.Int (toNumber)
