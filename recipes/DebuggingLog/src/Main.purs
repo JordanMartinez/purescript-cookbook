@@ -68,10 +68,17 @@ usingTraceM = do
   traceM "Notice how this text's color is different than what is outputted \
          \via `log`."
 
-  let localMutationResult = ST.run do
-        localReference <- ST.new 0
-        traceM localReference
-        four <- ST.modify (_ + 4) localReference
-        traceM four
-        ST.write (four + 2) localReference
-  log $ "Local reference value is: " <> show localMutationResult
+  let
+    localMutationComputation
+      :: forall ensureMutationStaysLocal. ST.ST ensureMutationStaysLocal Int
+    localMutationComputation = do
+      -- the ST monad does not implement `MonadEffect`,
+      -- so `traceM` is the only way to log output to the console in a
+      -- `log`-like fashion.
+      localReference <- ST.new 0
+      traceM localReference
+      four <- ST.modify (_ + 4) localReference
+      traceM four
+      ST.write (four + 2) localReference
+
+  log $ "Local reference value is: " <> show (ST.run localMutationComputation)
