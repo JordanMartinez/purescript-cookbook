@@ -2,6 +2,7 @@ module AceEditorHalogenHooks.Main where
 
 import Prelude
 
+import Ace (Editor)
 import Ace as Ace
 import Ace.EditSession as Session
 import Ace.Editor as Editor
@@ -72,7 +73,7 @@ aceComponent
    . MonadAff anyMonad
   => H.Component HH.HTML AceQuery unusedInput AceOutput anyMonad
 aceComponent = Hooks.component \rec _ -> Hooks.do
-  state /\ stateIdx <- Hooks.useState Nothing
+  state /\ stateIdx <- Hooks.useState (Nothing :: Maybe Editor)
   Hooks.useLifecycleEffect do
     Hooks.getHTMLElementRef aceElemLabel >>= traverse_ \element -> do
       editor <- liftEffect $ Ace.editNode element Ace.ace
