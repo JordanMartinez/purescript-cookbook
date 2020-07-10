@@ -64,6 +64,9 @@ data AceQuery a = ChangeText String a
 
 data AceOutput = TextChanged String
 
+aceElemLabel :: H.RefLabel
+aceElemLabel = H.RefLabel "ace"
+
 aceComponent
   :: forall unusedInput anyMonad
    . MonadAff anyMonad
@@ -71,7 +74,7 @@ aceComponent
 aceComponent = Hooks.component \rec _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState Nothing
   Hooks.useLifecycleEffect do
-    Hooks.getHTMLElementRef (H.RefLabel "ace") >>= traverse_ \element -> do
+    Hooks.getHTMLElementRef aceElemLabel >>= traverse_ \element -> do
       editor <- liftEffect $ Ace.editNode element Ace.ace
       session <- liftEffect $ Editor.getSession editor
       Hooks.put stateIdx $ Just editor
@@ -97,4 +100,4 @@ aceComponent = Hooks.component \rec _ -> Hooks.do
       pure (Just next)
 
   Hooks.pure $
-    HH.div [ HP.ref (H.RefLabel "ace") ] []
+    HH.div [ HP.ref aceElemLabel ] []
