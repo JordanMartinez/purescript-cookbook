@@ -30,8 +30,7 @@ main = do
 
   usingSpy
 
-  usingTraceMInEffect
-  usingTraceMInST
+  usingTraceM
   usingTraceMInAffRace
 
 usingSpy :: Effect Unit
@@ -64,15 +63,12 @@ usingSpy = do
         \Note: you should not use `spy` to do logging in production code. \
         \Use a proper logger in production code."
 
-usingTraceMInEffect :: Effect Unit
-usingTraceMInEffect = do
-  log "usingTraceMInEffect"
-  log "But what if you don't want to depend on `console` to do temporary \
-      \printing-based debugging? We can use traceM instead."
-  traceM "logging to the console without using `log`"
+usingTraceM :: Effect Unit
+usingTraceM = do
+  log "usingTraceM"
+  traceM "Notice how this text's color is different than what is outputted \
+         \via `log`."
 
-usingTraceMInST :: Effect Unit
-usingTraceMInST = do
   let localMutationResult = ST.run do
         localReference <- ST.new 0
         traceM localReference
