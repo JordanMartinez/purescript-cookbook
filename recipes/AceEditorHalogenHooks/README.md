@@ -1,4 +1,4 @@
-# AceHalogenHooks
+# AceEditorHalogenHooks
 
 A Halogen Hooks port of the ["Ace Editor" Halogen Example](https://github.com/purescript-halogen/purescript-halogen/tree/master/examples/ace).
 

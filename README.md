@@ -83,7 +83,7 @@ Running a web-compatible recipe:
 
 | Node | Web Browser | Recipe | Description |
 | :-: | :-: | - | - |
-|   | :heavy_check_mark: | [AceHalogenHooks](recipes/AceHalogenHooks) | A Halogen Hooks port of the ["Ace Editor" Halogen Example](https://github.com/purescript-halogen/purescript-halogen/tree/master/examples/ace). |
+|   | :heavy_check_mark: | [AceEditorHalogenHooks](recipes/AceEditorHalogenHooks) | A Halogen Hooks port of the ["Ace Editor" Halogen Example](https://github.com/purescript-halogen/purescript-halogen/tree/master/examples/ace). |
 |   | :heavy_check_mark: | [AddRemoveEventListenerJs](recipes/AddRemoveEventListenerJs) | This recipe shows how to add and remove an event listener to an HTML element. |
 | :heavy_check_mark: | :heavy_check_mark: | [BigIntJs](recipes/BigIntJs) | This recipe shows how to print, create, and use values of the `BigIntJs` type in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [BookHalogenHooks](recipes/BookHalogenHooks) | A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples). |

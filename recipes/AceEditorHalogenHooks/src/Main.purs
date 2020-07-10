@@ -1,4 +1,4 @@
-module AceHalogenHooks.Main where
+module AceEditorHalogenHooks.Main where
 
 import Prelude
 
