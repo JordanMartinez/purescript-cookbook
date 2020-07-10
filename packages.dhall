@@ -3,6 +3,22 @@ let upstream =
 
 let overrides = {=}
 
-let additions = {=}
+let additions =
+  { ace =
+      { dependencies =
+          [ "arrays"
+          , "effect"
+          , "foreign"
+          , "nullable"
+          , "prelude"
+          , "web-html"
+          , "web-uievents"
+          ]
+      , repo =
+          "https://github.com/purescript-contrib/purescript-ace.git"
+      , version =
+          "v7.0.0"
+      }
+  }
 
 in  upstream // overrides // additions
