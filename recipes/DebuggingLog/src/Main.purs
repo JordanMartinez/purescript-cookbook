@@ -21,9 +21,9 @@ main = do
   log "When we are in the 'Effect' monad, we can print content to the console."
   launchAff_ do
     liftEffect $ log $ "We can still print values to the console as long as \
-                       \ the monad in question implements the MonadEffect \
+                       \the monad in question implements the MonadEffect \
                        \type class. Since `Aff` implements MonadEffect, we \
-                       \ can lift that effect into `Aff`."
+                       \can lift that effect into `Aff`."
 
   log "However, there are times when we want to debug some code and wish \
       \to use print-based debugging. Since PureScript is pure, how do we \
