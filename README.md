@@ -102,6 +102,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [FormsReactHooks](recipes/FormsReactHooks) | A React port of the ["User Interface - Forms" Elm Example](https://elm-lang.org/examples/forms). |
 |   | :heavy_check_mark: | [GroceriesHalogenHooks](recipes/GroceriesHalogenHooks) | A Halogen port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples). |
 |   | :heavy_check_mark: | [GroceriesReactHooks](recipes/GroceriesReactHooks) | A React port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [HelloConcur](recipes/HelloConcur) | A Concur port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples/hello). |
 |   | :heavy_check_mark: | [HelloHalogenHooks](recipes/HelloHalogenHooks) | A Halogen port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
 | :heavy_check_mark: |   | [HelloNode](recipes/HelloNode) | Equivalent to `HelloWorldLog` recipe, but just targets node.js environment (not the browser too). For CI testing until another node-only recipe is created. |
 |   | :heavy_check_mark: | [HelloReactHooks](recipes/HelloReactHooks) | A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
