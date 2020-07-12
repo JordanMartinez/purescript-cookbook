@@ -1,6 +1,6 @@
 # HelloConcur
 
-A Concur port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples).
+A Concur port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples/hello).
 
 ## Expected Behavior:
 
