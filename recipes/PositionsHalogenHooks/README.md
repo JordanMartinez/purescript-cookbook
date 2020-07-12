@@ -1,6 +1,6 @@
 # PositionsHalogenHooks
 
-A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions).
 
 ## Expected Behavior:
 

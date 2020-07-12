@@ -85,13 +85,13 @@ Running a web-compatible recipe:
 | :-: | :-: | - | - |
 |   | :heavy_check_mark: | [AddRemoveEventListenerJs](recipes/AddRemoveEventListenerJs) | This recipe shows how to add and remove an event listener to an HTML element. |
 | :heavy_check_mark: | :heavy_check_mark: | [BigIntJs](recipes/BigIntJs) | This recipe shows how to print, create, and use values of the `BigIntJs` type in either the node.js or web browser console. |
-|   | :heavy_check_mark: | [BookHalogenHooks](recipes/BookHalogenHooks) | A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [BookHalogenHooks](recipes/BookHalogenHooks) | A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book). |
 |   | :heavy_check_mark: | [BookReactHooks](recipes/BookReactHooks) | A React port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book). |
-|   | :heavy_check_mark: | [ButtonsHalogenHooks](recipes/ButtonsHalogenHooks) | A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [ButtonsHalogenHooks](recipes/ButtonsHalogenHooks) | A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples/buttons). |
 |   | :heavy_check_mark: | [ButtonsReactHooks](recipes/ButtonsReactHooks) | A React port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples/buttons). |
 |   | :heavy_check_mark: | [CardsHalogenHooks](recipes/CardsHalogenHooks) | A Halogen port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
 |   | :heavy_check_mark: | [CardsReactHooks](recipes/CardsReactHooks) | A React port of the ["Random - Cards" Elm Example](https://elm-lang.org/examples/cards). |
-|   | :heavy_check_mark: | [CatGifsHalogenHooks](recipes/CatGifsHalogenHooks) | A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [CatGifsHalogenHooks](recipes/CatGifsHalogenHooks) | A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 |   | :heavy_check_mark: | [CatGifsReactHooks](recipes/CatGifsReactHooks) | A React port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 | :heavy_check_mark: | :heavy_check_mark: | [DebuggingLog](recipes/DebuggingLog) | This recipe shows how to do print-debugging using the `Debug` module's `spy` and `traceM` functions. The compiler will emit warnings to remind you to remove these debug functions before you ship production code. |
 | :heavy_check_mark: |   | [DiceCLI](recipes/DiceCLI) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
@@ -100,23 +100,23 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [FileUploadHalogenHooks](recipes/FileUploadHalogenHooks) | A Halogen port of the ["Files - Upload" Elm Example](https://elm-lang.org/examples/upload). |
 |   | :heavy_check_mark: | [FindDomElementJs](recipes/FindDomElementJs) | This recipe shows how to find elements in the DOM by using query selectors. |
 |   | :heavy_check_mark: | [FormsReactHooks](recipes/FormsReactHooks) | A React port of the ["User Interface - Forms" Elm Example](https://elm-lang.org/examples/forms). |
-|   | :heavy_check_mark: | [GroceriesHalogenHooks](recipes/GroceriesHalogenHooks) | A Halogen port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples). |
-|   | :heavy_check_mark: | [GroceriesReactHooks](recipes/GroceriesReactHooks) | A React port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [GroceriesHalogenHooks](recipes/GroceriesHalogenHooks) | A Halogen port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples/groceries). |
+|   | :heavy_check_mark: | [GroceriesReactHooks](recipes/GroceriesReactHooks) | A React port of the ["HTML - Groceries" Elm Example](https://elm-lang.org/examples/groceries). |
 |   | :heavy_check_mark: | [HelloConcur](recipes/HelloConcur) | A Concur port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples/hello). |
-|   | :heavy_check_mark: | [HelloHalogenHooks](recipes/HelloHalogenHooks) | A Halogen port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
-|   | :heavy_check_mark: | [HelloReactHooks](recipes/HelloReactHooks) | A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [HelloHalogenHooks](recipes/HelloHalogenHooks) | A Halogen port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples/hello). |
+|   | :heavy_check_mark: | [HelloReactHooks](recipes/HelloReactHooks) | A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples/hello). |
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorldLog](recipes/HelloWorldLog) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [ImagePreviewsHalogenHooks](recipes/ImagePreviewsHalogenHooks) | A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop). |
-|   | :heavy_check_mark: | [NumbersHalogenHooks](recipes/NumbersHalogenHooks) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [NumbersHalogenHooks](recipes/NumbersHalogenHooks) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
 |   | :heavy_check_mark: | [NumbersReactHooks](recipes/NumbersReactHooks) | A React port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
-|   | :heavy_check_mark: | [PositionsHalogenHooks](recipes/PositionsHalogenHooks) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [PositionsHalogenHooks](recipes/PositionsHalogenHooks) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions). |
 |   | :heavy_check_mark: | [PositionsReactHooks](recipes/PositionsReactHooks) | A React port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions). |
 | :heavy_check_mark: |   | [ReadPrintFileContentsNode](recipes/ReadPrintFileContentsNode) | Reads a file's contents and prints it to the console. |
 |   | :heavy_check_mark: | [RoutingHashHalogenClassic](recipes/RoutingHashHalogenClassic) | This recipe shows how to use `purescript-routing` to do client-side hash-based routing in a Halogen-based single-page application (SPA). |
 |   | :heavy_check_mark: | [RoutingHashLog](recipes/RoutingHashLog) | This recipe demonstrates hash-based routing with `purescript-routing`. No web framework is used. |
 |   | :heavy_check_mark: | [RoutingPushHalogenClassic](recipes/RoutingPushHalogenClassic) | This recipe shows how to use `purescript-routing` to do client-side push-state routing in a Halogen-based single-page application (SPA). |
-|   | :heavy_check_mark: | [TextFieldsHalogenHooks](recipes/TextFieldsHalogenHooks) | A Halogen port of the ["User Interface - Text Fields" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [TextFieldsHalogenHooks](recipes/TextFieldsHalogenHooks) | A Halogen port of the ["User Interface - Text Fields" Elm Example](https://elm-lang.org/examples/text-fields). |
 |   | :heavy_check_mark: | [TextFieldsReactHooks](recipes/TextFieldsReactHooks) | A React port of the ["User Interface - Text Fields" Elm Example](https://elm-lang.org/examples/text-fields). |
-|   | :heavy_check_mark: | [TimeHalogenHooks](recipes/TimeHalogenHooks) | A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples). |
+|   | :heavy_check_mark: | [TimeHalogenHooks](recipes/TimeHalogenHooks) | A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples/time). |
 |   | :heavy_check_mark: | [TimeReactHooks](recipes/TimeReactHooks) | A React port of the ["User Interface - Time" Elm Example](https://elm-lang.org/examples/time). |
 |   | :heavy_check_mark: | [WindowPropertiesJs](recipes/WindowPropertiesJs) | This recipe shows how to get and print various properties in the browser's `window` object. |

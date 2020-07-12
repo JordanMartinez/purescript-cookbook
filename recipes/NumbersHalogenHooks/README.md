@@ -1,6 +1,6 @@
 # NumbersHalogenHooks
 
-A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers).
 
 ## Expected Behavior:
 

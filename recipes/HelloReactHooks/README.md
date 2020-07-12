@@ -1,6 +1,6 @@
 # HelloReactHooks
 
-A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples).
+A React port of the ["HTML - Hello" Elm Example](https://elm-lang.org/examples/hello).
 
 ## Expected Behavior:
 

@@ -1,6 +1,6 @@
 # BookHalogenHooks
 
-A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["HTTP - Book" Elm Example](https://elm-lang.org/examples/book).
 
 ## Expected Behavior:
 
