@@ -1,6 +1,6 @@
 # ButtonsHalogenHooks
 
-A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["User Input - Buttons" Elm Example](https://elm-lang.org/examples/buttons).
 
 ## Expected Behavior:
 

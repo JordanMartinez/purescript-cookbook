@@ -1,6 +1,6 @@
 # TimeHalogenHooks
 
-A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples/time).
 
 ## Expected Behavior:
 

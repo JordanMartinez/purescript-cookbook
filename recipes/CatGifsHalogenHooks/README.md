@@ -1,6 +1,6 @@
 # CatGifsHalogenHooks
 
-A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples).
+A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs).
 
 ## Expected Behavior:
 
