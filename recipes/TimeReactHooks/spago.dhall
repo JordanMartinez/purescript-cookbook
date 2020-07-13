@@ -1,11 +1,9 @@
 { name = "TimeReactHooks"
 , dependencies =
   [ "console"
-  , "datetime"
   , "effect"
   , "js-date"
   , "js-timers"
-  , "now"
   , "psci-support"
   , "react-basic-hooks"
   ]
