@@ -3,6 +3,7 @@
   [ "console"
   , "effect"
   , "halogen-hooks"
+  , "js-date"
   , "interpolate"
   , "psci-support"
   ]

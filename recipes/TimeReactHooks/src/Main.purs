@@ -2,14 +2,13 @@ module TimeReactHooks.Main where
 
 import Prelude
 import Data.Array (intercalate)
-import Data.Enum (fromEnum)
+import Data.Int (floor)
+import Data.JSDate (JSDate)
+import Data.JSDate as JSDate
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype)
-import Data.Time (Time)
-import Data.Time as Time
 import Effect (Effect)
 import Effect.Exception (throw)
-import Effect.Now (nowTime)
 import Effect.Timer (clearInterval, setInterval)
 import React.Basic.DOM (render)
 import React.Basic.DOM as R
@@ -19,6 +18,9 @@ import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.Window (document)
+
+type Time
+  = { hours :: Int, minutes :: Int, seconds :: Int }
 
 main :: Effect Unit
 main = do
@@ -31,22 +33,16 @@ main = do
 
 mkTime :: Component {}
 mkTime = do
-  now <- nowTime
+  now <- JSDate.now >>= getTime
   component "Time" \_ -> React.do
-    currentTime <- useCurrentTime now
-    let
-      hour = fromEnum (Time.hour currentTime)
-
-      minute = fromEnum (Time.minute currentTime)
-
-      second = fromEnum (Time.second currentTime)
+    { hours, minutes, seconds } <- useCurrentTime now
     pure
       $ R.h1_
           [ R.text
               $ intercalate ":"
-                  [ show hour
-                  , show minute
-                  , show second
+                  [ show hours
+                  , show minutes
+                  , show seconds
                   ]
           ]
 
@@ -60,6 +56,13 @@ useCurrentTime initialTime =
   coerceHook React.do
     currentTime /\ setCurrentTime <- useState' initialTime
     useEffectOnce do
-      intervalId <- setInterval 1000 (nowTime >>= setCurrentTime)
+      intervalId <- setInterval 1000 (JSDate.now >>= getTime >>= setCurrentTime)
       pure (clearInterval intervalId)
     pure currentTime
+
+getTime :: JSDate -> Effect Time
+getTime date = ado
+  hours <- floor <$> JSDate.getHours date
+  minutes <- floor <$> JSDate.getMinutes date
+  seconds <- floor <$> JSDate.getSeconds date
+  in { hours, minutes, seconds }
