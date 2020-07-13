@@ -13,13 +13,6 @@ separateWithDashes = log "------------------"
 
 main :: Effect Unit
 main = do
-  {-
-    PureScript arrays must store values that have the same type. Attempting
-    to store values of different types will result in a compiler error.
-
-    To get around this limitation while still ensuring type safety, we can use
-    `Variant`.
-  -}
   let
     -- Read: "This particular `SProxy` value has the type
     -- `SProxy "typeLevelString"`..."

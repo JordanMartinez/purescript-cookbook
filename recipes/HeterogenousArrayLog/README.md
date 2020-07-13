@@ -2,6 +2,10 @@
 
 This recipe shows how to create, display, and pattern match on a heterogenous array.
 
+PureScript arrays must store values that have the same type. Attempting to store values of different types will result in a compiler error.
+
+To get around this limitation while still ensuring type safety, we can use `Variant`.
+
 ## Expected Behavior:
 
 Prints the following:
