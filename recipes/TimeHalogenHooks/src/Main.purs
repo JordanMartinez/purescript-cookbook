@@ -3,16 +3,15 @@ module TimeHalogenHooks.Main where
 import Prelude
 
 import Control.Monad.Rec.Class (forever)
-import Data.Enum (fromEnum)
+import Data.Int (floor)
 import Data.Interpolate (i)
+import Data.JSDate as JSDate
 import Data.Maybe (Maybe(..))
-import Data.Time (Time(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Aff (Milliseconds(..), error)
 import Effect.Aff as Aff
 import Effect.Aff.Class (class MonadAff)
-import Effect.Now (nowTime)
 import Halogen (liftEffect)
 import Halogen as H
 import Halogen.Aff as HA
@@ -57,10 +56,9 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
     HH.h1_ [ HH.text $ i hour":"minute":"second ]
 
   where
-    getTime = do
-      Time h m s _ <- liftEffect $ nowTime
-      let
-        hour = fromEnum h
-        minute = fromEnum m
-        second = fromEnum s
+    getTime = liftEffect do
+      now <- JSDate.now
+      hour <- floor <$> JSDate.getHours now
+      minute <- floor <$> JSDate.getMinutes now
+      second <- floor <$> JSDate.getSeconds now
       pure { hour, minute, second }
