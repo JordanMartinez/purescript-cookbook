@@ -1,6 +1,6 @@
 { name = "ComponentsHalogenHooks"
 , dependencies =
-  [ "console", "effect", "psci-support", "halogen-hooks", ]
+  [ "console", "effect", "psci-support", "halogen-hooks" ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ComponentsHalogenHooks/src/**/*.purs" ]
 }
