@@ -1,7 +1,6 @@
 module HeterogenousArrayLog.Main where
 
 import Prelude
-
 import Data.Functor.Variant (SProxy(..))
 import Data.Variant (Variant)
 import Data.Variant as Variant
@@ -44,20 +43,17 @@ heterogenousArrayViaSumType = do
       , Bool false
       , Num 82.4
       ]
-
   -- works, but not quite what we want.
   log $ show heterogenousArray
   separateWithDashes
-
   -- better, but does incur some boilerplate
-  log $ show $ heterogenousArray <#> \elem ->
-    case elem of
-      Str s -> s
-      Integer i -> show i
-      Bool b -> show b
-      Num n -> show n
+  log $ show $ heterogenousArray
+    <#> \elem -> case elem of
+        Str s -> s
+        Integer i -> show i
+        Bool b -> show b
+        Num n -> show n
   separateWithDashes
-
   foreachE heterogenousArray \elem -> do
     log case elem of
       Str s -> "String value: " <> s
@@ -80,13 +76,15 @@ heterogenousArrayViaVariant = do
     _boolean :: SProxy "boolean"
     _boolean = SProxy
 
-    heterogenousArray
-      :: Array (Variant
-                  ( typeLevelString :: String
-                  , int :: Int
-                  , boolean :: Boolean
-                  , "this type level string must match the label of the row" :: Number
-                  ))
+    heterogenousArray ::
+      Array
+        ( Variant
+            ( typeLevelString :: String
+            , int :: Int
+            , boolean :: Boolean
+            , "this type level string must match the label of the row" :: Number
+            )
+        )
     heterogenousArray =
       -- To create a value of type `Variant`, we must inject a value into
       -- the data type using a type-level string that refers to the
@@ -97,38 +95,38 @@ heterogenousArrayViaVariant = do
       , Variant.inj _boolean false
       , Variant.inj (SProxy :: SProxy "this type level string must match the label of the row") 82.4
       ]
-
   -- not quite what we want...
   log $ show heterogenousArray
   separateWithDashes
-
   -- a bit better, but still lacking...
   log $ show $ map show heterogenousArray
   separateWithDashes
-
   let
     _mustMatchLabelOfRow :: SProxy "this type level string must match the label of the row"
     _mustMatchLabelOfRow = SProxy
 
     shownArray :: Array String
-    shownArray = heterogenousArray <#> \elem ->
-      -- notice the similarity to pattern matching syntax via `case _ of`
-      -- and that the parenthesis wraps the entire statement
-      -- before we pass in the `elem` argument.
-      (Variant.case_
-        # Variant.on _typeLevelString show
-        # Variant.on _intValue show
-        # Variant.on _boolean show
-        # Variant.on _mustMatchLabelOfRow show) elem
-
+    shownArray =
+      heterogenousArray
+        <#> \elem ->
+            -- notice the similarity to pattern matching syntax via `case _ of`
+            -- and that the parenthesis wraps the entire statement
+            -- before we pass in the `elem` argument.
+            ( Variant.case_
+                # Variant.on _typeLevelString show
+                # Variant.on _intValue show
+                # Variant.on _boolean show
+                # Variant.on _mustMatchLabelOfRow show
+            )
+              elem
   log $ show shownArray
   separateWithDashes
-
   foreachE heterogenousArray \elem -> do
-    log $
-      (Variant.case_
-        # Variant.on _typeLevelString (\str -> "String value: " <> str)
-        # Variant.on _intValue (\i -> "Int value: " <> show i)
-        # Variant.on _boolean (\b -> "Boolean value: " <> show b)
-        # Variant.on _mustMatchLabelOfRow (\num -> "Number value: " <> show num))
-        elem
+    log
+      $ ( Variant.case_
+            # Variant.on _typeLevelString (\str -> "String value: " <> str)
+            # Variant.on _intValue (\i -> "Int value: " <> show i)
+            # Variant.on _boolean (\b -> "Boolean value: " <> show b)
+            # Variant.on _mustMatchLabelOfRow (\num -> "Number value: " <> show num)
+        )
+          elem
