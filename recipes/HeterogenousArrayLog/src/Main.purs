@@ -13,10 +13,20 @@ separateWithDashes = log "------------------"
 
 main :: Effect Unit
 main = do
+  {-
+    PureScript arrays must store values that have the same type. Attempting
+    to store values of different types will result in a compiler error.
+
+    To get around this limitation while still ensuring type safety, we can use
+    `Variant`.
+  -}
   let
+    -- Read: "This particular `SProxy` value has the type
+    -- `SProxy "typeLevelString"`..."
     _typeLevelString :: SProxy "typeLevelString"
     _typeLevelString = SProxy
 
+    -- ... which differs from `SProxy "int"` and the other SProxy types below.
     _intValue :: SProxy "int"
     _intValue = SProxy
 
@@ -31,6 +41,9 @@ main = do
                   , "this type level string must match the label of the row" :: Number
                   ))
     heterogenousArray =
+      -- To create a value of type `Variant`, we must inject a value into
+      -- the data type using a type-level string that refers to the
+      -- corresponding row (i.e. a label-type association)
       [ Variant.inj _typeLevelString "a String value"
       , Variant.inj _intValue 4
       , Variant.inj _boolean true
@@ -38,18 +51,23 @@ main = do
       , Variant.inj (SProxy :: SProxy "this type level string must match the label of the row") 82.4
       ]
 
-    _mustMatchLabelOfRow :: SProxy "this type level string must match the label of the row"
-    _mustMatchLabelOfRow = SProxy
-
+  -- not quite what we want...
   log $ show heterogenousArray
   separateWithDashes
 
+  -- a bit better, but still lacking...
   log $ show $ map show heterogenousArray
   separateWithDashes
 
   let
+    _mustMatchLabelOfRow :: SProxy "this type level string must match the label of the row"
+    _mustMatchLabelOfRow = SProxy
+
+    shownArray :: Array String
     shownArray = heterogenousArray <#> \elem ->
       -- notice similarity to pattern match syntax via `case _ of`
+      -- and that the parenthesis wraps the entire statement
+      -- before we pass in the `elem` argument.
       (Variant.case_
         # Variant.on _typeLevelString show
         # Variant.on _intValue show
