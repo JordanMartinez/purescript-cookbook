@@ -112,7 +112,7 @@ heterogenousArrayViaVariant = do
 
     shownArray :: Array String
     shownArray = heterogenousArray <#> \elem ->
-      -- notice similarity to pattern match syntax via `case _ of`
+      -- notice the similarity to pattern matching syntax via `case _ of`
       -- and that the parenthesis wraps the entire statement
       -- before we pass in the `elem` argument.
       (Variant.case_
