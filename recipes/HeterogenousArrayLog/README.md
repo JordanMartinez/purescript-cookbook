@@ -1,33 +1,16 @@
 # HeterogenousArrayLog
 
-This recipe shows how to create, display, and pattern match on a heterogenous array.
+This recipe demonstrates how to create a heterogenous array and process its elements.
 
-PureScript arrays must store values that have the same type. Attempting to store values of different types will result in a compiler error. Most of the time, one won't use a heterogenous array. However, we do have an "escape hatch"-sort of approach to get around this limitation using sum types or `Variant`. The resulting boilerplate is the cost of type safety.
+PureScript arrays are _homogeneous_, meaning that all values must have the same type. If you want to store values with different types in the same array (i.e. a _heterogeneous_ array), you should wrap all the types you wish to store in either a [sum type](https://github.com/purescript/documentation/blob/master/language/Types.md#tagged-unions) or a [Variant](https://pursuit.purescript.org/packages/purescript-variant). This recipe demonstrates both strategies.
 
 ## Expected Behavior:
 
 Prints the following:
 ```
-[Str(a String value),Integer(4),Bool(true),Bool(false),Num(82.4)]
-------------------
+---- Using Sum Type ----
 ["a String value","4","true","false","82.4"]
-------------------
-String value: a String value
-Int value: 4
-Boolean value: true
-Boolean value: false
-Number value: 82.4
-------------------
-------------------
-[(inj @"typeLevelString" "a String value"),(inj @"int" 4),(inj @"boolean" true),(inj @"boolean" false),(inj @"this type level string must match the label of the row" 82.4)]
-------------------
-["(inj @\"typeLevelString\" \"a String value\")","(inj @\"int\" 4)","(inj @\"boolean\" true)","(inj @\"boolean\" false)","(inj @\"this type level string must match the label of the row\" 82.4)"]
-------------------
-["\"a String value\"","4","true","false","82.4"]
-------------------
-String value: a String value
-Int value: 4
-Boolean value: true
-Boolean value: false
-Number value: 82.4
+
+---- Using Variant Type ----
+["a String value","4","true","false","82.4"]
 ```
