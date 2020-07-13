@@ -120,3 +120,4 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [TimeHalogenHooks](recipes/TimeHalogenHooks) | A Halogen port of the ["Time - Time" Elm Example](https://elm-lang.org/examples/time). |
 |   | :heavy_check_mark: | [TimeReactHooks](recipes/TimeReactHooks) | A React port of the ["User Interface - Time" Elm Example](https://elm-lang.org/examples/time). |
 |   | :heavy_check_mark: | [WindowPropertiesJs](recipes/WindowPropertiesJs) | This recipe shows how to get and print various properties in the browser's `window` object. |
+| :heavy_check_mark: |   | [WriteFileNode](recipes/WriteFileNode) | Writes a `String` to a text file using UTF-8 encoding. |
