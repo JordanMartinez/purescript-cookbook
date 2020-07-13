@@ -96,6 +96,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [CatGifsReactHooks](recipes/CatGifsReactHooks) | A React port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 |   | :heavy_check_mark: | [ComponentsHalogenHooks](recipes/ComponentsHalogenHooks) | Demonstrates how to nest one Halogen-Hooks-based component inside another and send/receive queries between the two. |
 |   | :heavy_check_mark: | [ComponentsInputHalogenHooks](recipes/ComponentsInputHalogenHooks) | Each time a parent re-renders, it will pass a new input value into the child, and the child will update accordingly. |
+|   | :heavy_check_mark: | [ComponentsMultiTypeHalogenHooks](recipes/ComponentsMultiTypeHalogenHooks) | Each time a parent re-renders, it will pass a new input value into the child, and the child will update accordingly. |
 | :heavy_check_mark: | :heavy_check_mark: | [DebuggingLog](recipes/DebuggingLog) | This recipe shows how to do print-debugging using the `Debug` module's `spy` and `traceM` functions. The compiler will emit warnings to remind you to remove these debug functions before you ship production code. |
 | :heavy_check_mark: |   | [DiceCLI](recipes/DiceCLI) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
 | :heavy_check_mark: | :heavy_check_mark: | [DiceLog](recipes/DiceLog) | This recipe shows how to log a random integer between 1 and 6 (representing a roll of a die) in either the node.js or web browser console. |
