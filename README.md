@@ -102,7 +102,8 @@ Running a web-compatible recipe:
 | :heavy_check_mark: | :heavy_check_mark: | [DiceLog](recipes/DiceLog) | This recipe shows how to log a random integer between 1 and 6 (representing a roll of a die) in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [DragAndDropHalogenHooks](recipes/DragAndDropHalogenHooks) | A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop). |
 |   | :heavy_check_mark: | [DriverIoHalogenHooks](recipes/DriverIoHalogenHooks) | Demonstrates how to communicate with a Halogen application by sending messages to and receiving messages from the root-level component via the driver. |
-|   | :heavy_check_mark: | [DriverRoutingHalogenHooks](recipes/DriverRoutingHalogenHooks) | Demonstrates how to communicate with a Halogen application by sending messages to and receiving messages from the root-level component via the driver. |
+|   | :heavy_check_mark: | [DriverRoutingHalogenHooks](recipes/DriverRoutingHalogenHooks) | Demonstrates using `hashchange` events to drive the root component in a Halogen application via the driver. |
+|   | :heavy_check_mark: | [DriverWebSocketsHalogenHooks](recipes/DriverWebSocketsHalogenHooks) | Demonstrates using a WebSocket to drive the main component in a Halogen application. |
 |   | :heavy_check_mark: | [FileUploadHalogenHooks](recipes/FileUploadHalogenHooks) | A Halogen port of the ["Files - Upload" Elm Example](https://elm-lang.org/examples/upload). |
 |   | :heavy_check_mark: | [FindDomElementJs](recipes/FindDomElementJs) | This recipe shows how to find elements in the DOM by using query selectors. |
 |   | :heavy_check_mark: | [FormsReactHooks](recipes/FormsReactHooks) | A React port of the ["User Interface - Forms" Elm Example](https://elm-lang.org/examples/forms). |
