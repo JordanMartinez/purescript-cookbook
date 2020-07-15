@@ -95,10 +95,15 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [CatGifsHalogenHooks](recipes/CatGifsHalogenHooks) | A Halogen port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 |   | :heavy_check_mark: | [CatGifsReactHooks](recipes/CatGifsReactHooks) | A React port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs). |
 |   | :heavy_check_mark: | [ComponentsHalogenHooks](recipes/ComponentsHalogenHooks) | Demonstrates how to nest one Halogen-Hooks-based component inside another and send/receive queries between the two. |
+|   | :heavy_check_mark: | [ComponentsInputHalogenHooks](recipes/ComponentsInputHalogenHooks) | Each time a parent re-renders, it will pass a new input value into the child, and the child will update accordingly. |
+|   | :heavy_check_mark: | [ComponentsMultiTypeHalogenHooks](recipes/ComponentsMultiTypeHalogenHooks) | Demonstrates a component that can communicate with its children that have differing types. |
 | :heavy_check_mark: | :heavy_check_mark: | [DebuggingLog](recipes/DebuggingLog) | This recipe shows how to do print-debugging using the `Debug` module's `spy` and `traceM` functions. The compiler will emit warnings to remind you to remove these debug functions before you ship production code. |
 | :heavy_check_mark: |   | [DiceCLI](recipes/DiceCLI) | This recipe shows how to create an interactive command line prompt that repeatedly generates a random number between 1 and 6. |
 | :heavy_check_mark: | :heavy_check_mark: | [DiceLog](recipes/DiceLog) | This recipe shows how to log a random integer between 1 and 6 (representing a roll of a die) in either the node.js or web browser console. |
 |   | :heavy_check_mark: | [DragAndDropHalogenHooks](recipes/DragAndDropHalogenHooks) | A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop). |
+|   | :heavy_check_mark: | [DriverIoHalogenHooks](recipes/DriverIoHalogenHooks) | Demonstrates how to communicate with a Halogen application by sending messages to and receiving messages from the root-level component via the driver. |
+|   | :heavy_check_mark: | [DriverRoutingHalogenHooks](recipes/DriverRoutingHalogenHooks) | Demonstrates using `hashchange` events to drive the root component in a Halogen application via the driver. |
+|   | :heavy_check_mark: | [DriverWebSocketsHalogenHooks](recipes/DriverWebSocketsHalogenHooks) | Demonstrates using a WebSocket to drive the main component in a Halogen application. |
 |   | :heavy_check_mark: | [FileUploadHalogenHooks](recipes/FileUploadHalogenHooks) | A Halogen port of the ["Files - Upload" Elm Example](https://elm-lang.org/examples/upload). |
 |   | :heavy_check_mark: | [FindDomElementJs](recipes/FindDomElementJs) | This recipe shows how to find elements in the DOM by using query selectors. |
 |   | :heavy_check_mark: | [FormsReactHooks](recipes/FormsReactHooks) | A React port of the ["User Interface - Forms" Elm Example](https://elm-lang.org/examples/forms). |
@@ -110,6 +115,9 @@ Running a web-compatible recipe:
 | :heavy_check_mark: | :heavy_check_mark: | [HelloWorldLog](recipes/HelloWorldLog) | This recipe shows how to run a simple "Hello world!" program in either the node.js or web browser console. |
 | :heavy_check_mark: | :heavy_check_mark: | [HeterogenousArrayLog](recipes/HeterogenousArrayLog) | This recipe demonstrates how to create a heterogenous array and process its elements. |
 |   | :heavy_check_mark: | [ImagePreviewsHalogenHooks](recipes/ImagePreviewsHalogenHooks) | A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop). |
+|   | :heavy_check_mark: | [InterpretHalogenHooks](recipes/InterpretHalogenHooks) | Demonstrates how to use a custom monad (in this case, using `ReaderT` with `Aff` as the effect type) for a component, and then interpreting that custom monad back down to `Aff`, so it can be run as a normal component. |
+|   | :heavy_check_mark: | [KeyboardInputHalogenHooks](recipes/KeyboardInputHalogenHooks) | This example demonstrates how to selectively capture keyboard events and, more generally, how to use `EventSource`s in Halogen. |
+|   | :heavy_check_mark: | [LifecycleHalogenHooks](recipes/LifecycleHalogenHooks) | Demonstrates component lifecycle. |
 |   | :heavy_check_mark: | [NumbersHalogenHooks](recipes/NumbersHalogenHooks) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
 |   | :heavy_check_mark: | [NumbersReactHooks](recipes/NumbersReactHooks) | A React port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
 |   | :heavy_check_mark: | [PositionsHalogenHooks](recipes/PositionsHalogenHooks) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions). |
