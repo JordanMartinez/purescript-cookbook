@@ -109,7 +109,7 @@ childComponent id = Hooks.component \rec _ -> Hooks.do
         msg = case m of
           Initialized -> "Heard Initialized from cell" <> show i
           Finalized -> "Heard Finalized from cell" <> show i
-          Reported msg -> "Re-reporting from cell" <> show i <> ": " <> msg
+          Reported msg' -> "Re-reporting from cell" <> show i <> ": " <> msg'
       liftEffect $ log $ "Child " <> show i <> " >>> " <> msg
       Hooks.raise outputToken (Reported msg)
 
