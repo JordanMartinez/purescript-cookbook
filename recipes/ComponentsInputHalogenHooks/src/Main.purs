@@ -2,7 +2,7 @@ module ComponentsInputHalogenHooks.Main where
 
 import Prelude hiding (top)
 
-import Data.Maybe (Maybe, maybe)
+import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
