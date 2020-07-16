@@ -163,6 +163,12 @@ prodDistDir = $(call recipeDir,$1)/prod-dist
 > @echo === Building $* ===
 > spago -x $(call recipeSpago,$*) build
 
+# Watches for changes and rebuilds recipe
+.PHONY: %-build-watch
+%-build-watch:
+> @echo === Watching to Build $* ===
+> spago -x $(call recipeSpago,$*) build -w
+
 # Tests whether recipe can be run on web browser backend
 recipes/%/web:
 > @echo Recipe $* is not compatible with the web browser backend

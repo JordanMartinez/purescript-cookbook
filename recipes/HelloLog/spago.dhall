@@ -1,8 +1,8 @@
-{ name = "HelloWorldLog"
+{ name = "HelloLog"
 , dependencies =
   [ "console", "effect", "psci-support" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/HelloWorldLog/src/**/*.purs" ]
+, sources = [ "recipes/HelloLog/src/**/*.purs" ]
 }
 {-
 sources does not work with paths relative to this config
