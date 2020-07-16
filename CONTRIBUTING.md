@@ -8,27 +8,29 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 
 #### Goal 1: Claim and Start Working on a Recipe Request
 
-1. Search currently open "Recipe Request" issues. If there isn't one for your recipe, open a new "Recipe Request" issue for it. This is where you'll find the "Unique Recipe Name" (i.e. short description of the problem using PascalCase, such as "HelloWorld")
-1. State on the issue that you'll be implementing the recipe and how long we should wait before following up with you if you haven't finished it yet. If you do not post this, we will assume that you will have it done within two weeks.
-    - This helps avoid two issues. First, it prevents two developers from working on the same recipe independently. Second, one developer who wants to implement the recipe may think someone else who has started work on it and then abandoned it is still working on it.
+1. Search currently [open "Recipe Request" issues](https://github.com/JordanMartinez/purescript-cookbook/issues?q=is%3Aissue+is%3Aopen+label%3Arecipe-request).
+1. If your recipe idea is unique, open a new ["Recipe Request" issue](https://github.com/JordanMartinez/purescript-cookbook/issues/new?assignees=&labels=recipe-request&template=recipe-request.md&title=)
+1. Proceed to the next step if you'd like to implement this recipe yourself.
 
 #### Goal 2: Setup a New Recipe's Boilerplate by Copying a Current Similar One
 
-1. Pick an existing recipe to duplicate as a starting point. The `HelloWorld` recipe is the simplest and is set up to work on both Node.js and Browser backends.
-    - In the examples that follow, we'll assume that you copied the `HelloWorld` recipe and wish to use the "Unique Recipe Name" of `MyNewRecipe`
+1. Pick an existing recipe to duplicate as a starting point. The `HelloLog` recipe is the simplest and is set up to work on both Node.js and Browser backends.
+    - In the examples that follow, we'll assume that you copied the `HelloLog` recipe and wish to use the "Unique Recipe Name" of `MyNewRecipe`
+    ```
+    cd recipes
+    cp -r HelloLog MyNewRecipe
+    ```
 1. Rename the copied folder to the "Unique Recipe Name" assigned in the original issue.
 1. Depending on the backend-compatibility of your recipe, follow the instructions below:
-    1. If your recipe is incompatible with the browser enviornment, delete the `web` directory.
+    1. If your recipe is incompatible with the browser environment, delete the `web` directory.
         - If your recipe uses `node-*` libraries, it is incompatible with the browser.
         - Logging to the console **is** supported in the browser.
     1. If your recipe is incompatible with the Node.js backend, delete the `nodeSupported.md` file.
     1. If your recipe is compatible with Node.js, but the resulting program should not be run during CI (e.g. a program that parses command-line arguments), then rename `nodeSupported.md` to `nodeSupportedSkipCI.md`.
-1. Replace all usages of the original recipe's "Unique Recipe Name" with your recipe's "Unique Recipe Name." To find all instances, `cd` into your recipe folder and run `grep -r <originalUniqueRecipeName>`. For example, `HelloWorld` would be replaced with `MyNewRecipe` in the following files (as of this writing):
-    - `recipes/MyNewRecipe/spago.dhall`
-    - `recipes/MyNewRecipe/README.md`
-    - `recipes/MyNewRecipe/src/Main.purs`
-    - `recipes/MyNewRecipe/web/index.html`
-    - `recipes/MyNewRecipe/web/index.js`
+1. Replace all usages of the original recipe's name with your new recipe's name. For example:
+    ```
+    grep -rl 'HelloLog' MyNewRecipe | xargs sed -i 's/HelloLog/MyNewRecipe/g'
+    ```
 
 #### Goal 3: Implement and Submit the Recipe
 
@@ -38,15 +40,15 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
         1. Change directory into your recipe folder: `cd recipes/MyRecipeName`
         1. Install dependencies as normal: `spago install <packageName>`
         1. Return to the root directory: `cd ../..`
-    - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more contxt).
+    - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more context).
 1. Install needed `npm` dependencies via `npm i <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
     - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
 1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
-    - Run `spago -x recipes/MyNewRecipe/spago.dhall build -w` while in the root folder for faster iteration while developing
+    - Run `make MyNewRecipe-build-watch` while in the root folder if you'd like to automatically rebuild recipes upon changes.
 1. Update your recipe's `README.md` file by doing the following things:
-    1. Write a full sumary of your recipe on the 3rd line (i.e. don't use any newlines). This is what will appear in the repo's Recipe section's Table of Contents.
+    1. Write a summary of your recipe on the 3rd line. This is what will appear in the repo's Recipe section's Table of Contents. Don't add newlines unless you're okay with that additional content being omitted from the table.
     1. Update the "Expected Behavior" section to describe in more detail what should occur when users run your recipe.
-    1. Link to any other resources that a reader might find helpful. Do not explain things further.
+    1. Link to any other resources that a reader might find helpful. No need for detailed explanations of libraries here.
     1. List the `npm` dependencies your recipe uses (if any).
 1. Regenerate the table of recipes by running `make readme` while in the root folder
 1. Submit a PR. The first line should read `Fixes #X` where `X` refers to the original "Recipe Request" issue you claimed.
