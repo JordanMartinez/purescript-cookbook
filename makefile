@@ -228,7 +228,7 @@ testAllCI: $(targetsAllCI)
 # recipe actually works.
 testAllCommands:
 > $(MAKE)
-> $(MAKE) HelloWorldLog-node
-> $(MAKE) HelloWorldLog-build
-> $(MAKE) HelloWorldLog-buildWeb
-> $(MAKE) HelloWorldLog-buildProd
+> $(MAKE) HelloLog-node
+> $(MAKE) HelloLog-build
+> $(MAKE) HelloLog-buildWeb
+> $(MAKE) HelloLog-buildProd
