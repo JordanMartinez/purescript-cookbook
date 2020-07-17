@@ -36,12 +36,12 @@ Use "make RecipeName-target" to run a recipe
 
 === Node Recipes ===
 make ReadPrintFileContents-node
-make HelloWorld-node
+make HelloLog-node
 ...
 
 === Web Recipes ===
 make WindowProperties-web
-make HelloWorld-web
+make HelloLog-web
 ...
 ```
 
@@ -49,8 +49,8 @@ Then simply copy and paste one of the listed commands. For example:
 
 Running a node-compatible recipe:
 ```
-> make HelloWorld-node
-=== Running HelloWorld on the Node.js backend ===
+> make HelloLog-node
+=== Running HelloLog on the Node.js backend ===
 [info] Installation complete.
 [info] Build succeeded.
 Hello world!
@@ -58,11 +58,11 @@ Hello world!
 
 Running a web-compatible recipe:
 ```
-> make HelloWorld-web
-=== Building HelloWorld ===
+> make HelloLog-web
+=== Building HelloLog ===
 [info] Installation complete.
 [info] Build succeeded.
-=== Launching HelloWorld in the web browser ===
+=== Launching HelloLog in the web browser ===
 ...
 ```
 
@@ -70,11 +70,12 @@ Running a web-compatible recipe:
 
 | Recipes ending with ... | ... mean the following approach/library is used |
 | - | - |
-| `HalogenClassic` | Component-style Halogen  |
-| `HalogenHooks` | Hooks-style Halogen |
-| `ReactClassic` | Component-style React via [react-basic](https://github.com/lumihq/purescript-react-basic) |
-| `ReactHooks` | Hooks-style React via [react-basic](https://github.com/lumihq/purescript-react-basic) |
-| `Js` | Run plain PureScript on the web without a web framework |
-| `Log` | Log content to both the browser's console and the terminal |
-| `Node` | Run PureScript on Node.js where no user interaction occurs |
-| `CLI` | Run PureScript on Node.js with user interaction |
+| `HalogenClassic` | [Component-style Halogen](https://github.com/purescript-halogen/purescript-halogen/)  |
+| `HalogenHooks` | [Hooks-style Halogen](https://github.com/thomashoneyman/purescript-halogen-hooks/) |
+| `ReactClassic` | [Component-style React](https://github.com/lumihq/purescript-react-basic-classic) via [react-basic](https://github.com/lumihq/purescript-react-basic) |
+| `ReactHooks` | [Hooks-style React](https://github.com/spicydonuts/purescript-react-basic-hooks/) via [react-basic](https://github.com/lumihq/purescript-react-basic) |
+| `Concur` | [Concur](https://github.com/purescript-concur/purescript-concur-react) |
+| `Js` | Run plain PureScript **only** on the web (no node.js) without a web framework |
+| `Log` | Log content to **both** the browser's dev console and the terminal |
+| `Node` | Run PureScript **only** on Node.js where no user interaction occurs |
+| `CLI` | Run PureScript **only** on Node.js with user interaction |

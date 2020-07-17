@@ -139,11 +139,17 @@ nodeCompatSkipCI = $(call recipeDir,$1)/nodeSupportedSkipCI.md
 >   exit 1
 > fi
 
-.PHONY: %-node
 # Runs recipe as node.js console app
+.PHONY: %-node
 %-node: $(call recipeDir,%) %-nodeCompatible
 > @echo === Running $* on the Node.js backend ===
 > spago -x $(call recipeSpago,$*) run --main $(call main,$*)
+
+# Watches for changes and rebuilds and reruns recipe as node.js console app
+.PHONY: %-node-watch
+%-node-watch: $(call recipeDir,%) %-nodeCompatible
+> @echo === Watching to build and run $* on the Node.js backend ===
+> spago -x $(call recipeSpago,$*) run --main $(call main,$*) -w
 
 # Functions for browser-comptabile recipes that help generate paths
 
