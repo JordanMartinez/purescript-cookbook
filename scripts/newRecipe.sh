@@ -46,7 +46,7 @@ make $1-build
 # Disable echo of all following script commands
 set +x
 
-echo Some helpful development commands for this recipe:
+echo --- Some helpful development commands for this recipe: ---
 
 # Basic node
 [ -f recipes/$1/nodeSupported.md ] && cat <<CMD
@@ -75,7 +75,9 @@ CMD
 # Common
 cat <<CMD
 
-* Manual Rebuild:
+--------- Common to all recipe types: ---------
+
+* Manual rebuild:
     make $1-build
 
 * Regenerate recipe table (run this after editing recipes/$1/README.md):
