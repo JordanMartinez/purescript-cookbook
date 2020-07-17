@@ -1,24 +1,8 @@
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.13.6-20200507/packages.dhall sha256:9c1e8951e721b79de1de551f31ecb5a339e82bbd43300eb5ccfb1bf8cf7bbd62
+      https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20200716/packages.dhall sha256:c4683b4c4da0fd33e0df86fc24af035c059270dd245f68b79a7937098f6c6542
 
 let overrides = {=}
 
-let additions =
-  { ace =
-      { dependencies =
-          [ "arrays"
-          , "effect"
-          , "foreign"
-          , "nullable"
-          , "prelude"
-          , "web-html"
-          , "web-uievents"
-          ]
-      , repo =
-          "https://github.com/purescript-contrib/purescript-ace.git"
-      , version =
-          "v7.0.0"
-      }
-  }
+let additions = {=}
 
 in  upstream // overrides // additions
