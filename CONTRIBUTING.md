@@ -14,22 +14,18 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 
 #### Goal 2: Setup a New Recipe's Boilerplate by Copying a Current Similar One
 
-1. Pick an existing recipe to duplicate as a starting point. The `HelloLog` recipe is the simplest and is set up to work on both Node.js and Browser backends.
-    - In the examples that follow, we'll assume that you copied the `HelloLog` recipe and wish to use the "Unique Recipe Name" of `MyNewRecipe`
+1. Pick an existing recipe to duplicate as a starting point. Here are some suggestions:
+    - `HelloLog` - If your recipe is compatible with both Node.js and web browser backends. _Note:_ Logging to the console **is** supported by **both** backends.
+    - `ReadPrintFileContentsNode` - If your recipe is **only** compatible with the `Node.js` backend.
+    - `DiceCLI` - If your recipe is **only** compatible with the `Node.js` backend **and** requires user interact for testing (e.g. a CLI app). This is to prevent our CI process from blocking while waiting for input during testing.
+    - `WindowPropertiesJs` - If your recipe is **only** compatible with the web browser backend.
+    - If your recipe targets a particular web framework:
+        - `HelloConcur`
+        - `HelloHalogenHooks`
+        - `HelloReactHooks`
+1. Run the recipe creation script. Substitute `MyNewRecipe` with your recipe name:
     ```
-    cd recipes
-    cp -r HelloLog MyNewRecipe
-    ```
-1. Rename the copied folder to the "Unique Recipe Name" assigned in the original issue.
-1. Depending on the backend-compatibility of your recipe, follow the instructions below:
-    1. If your recipe is incompatible with the browser environment, delete the `web` directory.
-        - If your recipe uses `node-*` libraries, it is incompatible with the browser.
-        - Logging to the console **is** supported in the browser.
-    1. If your recipe is incompatible with the Node.js backend, delete the `nodeSupported.md` file.
-    1. If your recipe is compatible with Node.js, but the resulting program should not be run during CI (e.g. a program that parses command-line arguments), then rename `nodeSupported.md` to `nodeSupportedSkipCI.md`.
-1. Replace all usages of the original recipe's name with your new recipe's name. For example:
-    ```
-    grep -rl 'HelloLog' MyNewRecipe | xargs sed -i 's/HelloLog/MyNewRecipe/g'
+    ./scripts/newRecipe.sh MyNewRecipe HelloLog
     ```
 
 #### Goal 3: Implement and Submit the Recipe
