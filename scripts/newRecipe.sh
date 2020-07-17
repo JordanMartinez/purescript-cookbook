@@ -37,9 +37,6 @@ cp -r recipes/$orig recipes/$1
 # Replace all usages of the original recipe's name with the new recipe's name
 grep -rl $orig recipes/$1 | xargs sed -i "s/$orig/$1/g"
 
-# Build recipe
-make $1-build
-
 
 # ====== Additional instructions =======
 
