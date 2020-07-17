@@ -119,6 +119,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [InterpretHalogenHooks](recipes/InterpretHalogenHooks) | Demonstrates how to use a custom monad (in this case, using `ReaderT` with `Aff` as the effect type) for a component, and then interpreting that custom monad back down to `Aff`, so it can be run as a normal component. |
 |   | :heavy_check_mark: | [KeyboardInputHalogenHooks](recipes/KeyboardInputHalogenHooks) | This example demonstrates how to selectively capture keyboard events and, more generally, how to use `EventSource`s in Halogen. |
 |   | :heavy_check_mark: | [LifecycleHalogenHooks](recipes/LifecycleHalogenHooks) | Demonstrates component lifecycle. |
+| :heavy_check_mark: | :heavy_check_mark: | [MemoizeFibonacci](recipes/MemoizeFibonacci) | This recipe demonstrates correct and incorrect use of the [`memoize`](https://pursuit.purescript.org/packages/purescript-memoize/docs/Data.Function.Memoize#v:memoize) function by calculating the fibonacci sequence. |
 |   | :heavy_check_mark: | [NumbersHalogenHooks](recipes/NumbersHalogenHooks) | A Halogen port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
 |   | :heavy_check_mark: | [NumbersReactHooks](recipes/NumbersReactHooks) | A React port of the ["Random - Numbers" Elm Example](https://elm-lang.org/examples/numbers). |
 |   | :heavy_check_mark: | [PositionsHalogenHooks](recipes/PositionsHalogenHooks) | A Halogen port of the ["Random - Positions" Elm Example](https://elm-lang.org/examples/positions). |
