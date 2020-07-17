@@ -2,6 +2,8 @@
 
 A React port of the ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs).
 
+Broken due to upgrading package set to `psc-0.13.8-20200716`.
+
 ## Expected Behavior:
 
 ### Browser

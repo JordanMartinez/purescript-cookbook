@@ -23,7 +23,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Halogen.Hooks (HookM, StateToken)
+import Halogen.Hooks (HookM, StateId)
 import Halogen.Hooks as Hooks
 import Halogen.Hooks.Extra.Actions.Events (preventDefault)
 import Halogen.VDom.Driver (runUI)
@@ -134,7 +134,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   where
     putFileUrls
       :: Ref (Array (Effect Unit))
-      -> StateToken (Array String)
+      -> StateId (Array String)
       -> Array File
       -> HookM anyMonad Unit
     putFileUrls arrayRef idx files = do
