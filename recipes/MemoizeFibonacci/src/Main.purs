@@ -44,6 +44,8 @@ type-check. Feel free to experiment with these yourself:
   * `fibMemo = memoize fibFast`
 * Move to a `let` or `where` clause inside of `fibFast`.
 -}
+
+
 main :: Effect Unit
 main = do
   log $ i "basic fib result: " $ fib 7
