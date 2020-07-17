@@ -10,17 +10,13 @@ import Effect.Class.Console (log)
 -- Basic fibonacci implementation
 fib :: Int -> Int
 fib 0 = 0
-
 fib 1 = 1
-
 fib n = fib (n - 2) + fib (n - 1)
 
 -- Same as `fib`, but with `spy` statements added to reveal duplicated work
 fibSlow :: Int -> Int
 fibSlow 0 = spy "fibSlow 0" 0
-
 fibSlow 1 = spy "fibSlow 1" 1
-
 fibSlow n =
   spy ("fibSlow " <> show n)
     $ fibSlow (n - 2)
@@ -29,9 +25,7 @@ fibSlow n =
 -- Fast memoized version of fibonacci
 fibFast :: Int -> Int
 fibFast 0 = spy "fibFast 0" 0
-
 fibFast 1 = spy "fibFast 1" 1
-
 fibFast n =
   spy ("fibFast " <> show n)
     $ fibMemo (n - 2)
