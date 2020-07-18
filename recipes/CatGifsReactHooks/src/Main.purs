@@ -43,17 +43,21 @@ mkCatGifs = do
     gifState <- toGifState <$> useAff resetToken getRandomCatGif
     let
       onClick = handler_ reset
-    pure case gifState of
-      Loading -> R.text "Loading..."
-      Failure ->
-        R.div_
-          [ R.text "I could not load a random cat for some reason. "
-          , R.button { onClick, children: [ R.text "Try Again!" ] }
-          ]
-      Success url ->
-        R.div_
-          [ R.button { onClick, style: css { display: "block" }, children: [ R.text "More Please!" ] }
-          , R.img { src: url }
+    pure
+      $ R.div_
+          [ R.h2_ [ R.text "Random Cats" ]
+          , case gifState of
+              Loading -> R.text "Loading..."
+              Failure ->
+                R.div_
+                  [ R.text "I could not load a random cat for some reason. "
+                  , R.button { onClick, children: [ R.text "Try Again!" ] }
+                  ]
+              Success url ->
+                R.div_
+                  [ R.button { onClick, style: css { display: "block" }, children: [ R.text "More Please!" ] }
+                  , R.img { src: url }
+                  ]
           ]
 
 -- | Collapse nested `Maybe`s to our `GifState` type
