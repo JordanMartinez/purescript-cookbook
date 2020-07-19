@@ -8,7 +8,7 @@ import Data.Newtype (class Newtype)
 import Effect (Effect)
 import Effect.Exception (throw)
 import Effect.Timer (clearInterval, setInterval)
-import Math (cos, pi, sin)
+import Math (cos, sin, tau)
 import React.Basic.DOM (render)
 import React.Basic.DOM.SVG as SVG
 import React.Basic.Hooks (Component, Hook, JSX, UseEffect, UseState, coerceHook, component, useEffectOnce, useState', (/\))
@@ -51,7 +51,7 @@ mkClock = do
 hand :: Int -> Number -> Number -> JSX
 hand width length turns =
   let
-    t = 2.0 * pi * (turns - 0.25)
+    t = tau * (turns - 0.25)
 
     x = 200.0 + length * cos t
 
