@@ -27,13 +27,13 @@ main = do
   case container of
     Nothing -> throw "Root element not found."
     Just c -> do
-      time <- mkTime
-      render (time {}) c
+      clock <- mkClock
+      render (clock {}) c
 
-mkTime :: Component {}
-mkTime = do
+mkClock :: Component {}
+mkClock = do
   now <- JSDate.now >>= getTime
-  component "Time" \_ -> React.do
+  component "Clock" \_ -> React.do
     { hours, minutes, seconds } <- useCurrentTime now
     pure
       $ SVG.svg
