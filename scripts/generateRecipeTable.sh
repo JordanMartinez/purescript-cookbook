@@ -18,7 +18,7 @@ for d in recipes/*; do
   fi
   browser=" "
   if [ -d $d/web ]; then
-    browser=":heavy_check_mark:"
+    browser=":heavy_check_mark: ([try](https://try.ps.ai/?github=JordanMartinez/purescript-cookbook/master/recipes/$base/src/Main.purs))"
   fi
   echo "| $node | $browser | [$base]($d) | $description |"
 done

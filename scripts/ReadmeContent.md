@@ -21,7 +21,7 @@ make installDeps
 ```
 
 Install for Nix users:
-```
+```sh
 # Remove purescript and spago and removing traling , from package.json
 sed --in-place '/purescript\|spago/d' ./package.json && sed --in-place '$!N;s/,\n  }/\n  }/;P;D' package.json
 nix-shell
