@@ -10,19 +10,19 @@ import React.Basic.DOM as R
 import React.Basic.Events (handler_)
 import React.Basic.Hooks (Component, component, useState', (/\))
 import React.Basic.Hooks as React
-import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.HTMLDocument (body)
+import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  container <- getElementById "root" =<< map toNonElementParentNode (document =<< window)
-  case container of
-    Nothing -> throw "Root element not found."
-    Just c -> do
+  body <- body =<< document =<< window
+  case body of
+    Nothing -> throw "Could not find body."
+    Just b -> do
       numbers <- mkNumbers
-      render (numbers {}) c
+      render (numbers {}) (toElement b)
 
 mkNumbers :: Component {}
 mkNumbers = do

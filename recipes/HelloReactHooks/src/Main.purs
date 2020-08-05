@@ -7,19 +7,19 @@ import Effect.Exception (throw)
 import React.Basic.DOM (render)
 import React.Basic.DOM as R
 import React.Basic.Hooks (Component, component)
-import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.HTMLDocument (body)
+import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  container <- getElementById "root" =<< map toNonElementParentNode (document =<< window)
-  case container of
-    Nothing -> throw "Root element not found."
-    Just c -> do
+  body <- body =<< document =<< window
+  case body of
+    Nothing -> throw "Could not find body."
+    Just b -> do
       helloComponent <- mkHelloComponent
-      render (helloComponent {}) c
+      render (helloComponent {}) (toElement b)
 
 mkHelloComponent :: Component {}
 mkHelloComponent = do

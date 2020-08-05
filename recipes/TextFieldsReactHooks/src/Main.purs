@@ -12,19 +12,19 @@ import React.Basic.DOM.Events (targetValue)
 import React.Basic.Events (handler)
 import React.Basic.Hooks (Component, component, useState, (/\))
 import React.Basic.Hooks as React
-import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.HTMLDocument (body)
+import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  container <- getElementById "root" =<< map toNonElementParentNode (document =<< window)
-  case container of
-    Nothing -> throw "Root element not found."
-    Just c -> do
+  body <- body =<< document =<< window
+  case body of
+    Nothing -> throw "Could not find body."
+    Just b -> do
       textField <- mkTextField
-      render (textField {}) c
+      render (textField {}) (toElement b)
 
 mkTextField :: Component {}
 mkTextField = do
