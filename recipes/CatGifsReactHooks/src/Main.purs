@@ -17,9 +17,9 @@ import React.Basic.Hooks (Component, component, (/\))
 import React.Basic.Hooks as React
 import React.Basic.Hooks.Aff (useAff)
 import React.Basic.Hooks.ResetToken (useResetToken)
-import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.HTMLDocument (body)
+import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
 data GifState
@@ -29,12 +29,12 @@ data GifState
 
 main :: Effect Unit
 main = do
-  container <- getElementById "root" =<< map toNonElementParentNode (document =<< window)
-  case container of
-    Nothing -> throw "Root element not found."
-    Just c -> do
+  body <- body =<< document =<< window
+  case body of
+    Nothing -> throw "Could not find body."
+    Just b -> do
       catGifs <- mkCatGifs
-      render (catGifs {}) c
+      render (catGifs {}) (toElement b)
 
 mkCatGifs :: Component {}
 mkCatGifs = do

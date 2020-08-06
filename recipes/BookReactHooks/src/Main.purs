@@ -13,9 +13,9 @@ import React.Basic.DOM as R
 import React.Basic.Hooks (Component, component)
 import React.Basic.Hooks as React
 import React.Basic.Hooks.Aff (useAff)
-import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.HTMLDocument (body)
+import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
 data TextState
@@ -24,24 +24,25 @@ data TextState
 
 main :: Effect Unit
 main = do
-  container <- getElementById "root" =<< map toNonElementParentNode (document =<< window)
-  case container of
-    Nothing -> throw "Root element not found."
-    Just c -> do
+  body <- body =<< document =<< window
+  case body of
+    Nothing -> throw "Could not find body."
+    Just b -> do
       bookComponent <- mkBookComponent
-      render (bookComponent {}) c
+      render (bookComponent {}) (toElement b)
 
 mkBookComponent :: Component {}
 mkBookComponent = do
   let
     url = "https://elm-lang.org/assets/public-opinion.txt"
   component "Book" \_ -> React.do
-    textState <- useAff unit do
-      result <- Affjax.get ResponseFormat.string url
-      pure case result of
-        Right response
-          | response.status == StatusCode 200 -> Success response.body
-        _ -> Failure
+    textState <-
+      useAff unit do
+        result <- Affjax.get ResponseFormat.string url
+        pure case result of
+          Right response
+            | response.status == StatusCode 200 -> Success response.body
+          _ -> Failure
     pure case textState of
       Nothing -> R.text "Loading..."
       Just Failure -> R.text "I was unable to load your book."
