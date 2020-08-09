@@ -1,6 +1,6 @@
 # ImagePreviewsHalogenHooks
 
-A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop).
+A Halogen port of the ["Files - Drag-and-Drop" Elm Example](https://elm-lang.org/examples/drag-and-drop) with an additional feature to display image thumbnails.
 
 ## Expected Behavior:
 
