@@ -23,25 +23,28 @@ import Partial.Unsafe (unsafePartial)
 main :: Effect Unit
 main = do
   log "Verify codec is bidirectional"
+  log "Rountrip 1: decode (encode x) == x:"
   let encodeDecodeValue = decode entireRecordCodec (encode entireRecordCodec exampleValue)
   case encodeDecodeValue of
     Left error -> log $ printJsonDecodeError error
-    Right value -> log $ "encode, then decode: " <> show (value == exampleValue)
+    Right value -> logShow (value == exampleValue)
 
+  log "Rountrip 2: encode (decode x) == x"
   let decodeEncodeValue = encode entireRecordCodec <$> (decode entireRecordCodec exampleJson)
   case decodeEncodeValue of
     Left error -> log $ printJsonDecodeError error
-    Right value -> log $ "decode, then encode: " <> show (value == exampleJson)
+    Right value -> logShow (value == exampleJson)
 
-  log "Parsing the example JSON"
-  let decodedValue = decode entireRecordCodec exampleJson
-  log $ "Decoded Value was:"
-  logShow decodedValue
+  log "\n\n"
 
-  log $ "Example value is: "
-  logShow exampleValue
-  let encodedValue = encode entireRecordCodec exampleValue
-  log $ stringify encodedValue
+  log "Decoding the example JSON"
+  either (log <<< printJsonDecodeError) logShow $
+    decode entireRecordCodec exampleJson
+
+  log "\n"
+
+  log $ "Encoding Example value: "
+  log $ stringify $ encode entireRecordCodec exampleValue
 
 
 exampleJson :: Json
