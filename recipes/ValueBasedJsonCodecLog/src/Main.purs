@@ -3,14 +3,14 @@ module ValueBasedJsonCodecLog.Main where
 import Prelude
 
 import Data.Argonaut.Core (Json, stringify)
-import Data.Argonaut.Core as ArgonautCore
+import Data.Argonaut.Parser (jsonParser)
 import Data.Bifunctor (class Bifunctor, lmap)
 import Data.Codec (basicCodec, decode, encode)
 import Data.Codec.Argonaut (JsonCodec, JsonDecodeError(..), printJsonDecodeError, (~))
 import Data.Codec.Argonaut as CA
 import Data.Codec.Argonaut.Common as CAM
 import Data.Codec.Argonaut.Record as CAR
-import Data.Either (Either(..))
+import Data.Either (Either(..), either, fromRight)
 import Data.Int as Int
 import Data.Maybe (Maybe(..))
 import Data.Profunctor (dimap)
@@ -18,6 +18,7 @@ import Data.String (splitAt)
 import Data.TraversableWithIndex (forWithIndex)
 import Effect (Effect)
 import Effect.Console (log, logShow)
+import Partial.Unsafe (unsafePartial)
 
 main :: Effect Unit
 main = do
@@ -44,7 +45,7 @@ main = do
 
 
 exampleJson :: Json
-exampleJson = ArgonautCore.fromString
+exampleJson = unsafePartial $ fromRight $ jsonParser
   """
   {
     "string":"string value",
