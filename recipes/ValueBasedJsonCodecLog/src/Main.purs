@@ -66,7 +66,7 @@ exampleJson = unsafePartial $ fromRight $ jsonParser
       "Just 1"
     ],
     "sumTypeWithTags": [
-      {"tag": "Noting"},
+      {"tag": "Nothing"},
       {"tag": "Just", "value": 1}
     ],
     "productTypesNoLabels": [
