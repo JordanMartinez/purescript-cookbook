@@ -41,12 +41,22 @@ The JSON we'll be encoding and decoding is:
 
 ## Expected Behavior:
 
-### Node.js
+Prints the following to the console:
+```
+Verify codec is bidirectional
+Rountrip 1: decode (encode x) == x:
+true
+Rountrip 2: encode (decode x) == x
+true
 
-Prints "Hello world!" to console.
 
-### Browser
 
-Prints "Hello world!" to console when the page is loaded.
+Decoding the example JSON
+{ array: ["elem 1","elem 2","elem 3"], boolean: true, int: 4, number: 42.0, productTypesNoLabels: IntBooleanString(1 true "stuff"), productTypesWithLabels: IntBooleanString(1 true "stuff"), record: { baz: 8, foo: "bar" }, string: "string value", sumTypeWithTags: [Nothing,(Just 1)], sumTypesNoTags: [Nothing,(Just 1)] }
 
-Make sure to open the console with dev tools first, then reload/refresh the page.
+
+Encoding Example value:
+{"array":["elem 1","elem 2","elem 3"],"boolean":true,"int":4,"number":42,"productTypesNoLabels":[1,true,"stuff"],"productTypesWithLabels":{"key1":1,"key2":true,"key3":"stuff"},"record":{"baz":8,"foo":"bar"},"string":"string value","sumTypeWithTags":[{"tag":"Nothing"},{"tag":"Just","value":1}],"sumTypesNoTags":["Nothing","Just 1"]}
+```
+
+If running this code in the Browser environment, make sure to open the console with dev tools first, then reload/refresh the page.
