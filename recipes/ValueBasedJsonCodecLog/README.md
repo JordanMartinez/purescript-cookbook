@@ -55,7 +55,7 @@ Decoding the example JSON
 { array: ["elem 1","elem 2","elem 3"], boolean: true, int: 4, number: 42.0, productTypesNoLabels: IntBooleanString(1 true "stuff"), productTypesWithLabels: IntBooleanString(1 true "stuff"), record: { baz: 8, foo: "bar" }, string: "string value", sumTypeWithTags: [Nothing,(Just 1)], sumTypesNoTags: [Nothing,(Just 1)] }
 
 
-Encoding Example value:
+Encoding the example value:
 {"array":["elem 1","elem 2","elem 3"],"boolean":true,"int":4,"number":42,"productTypesNoLabels":[1,true,"stuff"],"productTypesWithLabels":{"key1":1,"key2":true,"key3":"stuff"},"record":{"baz":8,"foo":"bar"},"string":"string value","sumTypeWithTags":[{"tag":"Nothing"},{"tag":"Just","value":1}],"sumTypesNoTags":["Nothing","Just 1"]}
 ```
 

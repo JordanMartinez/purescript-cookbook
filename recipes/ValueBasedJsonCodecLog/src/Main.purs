@@ -43,7 +43,7 @@ main = do
 
   log "\n"
 
-  log $ "Encoding Example value: "
+  log $ "Encoding the example value:"
   log $ stringify $ encode entireRecordCodec exampleValue
 
 
