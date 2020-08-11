@@ -1,6 +1,6 @@
 # ValueBasedJsonCodecLog
 
-This recipe shows how to use [`codec`]() and [`codec-argonaut`]() to encode and decode JSON written in "meta-language."
+This recipe shows how to use [`codec`](https://pursuit.purescript.org/packages/purescript-codec/3.0.0) and [`codec-argonaut`](https://pursuit.purescript.org/packages/purescript-codec-argonaut/) to write value-based bidirectional JSON codecs to encode and decode examples written in "meta-language."
 
 The JSON we'll be encoding and decoding is:
 ```json
