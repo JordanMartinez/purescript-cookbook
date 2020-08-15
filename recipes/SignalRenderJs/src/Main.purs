@@ -6,7 +6,7 @@ import Control.Apply (lift2)
 import Data.Maybe (Maybe(..), maybe)
 import Effect (Effect)
 import Effect.Exception (throw)
-import Signal (Signal, constant, dropRepeats, foldp, merge, runSignal, sampleOn)
+import Signal (Signal, constant, dropRepeats, filterMap, foldp, merge, runSignal, sampleOn)
 import Signal.DOM (animationFrame, keyPressed)
 import Signal.Time (every)
 import Web.DOM (Node)
@@ -61,17 +61,27 @@ update Tick m = m { pos = m.pos + step m.dir }
 -- Note that this signal is wrapped in an Effect,
 -- so requires some unwrapping to work with.
 sigArrowsEff :: Effect (Signal Action)
-sigArrowsEff =
-  let
-    f :: Boolean -> Boolean -> Maybe Dir
-    f true false = Just Left
-    f false true = Just Right
-    f _ _ = Nothing
-  in
-    do
-      left <- keyPressed 37
-      right <- keyPressed 39
-      pure $ SetDir <$> lift2 f left right
+sigArrowsEff = do
+  left <- keyPressed 37
+  right <- keyPressed 39
+  pure $ SetDir <$> mapKey Left left <> mapKey Right right
+
+{- Note that this strategy for merging signals only considers the
+most recent start of a keypress to determine a single key that
+might be pressed.
+-}
+
+-- Convert a keypress (bool) signal to another Maybe signal
+-- that is Just when the key is pressed and Nothing when released.
+mapKey :: forall a. a -> Signal Boolean -> Signal (Maybe a)
+mapKey out sig = filterMap (fromBool out) Nothing sig
+
+-- Helper function for mapKey.
+-- Additional Maybe wrapper required for filterMap.
+fromBool :: forall a. a -> Boolean -> Maybe (Maybe a)
+fromBool x b
+  | b = Just $ Just x
+  | otherwise = Nothing
 
 -- An `Action` signal that fires 5 times per second
 sigTicks :: Signal Action
