@@ -17,6 +17,8 @@ import Web.HTML.HTMLDocument as HTMLDocument
 import Web.HTML.HTMLElement as HTMLElement
 import Web.HTML.Window (document)
 
+-- STATE MODEL AND TYPES
+--
 -- Model is the type of our application state.
 -- We track a direction to move on each tick,
 -- and our position.
@@ -44,6 +46,8 @@ data Action
   = Tick
   | SetDir Direction
 
+--- UPDATE
+--
 -- How we update our model with each Action.
 -- For example changing direction or moving a step.
 update :: Action -> Model -> Model
@@ -54,6 +58,15 @@ update Tick m = m { pos = m.pos + step m.direction }
     step Left = -1
     step Right = 1
 
+-- RENDERING
+--
+-- How to render our Model
+render :: Node -> Model -> Effect Unit
+render node model =
+  setTextContent (show model) node
+
+-- SIGNALS
+--
 -- An `Action` signal that fires whenever the left or
 -- right arrow keys are pressed.
 -- Note that this signal is wrapped in an Effect,
@@ -92,29 +105,8 @@ sigActionEff = do
   sigArrows <- sigArrowsEff
   pure $ merge sigArrows sigTicks
 
--- How to render our Model
-render :: Node -> Model -> Effect Unit
-render node model =
-  setTextContent (show model) node
-
--- Create our HTML and return a node to render into
-getRenderNode :: Effect Node
-getRenderNode = do
-  htmlDoc <- document =<< window
-  body <- maybe (throw "Could not find body element") pure =<< HTMLDocument.body htmlDoc
-  let
-    doc = HTMLDocument.toDocument htmlDoc
-  p1Elem <- createElement "p" doc
-  p2Elem <- createElement "p" doc
-  let
-    bodyNode = HTMLElement.toNode body
-    p1Node = Element.toNode p1Elem
-    p2Node = Element.toNode p2Elem
-  setTextContent "Click on page, then press Left or Right arrow keys" p1Node
-  void $ appendChild p1Node bodyNode
-  void $ appendChild p2Node bodyNode
-  pure p2Node
-
+-- MAIN
+--
 main :: Effect Unit
 main = do
   node <- getRenderNode
@@ -139,3 +131,27 @@ main = do
     sigStateAtFrameDedup = dropRepeats sigStateAtFrame
   -- Apply render function to our signal
   runSignal $ map (render node) sigStateAtFrameDedup
+
+-- HTML WORKAROUND
+--
+-- Create our HTML and return a node to render into.
+-- Note that this much more concise concise if written in HTML,
+-- but we need to use this workaround for compatibility with the
+-- TryPureScript environment, which doesn't yet allow providing
+-- custom HTML.
+getRenderNode :: Effect Node
+getRenderNode = do
+  htmlDoc <- document =<< window
+  body <- maybe (throw "Could not find body element") pure =<< HTMLDocument.body htmlDoc
+  let
+    doc = HTMLDocument.toDocument htmlDoc
+  p1Elem <- createElement "p" doc
+  p2Elem <- createElement "p" doc
+  let
+    bodyNode = HTMLElement.toNode body
+    p1Node = Element.toNode p1Elem
+    p2Node = Element.toNode p2Elem
+  setTextContent "Click on page, then press Left or Right arrow keys" p1Node
+  void $ appendChild p1Node bodyNode
+  void $ appendChild p2Node bodyNode
+  pure p2Node
