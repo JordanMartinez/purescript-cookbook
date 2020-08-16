@@ -2,7 +2,6 @@ module SignalRenderJs.Main where
 
 import Prelude
 
-import Control.Apply (lift2)
 import Data.Maybe (Maybe(..), maybe)
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -22,37 +21,36 @@ import Web.HTML.Window (document)
 -- We track a direction to move on each tick,
 -- and our position.
 type Model
-  = { dir :: Dir
+  = { direction :: Direction
     , pos :: Int
     }
 
 initialState :: Model
-initialState = {pos: 0, dir: Right}
+initialState = {pos: 0, direction: Right}
 
-data Dir
+data Direction
   = Left
   | Right
 
-instance showDir :: Show Dir where
+instance showDir :: Show Direction where
   show Left = "Left"
   show Right = "Right"
 
-derive instance eqDir :: Eq Dir
+derive instance eqDir :: Eq Direction
 
 -- Actions that can change our state.
 -- (same as Msg type in Elm)
 data Action
   = Tick
-  | SetDir (Maybe Dir)
+  | SetDir Direction
 
 -- How we update our model with each Action.
 -- For example changing direction or moving a step.
 update :: Action -> Model -> Model
-update (SetDir Nothing) m = m
-update (SetDir (Just d)) m = m {dir = d}
-update Tick m = m { pos = m.pos + step m.dir }
+update (SetDir d) m = m {direction = d}
+update Tick m = m { pos = m.pos + step m.direction }
   where
-    step :: Dir -> Int
+    step :: Direction -> Int
     step Left = -1
     step Right = 1
 
@@ -71,16 +69,17 @@ most recent start of a keypress to determine a single key that
 might be pressed.
 -}
 
--- Convert a keypress (bool) signal to another Maybe signal
--- that is Just when the key is pressed and Nothing when released.
-mapKey :: forall a. a -> Signal Boolean -> Signal (Maybe a)
-mapKey out sig = filterMap (fromBool out) Nothing sig
+-- Convert a keypress (bool) signal to a Direction signal.
+-- Note that Signals must always have a value, so initialState.direction
+-- is used here to provide a signal value at time = 0.
+mapKey :: Direction -> Signal Boolean -> Signal Direction
+mapKey direction sig = filterMap (fromBool direction) initialState.direction sig
 
--- Helper function for mapKey.
--- Additional Maybe wrapper required for filterMap.
-fromBool :: forall a. a -> Boolean -> Maybe (Maybe a)
+-- Helper function for mapKey's filterMap.
+-- Convert's a Boolean to a Maybe using a default value.
+fromBool :: forall a. a -> Boolean -> Maybe a
 fromBool x b
-  | b = Just $ Just x
+  | b = Just x
   | otherwise = Nothing
 
 -- An `Action` signal that fires 5 times per second
