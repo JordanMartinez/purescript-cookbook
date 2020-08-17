@@ -1,14 +1,15 @@
 module SignalSnakeJs.Main where
 
 import Prelude
-import Data.Int (toNumber)
-import Data.Maybe (Maybe(..), maybe)
-import Data.Traversable (elem, for)
-import Test.QuickCheck.Gen (Gen, GenState, chooseInt, runGen)
+
 import Color (Color, black, toHexString, white)
 import Color.Scheme.Clrs (green, red)
 import Control.Monad.Rec.Loops (iterateWhile)
+import Control.MonadZero (guard)
 import Data.Array.NonEmpty (NonEmptyArray, cons, cons', dropEnd, head, singleton)
+import Data.Int (toNumber)
+import Data.Maybe (Maybe(..), maybe)
+import Data.Traversable (elem, for)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -17,6 +18,7 @@ import Random.LCG (randomSeed)
 import Signal (Signal, constant, dropRepeats, filterMap, foldp, runSignal, sampleOn)
 import Signal.DOM (animationFrame, keyPressed)
 import Signal.Time (every, second)
+import Test.QuickCheck.Gen (Gen, GenState, chooseInt, runGen)
 import Web.DOM.Document (createElement)
 import Web.DOM.Element (setAttribute, setId)
 import Web.DOM.Element as Element
@@ -262,14 +264,7 @@ keystrokes, but this increases complexity.
 -- Note that Signals must always have a value, so initialDirection
 -- is used here to provide a signal value at time = 0.
 mapKey :: Direction -> Signal Boolean -> Signal Direction
-mapKey dir sig = filterMap (fromBool dir) initialDirection sig
-
--- Helper function for mapKey's filterMap.
--- Convert's a Boolean to a Maybe using a default value.
-fromBool :: forall a. a -> Boolean -> Maybe a
-fromBool x b
-  | b = Just x
-  | otherwise = Nothing
+mapKey dir sig = filterMap (\b -> guard b $> dir) initialDirection sig
 
 -- Combine ticks with effectful keypress
 sigActionEff :: Effect (Signal Action)
