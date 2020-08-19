@@ -8,12 +8,12 @@ import Control.Monad.Rec.Loops (iterateWhile)
 import Control.MonadZero (guard)
 import Data.Array.NonEmpty (NonEmptyArray, cons, cons', dropEnd, head, singleton)
 import Data.Int (toNumber)
-import Data.Maybe (Maybe(..), maybe)
+import Data.Maybe (Maybe, maybe)
 import Data.Traversable (elem, for)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Exception (throw)
-import Graphics.Canvas (Context2D, fillPath, getCanvasElementById, getContext2D, rect, setFillStyle)
+import Graphics.Canvas (Context2D, fillPath, getCanvasElementById, getContext2D, rect, setCanvasDimensions, setFillStyle)
 import Random.LCG (randomSeed)
 import Signal (Signal, constant, dropRepeats, filterMap, foldp, runSignal, sampleOn)
 import Signal.DOM (animationFrame, keyPressed)
@@ -326,7 +326,7 @@ main = do
 -- HTML WORKAROUND
 --
 -- Create our HTML and return a canvas to render into.
--- Note that this much more concise concise if written in HTML,
+-- Note that this is much more concise concise if written in HTML,
 -- but we need to use this workaround for compatibility with the
 -- TryPureScript environment, which doesn't yet allow providing
 -- custom HTML.
@@ -339,11 +339,6 @@ getRenderNode = do
   noteElem <- createElement "pre" doc
   canvasElem <- createElement "canvas" doc
   setId "canvas" canvasElem
-  let
-    canvasWidth = show $ cellSize * (xmax + 2)
-    canvasHeight = show $ cellSize * (ymax + 2)
-  setAttribute "width" canvasWidth canvasElem
-  setAttribute "height" canvasHeight canvasElem
   setAttribute "style" "border: 1px solid black" canvasElem
   let
     bodyNode = HTMLElement.toNode body
@@ -354,11 +349,15 @@ getRenderNode = do
   setTextContent
     """
 Click on page to set focus.
-Use Arrow keys to change direction of movement.
+Use Arrow keys to turn.
 """
     noteNode
   void $ appendChild noteNode bodyNode
   void $ appendChild canvasNode bodyNode
   canvas <- maybe (throw "Could not find canvas") pure =<< getCanvasElementById "canvas"
+  let
+    width = toNumber $ cellSize * (xmax + 2)
+    height = toNumber $ cellSize * (ymax + 2)
+  _ <- setCanvasDimensions canvas { height, width }
   ctx <- getContext2D canvas
   pure ctx
