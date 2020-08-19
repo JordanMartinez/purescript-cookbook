@@ -3,7 +3,7 @@
   "devDependencies": {
     "parcel": "^1.12.4",
     "purescript": "^0.13.8",
-    "spago": "^0.15.3"
+    "spago": "^0.16.0"
   },
   "dependencies": {
     "ace-builds": "^1.4.11",
