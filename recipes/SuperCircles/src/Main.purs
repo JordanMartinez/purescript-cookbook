@@ -364,8 +364,9 @@ main :: Effect Unit
 main = do
   ctx <- getRenderNode
 
-  -- Animate the canvas!
+  -- Grab the keybord to thread through to 'controls'.
   keyboard <- getKeyboard
+  -- Animate the canvas!
   _ <- animate (renderLoop keyboard) (render ctx)
 
   pure unit -- We're done!
