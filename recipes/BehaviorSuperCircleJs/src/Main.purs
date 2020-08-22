@@ -150,12 +150,22 @@ update (Seconds timestamp) control previous
 
 {- PAINT -}
 
+-- | Constants
+size :: Number
+size = 400.0
+
+halfSize :: Number
+halfSize = size / 2.0
+
+eighthSize :: Number
+eighthSize = size / 8.0
+
 -- | Given the timestamp, we need to work out how "wide" we should draw the
 -- | obstacle. This function does some ugly maths to tell us just that.
 
 timestampToObstacleRadius :: Number -> Number
 timestampToObstacleRadius time
-  = 50.0 + remainder * 75.0
+  = eighthSize + remainder * size * 3.0 / 16.0
   where
     -- 2.0 is "brand new", 0.0 is "just finished"
     remainder :: Number
@@ -174,20 +184,20 @@ background
     backdrop
       = filled
           (fillColor white)
-          (rectangle 0.0 0.0 400.0 400.0)
+          (rectangle 0.0 0.0 size size)
 
     -- The guideline shows the path of the cursor, but never actually moves.
     guideline
       = outlined
           (outlineColor (graytone 0.8))
-          (circle 200.0 200.0 50.0)
+          (circle halfSize halfSize eighthSize)
 
 -- | Given the value of the score, produce the display: simple text in the
 -- | top-right of the canvas.
 
 score :: Int -> Drawing
 score value
-  = text (font monospace 12 mempty) 300.0 50.0
+  = text (font monospace 12 mempty) (size * 0.75) eighthSize
       (fillColor black) (show value)
 
 -- | Given the cursor's current rotation, we can work out where to draw it on
@@ -195,8 +205,8 @@ score value
 
 rotationToCursorPosition :: Number -> { x :: Number, y :: Number }
 rotationToCursorPosition rotation
-  = { x: 200.0 + 50.0 * cos rotation
-    , y: 200.0 + 50.0 * sin rotation
+  = { x: halfSize + eighthSize * cos rotation
+    , y: halfSize + eighthSize * sin rotation
     }
 
 -- | Rotation is usually around the origin, which isn't really what we want. To
@@ -205,9 +215,9 @@ rotationToCursorPosition rotation
 
 rotateAroundCentre :: Number -> Drawing -> Drawing
 rotateAroundCentre angle
-    = translate 200.0 200.0
+    = translate halfSize halfSize
   <<< rotate angle
-  <<< translate (-200.0) (-200.0)
+  <<< translate (-halfSize) (-halfSize)
 
 -- | Given all the information we calculated in the `update` function, we can
 -- | now work out what we want to draw for the next render frame in our game's
@@ -235,7 +245,7 @@ paint state
     -- Centre the obstacle and rotate accordingly.
     positionObstacle :: Drawing -> Drawing
     positionObstacle
-        = translate 200.0 200.0
+        = translate halfSize halfSize
       <<< rotate (timestampToObstacleRotation obstacleStart)
 
     -- When did this obstacle start?
@@ -362,10 +372,12 @@ renderLoop keyboard
 
 main :: Effect Unit
 main = do
+  -- Grab the keyboard to thread through to 'controls'.
+  keyboard <- getKeyboard
+
+  -- Grab canvas context for rendering.
   ctx <- getRenderNode
 
-  -- Grab the keybord to thread through to 'controls'.
-  keyboard <- getKeyboard
   -- Animate the canvas!
   _ <- animate (renderLoop keyboard) (render ctx)
 
@@ -382,18 +394,9 @@ getRenderNode :: Effect Context2D
 getRenderNode = do
   htmlDoc <- document =<< window
   body <- maybe (throw "Could not find body element") pure =<< HTMLDocument.body htmlDoc
-  let
-    doc = HTMLDocument.toDocument htmlDoc
-  canvasElem <- createElement "canvas" doc
+  canvasElem <- createElement "canvas" $ HTMLDocument.toDocument htmlDoc
   setId "canvas" canvasElem
-  let
-    bodyNode = HTMLElement.toNode body
-    canvasNode = Element.toNode canvasElem
-  void $ appendChild canvasNode bodyNode
+  void $ appendChild (Element.toNode canvasElem) (HTMLElement.toNode body)
   canvas <- maybe (throw "Could not find canvas") pure =<< getCanvasElementById "canvas"
-  let
-    width = 400.0
-    height = 400.0
-  _ <- setCanvasDimensions canvas { height, width }
-  ctx <- getContext2D canvas
-  pure ctx
+  _ <- setCanvasDimensions canvas { height: size, width: size}
+  getContext2D canvas
