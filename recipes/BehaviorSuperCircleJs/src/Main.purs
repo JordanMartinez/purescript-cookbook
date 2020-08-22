@@ -1,4 +1,4 @@
-module SuperCircles.Main where
+module BehaviorSuperCircleJs.Main where
 
 import Prelude
 
