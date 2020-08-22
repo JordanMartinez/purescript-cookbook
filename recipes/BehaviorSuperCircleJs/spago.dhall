@@ -1,7 +1,7 @@
-{ name = "SuperCircles"
+{ name = "BehaviorSuperCircleJs"
 , dependencies =
   [ "console", "prelude", "effect", "drawing", "behaviors", "web-html" ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/SuperCircles/src/**/*.purs" ]
+, sources = [ "recipes/BehaviorSuperCircleJs/src/**/*.purs" ]
 }
 

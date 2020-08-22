@@ -1,4 +1,4 @@
-# SuperCircles
+# BehaviorSuperCircleJs
 
 A simplified Super Hexagon clone written in PureScript. There are only two controls: the left and right arrow keys.
 
