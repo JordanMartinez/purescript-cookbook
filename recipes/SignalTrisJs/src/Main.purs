@@ -10,8 +10,6 @@ import Data.Array.NonEmpty (NonEmptyArray, cons', toNonEmpty)
 import Data.Foldable (all, any, foldl)
 import Data.FoldableWithIndex (foldlWithIndex, traverseWithIndex_)
 import Data.FunctorWithIndex (mapWithIndex)
-import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
 import Data.Int (toNumber)
 import Data.Map (Map, empty, insert, keys)
 import Data.Map as Map
@@ -103,11 +101,6 @@ data Direction
   | Down
 
 derive instance eqDirection :: Eq Direction
-
-derive instance genericDirection :: Generic Direction _
-
-instance showDirection :: Show Direction where
-  show = genericShow
 
 type Board
   = Map Point Color
