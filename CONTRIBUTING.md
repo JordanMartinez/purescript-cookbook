@@ -31,7 +31,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
     - **Web** - Recipe is compatible with the web browser backend.
     - **Node** - Recipe is compatible with the Node.js backend.
     - **CLI** - Recipe does not terminate, and/or requires user interaction (e.g. a CLI app) when run in the Node.js environment. These recipes contain a special configuration flag to prevent our CI process from stalling on these recipes during testing.
-    - **Framework** - A web framework for recipes that run in the browser.
+    - **Framework** - Recipe uses a particular web framework.
     - **Template** - A recommended recipe to copy.
 
 1. Run the recipe creation script. Substitute `MyNewRecipe` with your recipe name:
@@ -42,11 +42,14 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
       ```
       ./scripts/newRecipe.sh MyNewRecipe recipes/HelloLog
       ```
-    - **Tip:** Note the `make` commands listed after running this script. These will be helpful when developing your recipe.
+    - **Tip:** The `make` commands printed after running this script will be helpful when developing your recipe. Make a copy of these for reference.
     - **Tip:** If you made a typo, or decide you want to rename your recipe, you can simply re-run this script to create a new recipe from your misspelled one with the correction, then delete the misspelled recipe:
       ```
       ./scripts/newRecipe.sh MyNewRecipeOops HelloLog
+      
       # *** Do lots of development work in the misspelled recipe ***
+      
+      # Fix the typo
       ./scripts/newRecipe.sh MyNewRecipe MyNewRecipeOops
       rm -r recipes/MyNewRecipeOops
       ```
@@ -64,7 +67,8 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
     - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
     - If you want your recipe to be compatible with TryPureScript, the npm dependency must be [listed here](https://github.com/purescript/trypurescript/blob/master/client/src/Try/Shim.purs). If it's not listed, open a PR to add it to that file.
 1. Implement your recipe.
-    - If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`). Note that your recipe will not be compatible with TryPureScript if it contains more than one module.
+    - If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`).
+      - **Note:** Your recipe will not be compatible with TryPureScript if it contains more than one module.
  2. Build and test your recipe.
     - The necessary commands to launch your recipe were printed after running `scripts/newRecipe.sh`. Hopefully you copied some of them. If not, you may consult these [instructions on running recipes](https://github.com/JordanMartinez/purescript-cookbook/blob/master/README.md#running-recipes).
     - **Note:** `make` commands must be run from the cookbook's root directory.
@@ -75,7 +79,8 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
     1. Link to any other resources that a reader might find helpful. No need for detailed explanations of libraries here.
     1. List the `npm` dependencies your recipe uses (if any).
 1. Regenerate the table of recipes by running `make readme` while in the root folder
-1. Submit a PR. The first line should read `Fixes #X` where `X` refers to the original "Recipe Request" issue you claimed.
+1. Submit a PR.
+   - If this addresses a "Recipe Request" issue, the first line should read `Fixes #X` where `X` is the issue number.
 
 ### Principles
 
