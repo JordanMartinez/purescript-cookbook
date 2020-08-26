@@ -1,7 +1,6 @@
 # PayloadHttpApiNode
 
-Implements a simple 'quote' API using the [payload](https://github.com/hoodunit/purescript-payload)
-HTTP backend.
+Implements a simple 'quote' API using the [payload](https://github.com/hoodunit/purescript-payload) HTTP backend.
 
 ## Expected Behavior:
 
