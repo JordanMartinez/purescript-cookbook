@@ -2,6 +2,11 @@
 
 Implements a simple 'quote' API using the [payload](https://github.com/hoodunit/purescript-payload) HTTP backend.
 
+Payload uses type-level information in order to guide the user into creating
+safe handlers for the defined routes. The approach is similar to
+[servant](https://www.servant.dev/), but using Purescript's advantages such as
+row types.
+
 ## Expected Behavior:
 
 ### Node.js
