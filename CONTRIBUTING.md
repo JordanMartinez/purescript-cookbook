@@ -9,24 +9,50 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
 #### Goal 1: Claim and Start Working on a Recipe Request
 
 1. Search currently [open "Recipe Request" issues](https://github.com/JordanMartinez/purescript-cookbook/issues?q=is%3Aissue+is%3Aopen+label%3Arecipe-request).
-1. If your recipe idea is unique, open a new ["Recipe Request" issue](https://github.com/JordanMartinez/purescript-cookbook/issues/new?assignees=&labels=recipe-request&template=recipe-request.md&title=)
+1. (optional) If your recipe idea is unique, open a new ["Recipe Request" issue](https://github.com/JordanMartinez/purescript-cookbook/issues/new?assignees=&labels=recipe-request&template=recipe-request.md&title=). This step aims to prevents two people from working on the same recipe.
 1. Proceed to the next step if you'd like to implement this recipe yourself.
 
 #### Goal 2: Setup a New Recipe's Boilerplate by Copying a Current Similar One
 
 1. Pick an existing recipe to duplicate as a starting point. Here are some suggestions:
-    - `HelloLog` - If your recipe is compatible with both Node.js and web browser backends. _Note:_ Logging to the console **is** supported by **both** backends.
-    - `ReadPrintFileContentsNode` - If your recipe is **only** compatible with the `Node.js` backend.
-    - `DiceCLI` - If your recipe is **only** compatible with the `Node.js` backend **and** requires user interact for testing (e.g. a CLI app). This is to prevent our CI process from blocking while waiting for input during testing.
-    - `WindowPropertiesJs` - If your recipe is **only** compatible with the web browser backend.
-    - If your recipe targets a particular web framework:
-        - `HelloConcur`
-        - `HelloHalogenHooks`
-        - `HelloReactHooks`
+
+    | Web | Node | CLI | Framework | Template |
+    | :-: | :-: | :-: | :-: | --- |
+    | :heavy_check_mark: | :heavy_check_mark: | | | `HelloLog` |
+    | :heavy_check_mark: | :x: | | :x: | `GroceriesJs` |
+    | :x: | :heavy_check_mark: | :x: | | `ReadPrintFileContentsNode` |
+    | :x: | :heavy_check_mark: | :heavy_check_mark: | | `DiceCLI` |
+    | :heavy_check_mark: | | | Concur | `HelloConcur` |
+    | :heavy_check_mark: | | | Halogen | `HelloHalogenHooks` |
+    | :heavy_check_mark: | | | React | `HelloReactHooks` |
+
+    Notes on interpreting the table:
+    - An empty cell means "not possible".
+    - **Web** - Recipe is compatible with the web browser backend.
+    - **Node** - Recipe is compatible with the Node.js backend.
+    - **CLI** - Recipe does not terminate, and/or requires user interaction (e.g. a CLI app) when run in the Node.js environment. These recipes contain a special configuration flag to prevent our CI process from stalling on these recipes during testing.
+    - **Framework** - Recipe uses a particular web framework.
+    - **Template** - A recommended recipe to copy.
+
 1. Run the recipe creation script. Substitute `MyNewRecipe` with your recipe name:
     ```
     ./scripts/newRecipe.sh MyNewRecipe HelloLog
     ```
+    - **Tip:** You may point to the recipe path to take advantage of shell autocompletion
+      ```
+      ./scripts/newRecipe.sh MyNewRecipe recipes/HelloLog
+      ```
+    - **Tip:** The `make` commands printed after running this script will be helpful when developing your recipe. Make a copy of these for reference.
+    - **Tip:** If you made a typo, or decide you want to rename your recipe, you can simply re-run this script to create a new recipe from your misspelled one with the correction, then delete the misspelled recipe:
+      ```
+      ./scripts/newRecipe.sh MyNewRecipeOops HelloLog
+      
+      # *** Do lots of development work in the misspelled recipe ***
+      
+      # Fix the typo
+      ./scripts/newRecipe.sh MyNewRecipe MyNewRecipeOops
+      rm -r recipes/MyNewRecipeOops
+      ```
 
 #### Goal 3: Implement and Submit the Recipe
 
@@ -39,28 +65,35 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
     - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more context).
 1. Install needed `npm` dependencies via `npm i <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
     - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
-1. Implement your recipe. If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`)
-    - Run `make MyNewRecipe-build-watch` while in the root folder if you'd like to automatically rebuild recipes upon changes.
+    - If you want your recipe to be compatible with TryPureScript, the npm dependency must be [listed here](https://github.com/purescript/trypurescript/blob/master/client/src/Try/Shim.purs). If it's not listed, open a PR to add it to that file.
+1. Implement your recipe.
+    - If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`).
+      - **Note:** Your recipe will not be compatible with TryPureScript if it contains more than one module.
+ 2. Build and test your recipe.
+    - The necessary commands to launch your recipe were printed after running `scripts/newRecipe.sh`. Hopefully you copied some of them. If not, you may consult these [instructions on running recipes](https://github.com/JordanMartinez/purescript-cookbook/blob/master/README.md#running-recipes).
+    - **Note:** `make` commands must be run from the cookbook's root directory.
+    - **Tip:** If you'd like to automatically rebuild recipes after saving changes and your IDE is being uncooperative, you can run `make MyNewRecipe-build-watch` while in the root folder.
 1. Update your recipe's `README.md` file by doing the following things:
     1. Write a summary of your recipe on the 3rd line. This is what will appear in the repo's Recipe section's Table of Contents. Don't add newlines unless you're okay with that additional content being omitted from the table.
     1. Update the "Expected Behavior" section to describe in more detail what should occur when users run your recipe.
     1. Link to any other resources that a reader might find helpful. No need for detailed explanations of libraries here.
     1. List the `npm` dependencies your recipe uses (if any).
 1. Regenerate the table of recipes by running `make readme` while in the root folder
-1. Submit a PR. The first line should read `Fixes #X` where `X` refers to the original "Recipe Request" issue you claimed.
+1. Submit a PR.
+   - If this addresses a "Recipe Request" issue, the first line should read `Fixes #X` where `X` is the issue number.
 
 ### Principles
 
 #### Only use packages in the latest package set release
 
-In other words, we do not allow anyone to override or add packages in the `packages.dhall` file for the following reasons:
+- Any PRs that use packages not in the package set will not be merged until all of their packages are in the package set.
+  - If you want to use a package that's not in the package set, please add it to the package set.
+- Recipes that use packages that get dropped from the package set will be moved to the `broken-recipes` folder.
+
+We do not allow anyone to override or add packages in the `packages.dhall` file for the following reasons:
 - Reduces the burden of maintenance for maintainers of this repo
 - Overriding package A to make Recipe X work now might prevent Recipe Y from working (which doesn't need the override)
 - Somewhat reduces the attack surface of malicious recipes (e.g. including a malicious package via addition/override)
-
-Thus, if you want to use a package that's not in the package set, please add it to the package set. Any PRs that use packages not in the package set will not be merged until all of their packages are in the package set.
-
-By implication, recipes that use packages that get dropped from the package set will be moved to the `broken-recipes` folder.
 
 #### All Recipes are Licensed under This Repo's License (MIT)
 
