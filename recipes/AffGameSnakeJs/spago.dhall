@@ -1,4 +1,4 @@
-{ name = "SignalSnakeJs"
+{ name = "AffGameSnakeJs"
 , dependencies =
   [ "canvas"
   , "canvas-action"
@@ -13,5 +13,5 @@
   , "web-html"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/SignalSnakeJs/src/**/*.purs" ]
+, sources = [ "recipes/AffGameSnakeJs/src/**/*.purs" ]
 }

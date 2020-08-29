@@ -1,4 +1,4 @@
-# SignalSnakeJs
+# AffGameSnakeJs
 
 A snake game built using [AffGame](https://pursuit.purescript.org/packages/purescript-game/2.0.0).
 

@@ -1,2 +1,2 @@
 "use strict";
-require("../../../output/SignalSnakeJs.Main/index.js").main();
+require("../../../output/AffGameSnakeJs.Main/index.js").main();
