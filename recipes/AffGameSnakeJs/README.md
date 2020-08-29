@@ -2,7 +2,7 @@
 
 A snake game built using [AffGame](https://pursuit.purescript.org/packages/purescript-game/2.0.0).
 
-This was rewritten from [@milesfrain](https://github.com/milesfrain)'s [version](https://github.com/JordanMartinez/purescript-cookbook/pull/213) with changes to use `AffGame` instead of `Signal` to run the game.
+This was rewritten from [SignalSnakeJs](../SignalSnakeJs) with changes to use `AffGame` instead of `Signal` to run the game.
 
 ## Expected Behavior
 
