@@ -34,15 +34,27 @@ set -x
 # Copy original recipe to new recipe directory
 cp -r recipes/$orig recipes/$1
 
-# Replace all usages of the original recipe's name with the new recipe's name
-grep -rl $orig recipes/$1 | xargs sed -i "s/$orig/$1/g"
+# Disable echo of all following script commands.
+# We used to be able to echo the substitution one-liner,
+# but the portable version is now too verbose.
+set +x
 
+# Replace all usages of the original recipe's name with the new recipe's name
+echo "+ Substituting all occurrences of $orig in recipes/$1"
+for file in $(grep -rl $orig recipes/$1)
+do
+    sed "s/$orig/$1/g" $file > $file.new
+    mv $file.new $file
+done
+# This used to be as simple as:
+#   grep -rl $orig recipes/$1 | xargs sed -i "s/$orig/$1/g"
+# But there are portability issues with in-place substitution (-i)
+# between the GNU (most linux distros) and BSD (mac osx) versions of `sed`.
+# See https://stackoverflow.com/a/21243111 for details.
 
 # ====== Additional instructions =======
 
-# Disable echo of all following script commands
-set +x
-
+echo # linebreak
 echo --- Some helpful development commands for this recipe: ---
 
 # Basic node
