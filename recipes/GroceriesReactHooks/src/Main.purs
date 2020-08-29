@@ -4,8 +4,7 @@ import Prelude
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
-import React.Basic.DOM (render)
-import React.Basic.DOM as R
+import React.Basic.DOM (div_, h1_, li_, render, text, ul_)
 import React.Basic.Hooks (Component, component)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (body)
@@ -25,17 +24,17 @@ mkGroceries :: Component {}
 mkGroceries = do
   component "Groceries" \_ -> React.do
     pure
-      $ R.div_
-          [ R.h1_ [ R.text "My Grocery List" ]
-          , R.ul_
-              [ R.li_ [ R.text "Black Beans" ]
-              , R.li_ [ R.text "Limes" ]
-              , R.li_ [ R.text "Greek Yogurt" ]
-              , R.li_ [ R.text "Cilantro" ]
-              , R.li_ [ R.text "Honey" ]
-              , R.li_ [ R.text "Sweet Potatoes" ]
-              , R.li_ [ R.text "Cumin" ]
-              , R.li_ [ R.text "Chili Powder" ]
-              , R.li_ [ R.text "Quinoa" ]
+      $ div_
+          [ h1_ [ text "My Grocery List" ]
+          , ul_
+              [ li_ [ text "Black Beans" ]
+              , li_ [ text "Limes" ]
+              , li_ [ text "Greek Yogurt" ]
+              , li_ [ text "Cilantro" ]
+              , li_ [ text "Honey" ]
+              , li_ [ text "Sweet Potatoes" ]
+              , li_ [ text "Cumin" ]
+              , li_ [ text "Chili Powder" ]
+              , li_ [ text "Quinoa" ]
               ]
           ]
