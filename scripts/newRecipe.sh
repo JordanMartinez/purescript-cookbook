@@ -46,7 +46,7 @@ do
     sed "s/$orig/$1/g" $file > $file.new
     mv $file.new $file
 done
-# This used to be as been as simple as:
+# This used to be as simple as:
 #   grep -rl $orig recipes/$1 | xargs sed -i "s/$orig/$1/g"
 # But there are portability issues with in-place substitution (-i)
 # between the GNU (most linux distros) and BSD (mac osx) versions of `sed`.
