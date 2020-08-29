@@ -2,31 +2,27 @@ module AffGameSnakeJs.Main where
 
 import Prelude
 
-import Color (Color, black, toHexString, white)
+import Color (Color, black, white)
 import Color.Scheme.Clrs (green, red)
 import Control.Monad.Rec.Loops (iterateWhile)
-import Control.MonadZero (guard)
 import Data.Array.NonEmpty (NonEmptyArray, cons, cons', dropEnd, head, singleton)
 import Data.Int (toNumber)
 import Data.Maybe (Maybe(..), maybe)
-import Data.Traversable (elem, for, for_)
+import Data.Traversable (elem, for_)
 import Data.Tuple.Nested ((/\))
 import Data.Vector.Polymorphic (Vector2, makeRect, (><))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Effect.Exception (throw)
-import Game.Aff (AffGame(..), FPS(..), launchGame_, mkAffGame, mkReducer)
+import Game.Aff (AffGame, FPS(..), launchGame_, mkAffGame, mkReducer)
 import Game.Aff.AnimationFrame (animationFrameMatchInterval)
-import Game.Aff.Web.Event (_keyboardEvent, documentEventTarget, keydown, keypressed)
+import Game.Aff.Web.Event (_keyboardEvent, documentEventTarget, keydown)
 import Game.Util (asksAt)
-import Graphics.Canvas (Context2D, fillPath, getCanvasElementById, getContext2D, rect, setCanvasDimensions, setFillStyle)
-import Graphics.CanvasAction (class MonadCanvasAction, CanvasAction, fillRect, filled, liftCanvasAction)
+import Graphics.Canvas (Context2D, getCanvasElementById, getContext2D, setCanvasDimensions)
+import Graphics.CanvasAction (class MonadCanvasAction, fillRect, filled, liftCanvasAction)
 import Graphics.CanvasAction.Run (CANVAS, runCanvas)
 import Random.LCG (randomSeed)
 import Run.State (get, modify)
--- import Signal (Signal, constant, dropRepeats, filterMap, foldp, runSignal, sampleOn)
--- import Signal.DOM (animationFrame, keyPressed)
--- import Signal.Time (every, second)
 import Test.QuickCheck.Gen (Gen, GenState, chooseInt, runGen)
 import Web.DOM.Document (createElement)
 import Web.DOM.Element (setAttribute, setId)
@@ -55,11 +51,13 @@ cellSizeNum = toNumber cellSize
 ticksPerSecond :: Number
 ticksPerSecond = 12.0
 
+-- Using opposite colors for the bg and the snake, so it's a little different
+-- from the Signal version.
 snakeColor :: Color
-snakeColor = white
+snakeColor = black
 
 bgColor :: Color
-bgColor = black
+bgColor = white
 
 foodColor :: Color
 foodColor = red
@@ -184,18 +182,6 @@ availableRandomPoint s = iterateWhile (_ `elem` s) randomPoint
 
 -- RENDERING
 --
-
-{- drawPoint :: Point -> Color -> Context2D -> Effect Unit
-drawPoint (x >< y) color ctx = do
-  setFillStyle ctx $ toHexString color
-  fillPath ctx
-    $ rect ctx
-        { x: cellSizeNum * toNumber x
-        , y: cellSizeNum * toNumber y
-        , width: cellSizeNum
-        , height: cellSizeNum
-        } -}
-
 drawPoint :: forall m. MonadCanvasAction m => Color -> Point -> m Unit
 drawPoint color (x >< y) = liftCanvasAction do
   filled color do
@@ -205,44 +191,18 @@ drawPoint color (x >< y) = liftCanvasAction do
       cellSizeNum
       cellSizeNum
 
-
 {-
 Note that we're currently keeping things simple and re-rendering
 the entire canvas from scratch from each state.
 We could be more efficient and just overwrite the cells
 that change, but that increases complexity.
 -}
-{- render :: Context2D -> Model -> Effect Unit
-render ctx m = do
-  -- Walls
-  setFillStyle ctx $ toHexString wallColor
-  fillPath ctx
-    $ rect ctx
-        { x: 0.0
-        , y: 0.0
-        , width: cellSizeNum * toNumber (xmax + 2)
-        , height: cellSizeNum * toNumber (ymax + 2)
-        }
-  -- Interior
-  setFillStyle ctx $ toHexString bgColor
-  fillPath ctx
-    $ rect ctx
-        { x: cellSizeNum
-        , y: cellSizeNum
-        , width: cellSizeNum * toNumber xmax
-        , height: cellSizeNum * toNumber ymax
-        }
-  -- Snake
-  _ <- for m.snake (\x -> drawPoint x snakeColor ctx)
-  -- Food
-  drawPoint m.food foodColor ctx -}
-
 render :: forall m. MonadCanvasAction m => Model -> m Unit
 render m = liftCanvasAction do
   -- Walls
   filled wallColor do
     -- If we want a rectangle to be drawn at (0, 0), we can pass a `Vector2`
-    -- containing just the dimensions to `fillRect`. This works because of
+    -- containing just the dimensions, to `fillRect`. This works because of
     -- `Vector2`s `ToRegion` instance:
     -- https://pursuit.purescript.org/packages/purescript-polymorphic-vectors/1.1.1/docs/Data.Vector.Polymorphic.Class#v:toRegionVector2
     fillRect
@@ -261,84 +221,53 @@ render m = liftCanvasAction do
   drawPoint foodColor m.food
 
 
-{- -- SIGNALS
---
--- An `Action` signal that fires at our tick rate
-sigTicks :: Signal Action
-sigTicks = sampleOn period $ constant Tick
-  where
-  period = every $ second / ticksPerSecond
-
--- An `Action` signal that fires on arrow key presses.
--- Note that this signal is wrapped in an Effect,
--- so requires some unwrapping to work with.
-sigArrowsEff :: Effect (Signal Action)
-sigArrowsEff = do
-  -- Unwrap effects from each keyPressed call
-  left <- keyPressed 37
-  right <- keyPressed 39
-  up <- keyPressed 38
-  down <- keyPressed 40
-  -- This block does a few things (describing from back):
-  -- * Maps each key's Boolean Signal to a Direction with mapKey.
-  -- * Merges all four signals. Note that `<>`/`append` means `merge`.
-  -- * Wraps in a SetDir Action
-  -- * Wraps in an Effect
-  pure $ SetDir
-    <$> mapKey Left left
-    <> mapKey Right right
-    <> mapKey Up up
-    <> mapKey Down down
-
-Note that this strategy for merging signals only considers the
-most recent start of a keypress to determine a single key that
-might be pressed.
-So if two keys are pressed between frames (within 17ms @ 60Hz),
-then the first keystroke will be overwritten and ignored.
-A possible solution is to maintain a queue of unhandled
-keystrokes, but this increases complexity.
-
--- Convert a keypress (bool) signal to a Direction signal.
--- Note that Signals must always have a value, so initialDirection
--- is used here to provide a signal value at time = 0.
-mapKey :: Direction -> Signal Boolean -> Signal Direction
-mapKey dir sig = filterMap (\b -> guard b $> dir) initialDirection sig
-
--- Combine ticks with effectful keypress
-sigActionEff :: Effect (Signal Action)
-sigActionEff = do
-  sigArrows <- sigArrowsEff
-  pure $ sigArrows <> sigTicks -}
-
 -- AFFGAME
 --
+
+{-
+We're using the `CANVAS` effect (from `Graphics.CanvasAction.Run`) to draw to
+the canvas. We note this in the type of `AffGame`, aliasing it as `Extra` for
+convenience.
+-}
 type Extra = (canvas :: CANVAS)
 
+{-
+We're using `Unit` as our environment, since we don't have any resources or
+constants we need in our game that requires `Effect` or `Aff` to acquire.
+-}
 type Env = Unit
 
 game :: AffGame Extra Unit
 game = mkAffGame
+  -- We generate the apple position and the generator state in the
+  -- initialization of the game, and put them in the initial state
   { init: liftEffect do
-        -- Setup first piece of random food
-        newSeed <- randomSeed
-        let
-          -- You may hardcode a constant seed value for an
-          -- identical sequence of pseudorandom food locations
-          -- on each page refresh.
-          -- newSeed = mkSeed 42
-          initialGenState = { newSeed, size: 1 }
+      -- Setup first piece of random food
+      newSeed <- randomSeed
+      let
+        -- You may hardcode a constant seed value for an
+        -- identical sequence of pseudorandom food locations
+        -- on each page refresh.
+        -- newSeed = mkSeed 42
+        initialGenState = { newSeed, size: 1 }
 
-          -- Run generator to get food location
-          food /\ genState = runGen (availableRandomPoint initialSnake) initialGenState
+        -- Run generator to get food location
+        food /\ genState = runGen (availableRandomPoint initialSnake) initialGenState
 
-          initState =
-            { food
-            , genState
-            , snake: initialSnake
-            , direction: initialDirection
-            }
-        pure { env: unit, initState }
+        initState =
+          { food
+          , genState
+          , snake: initialSnake
+          , direction: initialDirection
+          }
+      pure
+        { env:       unit      :: Env
+        -- We're using our `Model` type as the state of the game.
+        , initState: initState :: Model
+        }
   , updates:
+    -- We have a `keydown` update that updates the state with the direction we
+    -- pressed
     [ keydown documentEventTarget do
         mDir <- asksAt _keyboardEvent $ key >>> case _ of
           "ArrowLeft"  -> Just Left
@@ -347,6 +276,9 @@ game = mkAffGame
           "ArrowDown"  -> Just Down
           _ -> Nothing
         for_ mDir \dir -> modify (update (SetDir dir))
+    -- We also have an update that runs at our `ticksPerSecond` interval,
+    -- but approximated to the closest (future) animation frame. We simply
+    -- update the state, then read it again and render it to the canvas.
     , animationFrameMatchInterval (pure $ FPS ticksPerSecond) do
         modify (update Tick)
         get >>= render
@@ -359,34 +291,11 @@ game = mkAffGame
 --
 main :: Effect Unit
 main = do
-{-   -- Setup signals
-  sigAction <- sigActionEff
-  sigFrame <- animationFrame
-  let
-    -- Signal representing current state of our Model
-    -- based on applying all actions from the past.
-    sigState = foldp update initialState sigAction
-
-    -- These next two signals are optional enhancements.
-    -- You could alternatively experiment with just rendering
-    -- sigState or sigStateAtFrame.
-    -- -----------
-    -- Capture state at every animation frame. This limits
-    -- updates to 60 Hz (or whatever your refresh rate is),
-    -- and prevents multiple rerenders within the same frame.
-    -- A consequence of this strategy is that the signal fires
-    -- at exactly this rate, even when state is unchanged.
-    sigStateAtFrame = sampleOn sigFrame sigState
-
-    -- Skip rerenders when state is unchanged
-    sigStateAtFrameDedup = dropRepeats sigStateAtFrame
-  -- -}
-  -- Rendering
   -- Get canvas context to render into
   ctx <- getRenderNode
-  -- Apply render function to our signal
+  -- Run our game in `Effect`. This is where we tell the game how to handle
+  -- the `CANVAS` effect we specified as part of the `Extra` type.
   launchGame_ (mkReducer do runCanvas ctx) game
-  --runSignal $ map (render ctx) sigStateAtFrameDedup
 
 -- HTML WORKAROUND
 --
