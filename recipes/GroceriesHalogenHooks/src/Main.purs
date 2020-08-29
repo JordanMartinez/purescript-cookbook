@@ -35,3 +35,13 @@ hookComponent =
               , li_ [ text "Quinoa" ]
               ]
           ]
+
+{-
+NOTE: Most Halogen codebases will reference HTML tags via an `HH` prefix
+(i.e. `HH.div` rather than `div`). The `HH` is from `import Halogen.HTML as HH`.
+Most developers _choose_ to use the `HH` prefix, but it is not a requirement
+of the language, nor the library.
+
+To decrease verbosity and better compare this code to Elm's code,
+the above syntax does not use the `HH` prefix. 
+-}
