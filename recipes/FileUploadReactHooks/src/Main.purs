@@ -1,9 +1,8 @@
 module FileUploadReactHooks.Main where
 
 import Prelude
-import Data.Foldable (traverse_)
+import Data.Foldable (for_)
 import Data.Maybe (Maybe(..))
-import Data.Traversable (traverse)
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM (render)
@@ -34,9 +33,12 @@ mkFileUploadComponent = do
   component "FileUploadComponent" \_ -> React.do
     fileList /\ setFileList <- useState' []
     let
-      handleChange t =
-        join <$> traverse HTMLInputElement.files (HTMLInputElement.fromEventTarget t)
-          >>= traverse_ (FileList.items >>> map File.name >>> setFileList)
+      handleChange t = case HTMLInputElement.fromEventTarget t of
+        Nothing -> pure unit
+        Just fileInput -> do
+          maybeFiles <- (HTMLInputElement.files fileInput)
+          for_ maybeFiles
+            (FileList.items >>> map File.name >>> setFileList)
     pure
       $ fragment
           [ R.input
