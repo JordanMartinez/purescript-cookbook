@@ -33,12 +33,10 @@ mkFileUploadComponent = do
   component "FileUploadComponent" \_ -> React.do
     fileList /\ setFileList <- useState' []
     let
-      handleChange t = case HTMLInputElement.fromEventTarget t of
-        Nothing -> pure unit
-        Just fileInput -> do
-          maybeFiles <- (HTMLInputElement.files fileInput)
-          for_ maybeFiles
-            (FileList.items >>> map File.name >>> setFileList)
+      handleChange t =
+        for_ (HTMLInputElement.fromEventTarget t) \fileInput -> do
+          maybeFiles <- HTMLInputElement.files fileInput
+          for_ maybeFiles (setFileList <<< map File.name <<< FileList.items)
     pure
       $ fragment
           [ R.input
