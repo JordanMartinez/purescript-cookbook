@@ -92,7 +92,7 @@ type SetState state
 
 mkComponentA :: Component (Boolean /\ SetState Boolean)
 mkComponentA =
-  component "Component A" \(enabled /\ setEnabled) ->
+  component "ComponentA" \(enabled /\ setEnabled) ->
     pure
       $ R.div_
           [ R.p_ [ R.text "Toggle me!" ]
@@ -104,7 +104,7 @@ mkComponentA =
 
 mkComponentB :: Component (Int /\ SetState Int)
 mkComponentB =
-  component "Component B" \(count /\ setCount) ->
+  component "ComponentB" \(count /\ setCount) ->
     pure
       $ R.div_
           [ R.p_
@@ -119,7 +119,7 @@ mkComponentB =
 
 mkComponentC :: Component (String /\ EventHandler)
 mkComponentC =
-  component "Component C" \(value /\ onChange) ->
+  component "ComponentC" \(value /\ onChange) ->
     pure
       $ R.label_
           [ R.p_ [ R.text "What do you have to say?" ]
