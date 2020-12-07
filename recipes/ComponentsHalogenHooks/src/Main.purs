@@ -1,6 +1,6 @@
 module ComponentsHalogenHooks.Main where
 
-import Prelude hiding (top)
+import Prelude
 
 import Data.Maybe (Maybe(..), maybe)
 import Data.Symbol (SProxy(..))
@@ -49,12 +49,11 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
         ]
     ]
 
-data ButtonMessage = Toggled Boolean
 data ButtonQuery a = IsOn (Boolean -> a)
 
 buttonComponent
   :: forall unusedInput anyMonad
-   . H.Component HH.HTML ButtonQuery unusedInput ButtonMessage anyMonad
+   . H.Component HH.HTML ButtonQuery unusedInput Unit anyMonad
 buttonComponent = Hooks.component \rec _ -> Hooks.do
   enabled /\ enabledIdx <- Hooks.useState false
   Hooks.useQuery rec.queryToken case _ of
@@ -66,7 +65,7 @@ buttonComponent = Hooks.component \rec _ -> Hooks.do
     HH.button
       [ HP.title label
       , HE.onClick \_ -> Just do
-          newState <- Hooks.modify enabledIdx not
-          Hooks.raise rec.outputToken $ Toggled newState
+          _ <- Hooks.modify enabledIdx not
+          Hooks.raise rec.outputToken unit
       ]
       [ HH.text label ]
