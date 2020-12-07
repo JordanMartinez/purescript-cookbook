@@ -72,7 +72,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
  2. Build and test your recipe.
     - The necessary commands to launch your recipe were printed after running `scripts/newRecipe.sh`. Hopefully you copied some of them. If not, you may consult these [instructions on running recipes](https://github.com/JordanMartinez/purescript-cookbook/blob/master/README.md#running-recipes).
     - **Note:** `make` commands must be run from the cookbook's root directory.
-    - **Tip:** If you'd like to automatically rebuild recipes after saving changes and your IDE is being uncooperative, you can run `make MyNewRecipe-build-watch` while in the root folder.
+    - **Tip:** If you'd like to automatically rebuild recipes after saving changes and your [IDE is being uncooperative](https://github.com/JordanMartinez/purescript-cookbook/issues/230), you can run `make MyNewRecipe-build-watch` while in the root folder.
 1. Update your recipe's `README.md` file by doing the following things:
     1. Write a summary of your recipe on the 3rd line. This is what will appear in the repo's Recipe section's Table of Contents. Don't add newlines unless you're okay with that additional content being omitted from the table.
     1. Update the "Expected Behavior" section to describe in more detail what should occur when users run your recipe.
