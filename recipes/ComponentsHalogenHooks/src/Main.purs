@@ -1,9 +1,8 @@
 module ComponentsHalogenHooks.Main where
 
-import Prelude hiding (top)
+import Prelude
 
 import Data.Maybe (Maybe(..), maybe)
-import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Halogen as H
@@ -13,6 +12,7 @@ import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
+import Web.UIEvent.MouseEvent (MouseEvent)
 
 main :: Effect Unit
 main =
@@ -20,19 +20,22 @@ main =
     body <- HA.awaitBody
     void $ runUI containerComponent unit body
 
-_button :: SProxy "button"
-_button = SProxy
-
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
 containerComponent = Hooks.component \rec _ -> Hooks.do
+  enabled /\ enabledIdx <- Hooks.useState false
   toggleCount /\ toggleCountIdx <- Hooks.useState 0
   buttonState /\ buttonStateIdx <- Hooks.useState (Nothing :: Maybe Boolean)
+  let
+    handleClick _ =
+      Just do
+        Hooks.modify_ toggleCountIdx (_ + 1)
+        Hooks.modify_ enabledIdx not
+    label = if enabled then "On" else "Off"
   Hooks.pure $
     HH.div_
-    [ HH.slot _button unit buttonComponent unit \_ -> Just do
-        Hooks.modify_ toggleCountIdx (_ + 1)
+    [ renderButton {enabled, handleClick}
     , HH.p_
         [ HH.text ("Button has been toggled " <> show toggleCount <> " time(s)") ]
     , HH.p_
@@ -42,31 +45,23 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
             <> ". "
         , HH.button
             [ HE.onClick \_ -> Just do
-                mbBtnState <- Hooks.query rec.slotToken _button unit $ H.request IsOn
-                Hooks.put buttonStateIdx mbBtnState
+                Hooks.put buttonStateIdx $ Just enabled
             ]
             [ HH.text "Check now" ]
         ]
     ]
 
-data ButtonMessage = Toggled Boolean
-data ButtonQuery a = IsOn (Boolean -> a)
-
-buttonComponent
-  :: forall unusedInput anyMonad
-   . H.Component HH.HTML ButtonQuery unusedInput ButtonMessage anyMonad
-buttonComponent = Hooks.component \rec _ -> Hooks.do
-  enabled /\ enabledIdx <- Hooks.useState false
-  Hooks.useQuery rec.queryToken case _ of
-    IsOn reply -> do
-      isEnabled <- Hooks.get enabledIdx
-      pure $ Just $ reply isEnabled
-  let label = if enabled then "On" else "Off"
-  Hooks.pure $
+renderButton :: forall w i.
+  { enabled :: Boolean
+  , handleClick :: MouseEvent -> Maybe i
+  }
+  -> HH.HTML w i
+renderButton {enabled, handleClick} =
+  let
+    label = if enabled then "On" else "Off"
+  in
     HH.button
       [ HP.title label
-      , HE.onClick \_ -> Just do
-          newState <- Hooks.modify enabledIdx not
-          Hooks.raise rec.outputToken $ Toggled newState
+      , HE.onClick handleClick
       ]
       [ HH.text label ]
