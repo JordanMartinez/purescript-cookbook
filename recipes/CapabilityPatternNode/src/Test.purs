@@ -1,10 +1,10 @@
-module App.Layer.Test where
+module App.Test where
 -- Layers 1 & 2 must be in same module due to orphan instance restriction
 
 import Prelude
 
-import App.Layer.Four (Name(..))
-import App.Layer.Three (class Logger, class GetUserName)
+import App.Types (Name(..))
+import App.Application (class Logger, class GetUserName)
 import Control.Monad.Reader (Reader, runReader)
 
 -- | Layer 2 Define our "Test" Monad...

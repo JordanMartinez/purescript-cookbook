@@ -1,10 +1,10 @@
-module App.Layer.ProductionA where
+module App.Production.Async where
 -- Layers One and Two have to be in same file due to orphan instance restriction
 
 import Prelude
 
-import App.Layer.Four (Name(..))
-import App.Layer.Three (class Logger, class GetUserName)
+import App.Types (Name(..))
+import App.Application (class Logger, class GetUserName)
 import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks, runReaderT)
 import Effect.Aff (Aff, Milliseconds(..), delay)
 import Effect.Aff.Class (class MonadAff, liftAff)

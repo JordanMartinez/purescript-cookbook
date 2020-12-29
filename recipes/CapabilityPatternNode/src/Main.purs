@@ -2,10 +2,10 @@ module CapabilityPatternNode.Main where
 
 import Prelude
 
-import App.Layer.Production (runApp, Environment) as Sync
-import App.Layer.ProductionA (runApp, Environment) as Async
-import App.Layer.Test (runApp, Environment) as Test
-import App.Layer.Three (program)
+import App.Production.Sync (runApp, Environment) as Sync
+import App.Production.Async (runApp, Environment) as Async
+import App.Test (runApp, Environment) as Test
+import App.Application (program)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)

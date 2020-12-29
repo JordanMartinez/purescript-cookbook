@@ -1,6 +1,6 @@
-module App.Layer.Three where -- Layers 4 & 3 common to Production and Test
+module App.Application where -- Layers 4 & 3 common to Production and Test
 
-import App.Layer.Four (Name, getName)
+import App.Types (Name, getName)
 import Prelude (class Monad, Unit, bind, discard, pure, ($), (<>))
 
 -- | Layer 3

@@ -1,4 +1,4 @@
-module App.Layer.Four where -- Layers 4 & 3 common to Production and Test
+module App.Types where -- Layers 4 & 3 common to Production and Test
 
 -- | Layer 4
 -- | Strong types & pure, total functions on those types
