@@ -35,7 +35,7 @@ mainTest :: Test.Environment -> Effect Unit
 mainTest env = do
   assert $ (Test.runApp program env) == "succeeds"
   log "first test succeeded, now a failing test which will crash"
-  assert $ (Test.runApp program env) == "failing test"
+  -- assert $ (Test.runApp program env) == "failing test"
 
 mainAff1 :: Async.Environment -> Effect Unit
 mainAff1 env = launchAff_ do

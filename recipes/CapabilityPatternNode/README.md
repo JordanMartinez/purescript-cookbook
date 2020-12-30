@@ -58,7 +58,7 @@ There are three versions of this monadic container shown here:
 
 The `main` runs the `program` (see linked readme) in three successive, different monad contexts: `Aff`, `Effect` and `Test`. 
 
-In order to show both succeeding and failing test, the program will end by crashing on failed `assert` of second test.
+If you want to verify that a failing test would still terminate the process with an error, you can simply uncomment the second call to `Test.runApp`
 
 ### Node.js
 
