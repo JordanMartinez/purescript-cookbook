@@ -2,8 +2,11 @@
 
 Performs a simple HTTP Post request using Affjax library.
 
-The post data that is sent with the request makes use of the PureScript [Argonaut](https://github.com/purescript-contrib/purescript-argonaut) library to reduce the boilerplate needed to serialize and de-serialize the JSON.
-The user should note that there may be good reasons to provide this boilerplate explicitly, however, as detailed in this [blog post](https://code.slipthrough.net/2018/03/13/thoughts-on-typeclass-codecs/)
+The recipe shows two approaches to achieving the same simple HTTP POST 
+
+In the first post data that is sent with the request makes use of the PureScript [Argonaut](https://github.com/purescript-contrib/purescript-argonaut) library to reduce the boilerplate needed to serialize and de-serialize the JSON.
+
+In the second the encode and decode instances are provided explicitly.The tradeoffs between the two approaches are detailed in this [blog post](https://code.slipthrough.net/2018/03/13/thoughts-on-typeclass-codecs/)
 
 NB: this recipe depends upon the continuing availability of the dummy JSON provider "http://jsonplaceholder.typicode.com/posts"
 
@@ -11,7 +14,12 @@ NB: this recipe depends upon the continuing availability of the dummy JSON provi
 
 Prints to the console:
 
-`-- POST http://jsonplaceholder.typicode.com/posts response: {"userId":22,"title":"title","id":101,"body":"body"}`
+```
+First version, Argonaut derivation of codecs POST http://jsonplaceholder.typicode.com/posts response: {"userId":22,"title":"title","id":101,"body":"body"} >>> (Right { body: "body", id: (Just 101), title: "title", userId: 22 })
+Second version, explicit instances of codecs POST http://jsonplaceholder.typicode.com/posts response: {"userId":22,"body":"body","title":"title","id":101} >>> (Right { body: "body", id: (Just 101), title: "title", userId: 22 })
+```
+
+The order of the two lines may vary - we're running in Aff!
 
 ## Dependencies used
 
