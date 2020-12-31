@@ -47,5 +47,5 @@ main = launchAff_ $ do
       <> J.stringify response.body
 
 
--- expected response: (at least iff `endpoint` is available to you)
+-- expected response: (at least if `endpoint` is available to you)
 -- POST http://jsonplaceholder.typicode.com/posts response: {"userId":22,"title":"title","id":101,"body":"body"}
