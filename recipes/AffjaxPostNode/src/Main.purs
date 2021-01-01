@@ -67,7 +67,7 @@ version1 = launchAff_ $ do
 -- this approach tends to protect against ugly versioning problems
 -- see https://code.slipthrough.net/2018/03/13/thoughts-on-typeclass-codecs/
 
-data Post2 = Post2 Post
+newtype Post2 = Post2 Post
 instance showPost2 :: Show Post2 where
   show (Post2 post) = show post
 
