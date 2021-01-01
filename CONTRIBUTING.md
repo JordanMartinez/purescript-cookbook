@@ -65,6 +65,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
     - **Note**: you can only install dependencies that exist in the latest package set release; you cannot add or override packages in `packages.dhall` (see Principles section for more context).
 1. Install needed `npm` dependencies via `npm i <packageName>`. These will be installed to the root folder's `node_modules` folder, not a corresponding folder in the recipe.
     - If you do install `npm` dependencies for your recipe, please state which libraries were installed in the recipe's `README.md` file.
+    - You can commit and include with your PR the resulting update to `package.json` (you don't need to commit the `package-lock.json`, however)
     - If you want your recipe to be compatible with TryPureScript, the npm dependency must be [listed here](https://github.com/purescript/trypurescript/blob/master/client/src/Try/Shim.purs). If it's not listed, open a PR to add it to that file.
 1. Implement your recipe.
     - If you add any new modules, always start the module name with your recipe's "Unique Recipe Name" (e.g. `MyNewRecipe.Foo`, `MyNewRecipe.Module.Path.To.Cool.Types`).
