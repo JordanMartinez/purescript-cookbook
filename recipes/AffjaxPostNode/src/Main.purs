@@ -48,4 +48,4 @@ main = launchAff_ $ do
 
     Right response -> do
       log $ "POST " <> endpoint <> " response: " <> J.stringify response.body
-         <> " >>> " <> show (jsonToPost response.body)
+         <> "\n>>> " <> show (jsonToPost response.body)

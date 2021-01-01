@@ -16,7 +16,8 @@ NB: this recipe depends upon the continuing availability of the dummy JSON provi
 Prints to the console:
 
 ```
-POST http://jsonplaceholder.typicode.com/posts response: {"userId":22,"title":"title","id":101,"body":"body"} >>> (Right { body: "body", id: (Just 101), title: "title", userId: 22 })
+POST http://jsonplaceholder.typicode.com/posts response: {"userId":22,"title":"title","id":101,"body":"body"}
+>>> (Right { body: "body", id: (Just 101), title: "title", userId: 22 })
 ```
 
 ## Dependencies used
