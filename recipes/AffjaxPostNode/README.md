@@ -1,13 +1,12 @@
 # AffjaxPostNode
 
-Performs a simple HTTP Post request using Affjax library.
+Performs a simple HTTP Post request using the [Affjax](https://pursuit.purescript.org/packages/purescript-affjax/) library.
 
 The Post data that is sent with the request makes use of the PureScript
 [Argonaut](https://github.com/purescript-contrib/purescript-argonaut) library
 to reduce the boilerplate needed to serialize and de-serialize the JSON.
 
-See this [blog post](see
-https://code.slipthrough.net/2018/03/13/thoughts-on-typeclass-codecs/) for pros
+See [Thoughts on Typeclass Codecs (blog post)](https://code.slipthrough.net/2018/03/13/thoughts-on-typeclass-codecs/) for pros
 and cons of this approach to encodings.
 
 NB: this recipe depends upon the continuing availability of the dummy JSON provider "http://jsonplaceholder.typicode.com/posts"
