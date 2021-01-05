@@ -6,12 +6,11 @@ It's best to be completely familiar with the design and implementation of that r
 
 Additionally, you should familiarize yourself with the [README](https://github.com/natefaubion/purescript-checked-exceptions) from `checked-exceptions`.
 
-
 ## Expected Behavior:
 
-The `main` runs the `program` (see linked readme) in three successive, different monad contexts: `Aff`, `Effect` and `Test`. 
+The `main` runs the `program` in a specialized monadic context (`AppExcVM`) which provides `Reader`, `Aff` and `ExceptV` instances in addition to the _capabilities_ required by the `program`, namely ability to `log` and `getUserName`. 
 
-If you want to verify that a failing test would still terminate the process with an error, you can simply uncomment the second call to `Test.runApp`
+In the implementation of `getUserName` we - somewhat artificially - use two additional services, each of which can give rise to a class of thrown errors / exceptions. We show how, provided these errors are all matched to error handling functions, the exceptions can be guaranteed not to escape from our monadic context.
 
 ### Node.js
 
