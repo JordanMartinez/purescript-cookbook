@@ -6,8 +6,6 @@ import App.Application (program)
 import App.ProductionExcV as AppExcV
 import Effect (Effect)
 import Effect.Aff (launchAff_)
-import Effect.Class (liftEffect)
-import Effect.Class.Console (log)
 
 -- | See CapabilityPatternNode for other, simpler, examples of this pattern
 
@@ -15,5 +13,4 @@ import Effect.Class.Console (log)
 main :: Effect Unit
 main = launchAff_ do
   result <- AppExcV.runApp program { url: "http://www.purescript.org"}
-  liftEffect $ log "we got a result"
   pure unit

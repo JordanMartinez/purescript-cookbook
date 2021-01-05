@@ -81,9 +81,9 @@ instance getUserNameAppExcV :: GetUserName (AppExcV var) where
   getUserName = do
     env <- ask
 
-    foo <- safe $ (getPureScript env.url) # handleError (errorHandlersWithDefault unit)
+    name <- safe $ (getPureScript env.url) # handleError (errorHandlersWithDefault "there was an error!")
   
-    pure $ Name "AppExcV"
+    pure $ Name name
 
 -- | an example of a function which combines the underlying services and thus
 -- | has the possibility of raising errors from either one
@@ -92,15 +92,16 @@ getPureScript :: forall m r
   .  Monad m
   => MonadHttp m
   => MonadFs m
-  => String -> ExceptV  (HttpError + FsError + r) m Unit
+  => String -> ExceptV  (HttpError + FsError + r) m String
 getPureScript url = do
   HTTP.get url >>= FS.write "~/purescript.html"
+  pure "some result"
 
 
 -- | this function is used to declutter the implementation of `getUserName`
 -- | Provides exception handling functions for the _combined_ exceptions of HTTP and FS services
 -- | such that the `ExceptV` can be entirely unwrapped, using `safe` from `checked-exceptions`
-errorHandlersWithDefault :: forall m r a.
+errorHandlersWithDefault :: forall m a.
   MonadEffect m =>
   a -> 
   { fsFileNotFound     :: FilePath -> m a
