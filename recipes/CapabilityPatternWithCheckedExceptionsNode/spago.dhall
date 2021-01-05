@@ -4,11 +4,9 @@
   , "assert"
   , "console"
   , "effect"
-  , "node-fs"
-  , "node-fs-aff"
-  , "node-readline"
   , "transformers"
   , "checked-exceptions"
+  , "typelevel-prelude"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/CapabilityPatternWithCheckedExceptionsNode/src/**/*.purs" ]

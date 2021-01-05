@@ -15,7 +15,6 @@ import Effect.Aff (Aff, error)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Class.Console as Console
-import Node.Path (FilePath)
 import Prim.RowList (class RowToList)
 import Service.FS (class MonadFs, FsError)
 import Service.FS (write) as FS
@@ -25,59 +24,52 @@ import Type.Data.Row (RProxy)
 import Type.Equality (class TypeEquals, from)
 import Type.Row (type (+))
 
-    
-
 -- the type that we expect to be in the ReaderT as our environment
 type Environment = { url :: String }
 
 -- | Aff wrapped in ExceptV wrapped in ReaderT
-newtype AppExcV var a = AppExcV (ReaderT Environment (ExceptV var Aff) a)
-
--- newtype AppMA a = AppMA (ReaderT Environment Aff a)
-
--- runApp :: forall a. AppMA a -> Environment -> Aff a
--- runApp (AppMA reader_T) env = runReaderT reader_T env
+newtype AppExcVM var a = AppExcVM (ReaderT Environment (ExceptV var Aff) a)
 
 -- | ...and the means to run computations in it
-runApp :: forall a. AppExcV () a -> Environment -> Aff a
-runApp rave env = runAppExcV (RProxy :: _ ()) env rave
+runApp :: forall a. AppExcVM () a -> Environment -> Aff a
+runApp = runAppExcVM (RProxy :: _ ())
   where
-    runAppExcV :: forall var rl.
+    runAppExcVM :: forall var rl.
       RowToList var rl =>
       VariantTags rl =>
       VariantShows rl =>
       RProxy var ->
+      AppExcVM var a ->
       Environment ->
-      AppExcV var a ->
       Aff a
-    runAppExcV _ env (AppExcV rave) = do
-      ran <- runExceptT $ runReaderT rave env
+    runAppExcVM _ (AppExcVM appExcVM) env = do
+      ran <- runExceptT $ runReaderT appExcVM env
       case ran of
-        Right res -> pure res
-        Left l -> throwError $ error $ show l
+        Right result -> pure result
+        Left err     -> throwError $ error $ show err
 
--- | Layer 1 all the instances for the AppExcV monad
-derive newtype instance raveMonadAff    :: MonadAff (AppExcV var)
-derive newtype instance raveMonadEffect :: MonadEffect (AppExcV var)
-derive newtype instance raveMonad       :: Monad (AppExcV var)
-derive newtype instance raveApplicative :: Applicative (AppExcV var)
-derive newtype instance raveApply       :: Apply (AppExcV var)
-derive newtype instance raveFunctor     :: Functor (AppExcV var)
-derive newtype instance raveBind        :: Bind (AppExcV var)
-derive newtype instance raveMonadError  :: MonadThrow (Variant var) (AppExcV var)
+-- | Layer 1 all the instances for the AppExcVM monad
+derive newtype instance monadAffAppExcVM    :: MonadAff (AppExcVM var)
+derive newtype instance monadEffectAppExcVM :: MonadEffect (AppExcVM var)
+derive newtype instance monadAppExcVM       :: Monad (AppExcVM var)
+derive newtype instance applicativeAppExcVM :: Applicative (AppExcVM var)
+derive newtype instance applyAppExcVM       :: Apply (AppExcVM var)
+derive newtype instance functorAppExcVM     :: Functor (AppExcVM var)
+derive newtype instance bindAppExcVM        :: Bind (AppExcVM var)
+derive newtype instance monadErrorAppExcVM  :: MonadThrow (Variant var) (AppExcVM var)
 
 -- | Capability instances
-instance raveMonadHttp :: MonadHttp (AppExcV var)
+instance monadHttpAppExcVM :: MonadHttp (AppExcVM var)
 
-instance raveMonadFS   :: MonadFs (AppExcV var)
+instance monadFSAppExcVM   :: MonadFs (AppExcVM var)
 
-instance raveMonadAsk :: TypeEquals e1 Environment => MonadAsk e1 (AppExcV v) where
-  ask = AppExcV $ asks from
+instance monadAskAppExcVM :: TypeEquals e1 Environment => MonadAsk e1 (AppExcVM v) where
+  ask = AppExcVM $ asks from
 
-instance loggerAppExcV :: Logger (AppExcV var) where
+instance loggerAppExcVM :: Logger (AppExcVM var) where
   log msg = liftEffect $ Console.log msg
 
-instance getUserNameAppExcV :: GetUserName (AppExcV var) where
+instance getUserNameAppExcVM :: GetUserName (AppExcVM var) where
   getUserName = do
     env <- ask
 
@@ -104,7 +96,7 @@ getPureScript url = do
 errorHandlersWithDefault :: forall m a.
   MonadEffect m =>
   a -> 
-  { fsFileNotFound     :: FilePath -> m a
+  { fsFileNotFound     :: String -> m a
   , fsPermissionDenied :: Unit -> m a
   , httpNotFound       :: Unit -> m a
   , httpOther          :: { body :: String, status :: Int} -> m a

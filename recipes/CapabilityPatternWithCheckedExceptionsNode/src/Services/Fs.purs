@@ -5,12 +5,15 @@ import Prelude (class Monad, Unit, pure, unit)
 import Type.Row (type (+))
 import Control.Monad.Except.Checked (ExceptV)
 import Data.Variant (SProxy(..), inj, Variant)
-import Node.Path (FilePath)
+
 
 -- | This module is an empty definition for an exception raising monadic interface to a file system
 
 -- | Here's the fake file system monad for demonstration purposes
 class (Monad m) <= MonadFs m
+
+-- | dummy definition for FilePath, in reality you'd source from, for example, Node.FS
+type FilePath = String
 
 -- | we wish to export this checked-exception wrapper for some underlying FS operation
 write ∷ ∀ r m. MonadFs m ⇒ 
