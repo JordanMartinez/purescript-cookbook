@@ -2,7 +2,7 @@
 
 An enhancement of the CapabilityPattern Recipe, which adds `typed-exceptions`
 
-It's best to be completely familiar with the design and implementation of that Cookbook recipe before looking at this one. 
+It's best to be completely familiar with the design and implementation of that recipe before looking at this one. 
 
 Additionally, you should familiarize yourself with the [README](https://github.com/natefaubion/purescript-checked-exceptions) from `checked-exceptions`.
 
