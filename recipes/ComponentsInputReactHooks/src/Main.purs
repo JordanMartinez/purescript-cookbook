@@ -4,10 +4,23 @@ import Prelude
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
+import Effect.Unsafe (unsafePerformEffect)
 import React.Basic.DOM (render)
 import React.Basic.DOM as R
 import React.Basic.Events (handler_)
-import React.Basic.Hooks (Component, component, useState, (/\))
+import React.Basic.Hooks
+  ( Component
+  , Render
+  , UseEffect
+  , UseRef
+  , component
+  , readRef
+  , useEffectAlways
+  , useRef
+  , useState
+  , writeRef
+  , (/\)
+  )
 import React.Basic.Hooks as React
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (body)
@@ -27,6 +40,7 @@ mkContainer :: Component Unit
 mkContainer = do
   display <- mkDisplay
   component "Container" \_ -> React.do
+    parentRenders <- useRenderCount
     state /\ setState <- useState 0
     pure
       $ R.div_
@@ -45,6 +59,8 @@ mkContainer = do
               { onClick: handler_ (setState (_ - 1))
               , children: [ R.text "-1" ]
               }
+          , R.p_
+              [ R.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
           ]
 
 mkDisplay :: Component Int
@@ -55,3 +71,14 @@ mkDisplay =
           [ R.text "My input value is: "
           , R.strong_ [ R.text (show n) ]
           ]
+
+useRenderCount :: forall a. Render a (UseEffect Unit (UseRef Int a)) Int
+useRenderCount = React.do
+  rendersRef <- useRef 1
+  useEffectAlways do
+    renders <- readRef rendersRef
+    writeRef rendersRef (renders + 1)
+    pure mempty
+  let
+    renders = unsafePerformEffect (readRef rendersRef)
+  pure renders

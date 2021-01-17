@@ -7,6 +7,7 @@ Each time the parent's state updates, it will pass a new prop value into the chi
 ### Browser
 
 The parent stores an `Int` as state. Clicking the buttons will increment/decrement that value. The children will display the result of a mathematical computation using that value.
+The parent will also display how many times it has been re-rendered.
 
 ## Dependencies Used:
 
