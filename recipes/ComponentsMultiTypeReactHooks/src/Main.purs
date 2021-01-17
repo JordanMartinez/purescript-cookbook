@@ -5,19 +5,27 @@ import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Tuple (fst)
 import Effect (Effect)
 import Effect.Exception (throw)
+import Effect.Unsafe (unsafePerformEffect)
 import React.Basic.DOM (render)
 import React.Basic.DOM as R
 import React.Basic.DOM.Events (targetValue)
 import React.Basic.Events (EventHandler, handler, handler_)
 import React.Basic.Hooks
-  ( Component
+  ( type (/\)
+  , Component
   , Hook
+  , Render
+  , UseEffect
+  , UseRef
   , UseState
   , component
+  , readRef
+  , useEffectAlways
+  , useRef
   , useState
   , useState'
+  , writeRef
   , (/\)
-  , type (/\)
   )
 import React.Basic.Hooks as React
 import Web.HTML (window)
@@ -40,6 +48,7 @@ mkContainer = do
   componentB <- mkComponentB
   componentC <- mkComponentC
   component "Container" \_ -> React.do
+    parentRenders <- useRenderCount
     observedState /\ setObservedState <-
       useState' { a: Nothing, b: Nothing, c: Nothing }
     enabledState <- useState false
@@ -85,6 +94,8 @@ mkContainer = do
                       }
               , children: [ R.text "Check states now" ]
               }
+          , R.p_
+              [ R.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
           ]
 
 type SetState state
@@ -132,3 +143,14 @@ useInput initialValue = React.do
   let
     onChange = handler targetValue \t -> setState (fromMaybe "" t)
   pure (state /\ onChange)
+
+useRenderCount :: forall a. Render a (UseEffect Unit (UseRef Int a)) Int
+useRenderCount = React.do
+  rendersRef <- useRef 1
+  useEffectAlways do
+    renders <- readRef rendersRef
+    writeRef rendersRef (renders + 1)
+    pure mempty
+  let
+    renders = unsafePerformEffect (readRef rendersRef)
+  pure renders
