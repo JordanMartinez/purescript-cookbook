@@ -5,8 +5,12 @@ let
     pkgs.fetchFromGitHub {
       owner = "justinwoo";
       repo = "easy-purescript-nix";
-      rev = "01ae1bc844a4eed1af7dfbbb202fdd297e3441b9";
-      sha256 = "0jx4xb202j43c504gzh27rp9f2571ywdw39dqp6qs76294zwlxkh";
+      # Latest `rev` and `sha256` can be obtained by using
+      # ```
+      # $ nix-prefetch-git https://github.com/justinwoo/easy-purescript-nix.git
+      # ```
+      rev = "c8c32741bc09e2ac0a94d5140cf51fa5de809e24";
+      sha256 = "0rn938nbxqsd7lp7l8z1y7bhzaq29vbziq6hq9llb3yh9xs10lmf";
     }
   ) {
     inherit pkgs;
