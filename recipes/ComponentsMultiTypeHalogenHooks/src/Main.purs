@@ -6,11 +6,14 @@ import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
+import Effect.Class (class MonadEffect, liftEffect)
+import Effect.Ref as Ref
 import Halogen as H
 import Halogen.Aff as HA
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
+import Halogen.Hooks (Hooked, UseEffect, UseRef)
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
 
@@ -25,8 +28,10 @@ _button = SProxy
 
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+   . MonadEffect anyMonad
+  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
 containerComponent = Hooks.component \rec _ -> Hooks.do
+  parentRenders <- useRenderCount
   state /\ stateIdx <- Hooks.useState { a: Nothing, b: Nothing, c: Nothing }
   let
     _a = SProxy :: SProxy "a"
@@ -65,6 +70,8 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
             Hooks.put stateIdx { a, b, c }
         ]
         [ HH.text "Check states now" ]
+    , HH.p_
+        [ HH.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
     ]
 
 data QueryA a = IsOn (Boolean -> a)
@@ -128,3 +135,14 @@ componentC = Hooks.component \rec _ -> Hooks.do
         , HE.onValueInput (Just <<< Hooks.put stateIdx)
         ]
     ]
+
+useRenderCount
+  :: forall m a
+   . MonadEffect m
+  => Hooked m a (UseEffect (UseRef Int a)) Int
+useRenderCount = Hooks.do
+  renders /\ rendersRef <- Hooks.useRef 1
+  Hooks.captures {} Hooks.useTickEffect do
+    liftEffect (Ref.modify_ (_ + 1) rendersRef)
+    mempty
+  Hooks.pure renders
