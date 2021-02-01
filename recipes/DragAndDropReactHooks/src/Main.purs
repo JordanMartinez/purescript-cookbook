@@ -68,7 +68,8 @@ mkApp = do
               Events.handler_ do
                 setHover false
           , onDragOver:
-              Events.handler DOM.Events.preventDefault mempty
+              Events.handler DOM.Events.preventDefault \_ -> do
+                setHover true
           , onDrop:
               Events.handler DOM.Events.preventDefault \e -> do
                 setHover false
