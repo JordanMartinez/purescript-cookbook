@@ -1,13 +1,14 @@
 module RoutingPushReactHooks.Main where
 
 import Prelude
+import Control.Monad.Reader (ReaderT(..))
+import Control.Monad.Reader as Reader
 import Data.Array as Array
 import Data.Foldable as Foldable
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Class as Effect.Class
 import Effect.Exception as Exception
-import Effect.Unsafe as Effect.Unsafe
 import Foreign as Foreign
 import Partial.Unsafe as Partial.Unsafe
 import React.Basic (JSX, ReactContext)
@@ -15,7 +16,7 @@ import React.Basic as React.Basic
 import React.Basic.DOM as R
 import React.Basic.DOM.Events as DOM.Events
 import React.Basic.Events as Events
-import React.Basic.Hooks (Component, Hook, UseContext, (/\))
+import React.Basic.Hooks (Hook, UseContext, (/\), Render)
 import React.Basic.Hooks as React
 import Routing.Match (Match)
 import Routing.Match as Match
@@ -32,20 +33,36 @@ main = do
   case maybeBody of
     Nothing -> Exception.throw "Could not find body."
     Just body -> do
-      routerProvider <- mkRouterProvider
-      app <- mkApp
+      routerContext <- mkRouterContext
+      routerProvider <- Reader.runReaderT mkRouterProvider routerContext
+      app <- Reader.runReaderT mkApp routerContext
       R.render
         (routerProvider [ app unit ])
         (HTMLElement.toElement body)
 
+-- | Note that we are not using `React.Basic.Hooks.Component` here, replacing it
+-- | instead with a very similar type, that has some extra "environment"
+-- | provided by `ReaderT` (namely the `RouterContext` that we need to pass to
+-- | `useRouterContext`). By using `ReaderT` we can avoid explicitly threading
+-- | the context through to all the components that use it, instead we can just
+-- | use `ask` to access it as needed.
+type Component props
+  = ReaderT RouterContext Effect (props -> JSX)
+
+component ::
+  forall props hooks.
+  String -> (props -> Render Unit hooks JSX) -> Component props
+component name render = ReaderT \_ -> React.component name render
+
 mkApp :: Component Unit
 mkApp = do
+  routerContext <- Reader.ask
   postIndex <- mkPostIndex
   post <- mkPost
   postEdit <- mkPostEdit
   headerNav <- mkHeaderNav
-  React.component "App" \_ -> React.do
-    { route } <- useRouterContext
+  component "App" \_ -> React.do
+    { route } <- useRouterContext routerContext
     pure do
       React.Basic.fragment
         [ R.header_ [ headerNav unit ]
@@ -60,7 +77,7 @@ mkApp = do
 mkHeaderNav :: Component Unit
 mkHeaderNav = do
   link <- mkLink
-  React.component "Link" \_ ->
+  component "Link" \_ ->
     pure do
       R.nav_
         [ link
@@ -77,7 +94,7 @@ mkHeaderNav = do
 mkPostIndex :: Component Unit
 mkPostIndex = do
   link <- mkLink
-  React.component "PostIndex" \_ ->
+  component "PostIndex" \_ ->
     pure do
       R.ul_
         ( Array.range 1 10
@@ -94,7 +111,7 @@ mkPostIndex = do
 mkPost :: Component Int
 mkPost = do
   link <- mkLink
-  React.component "Post" \n ->
+  component "Post" \n ->
     pure do
       React.Basic.fragment
         [ R.h1_ [ R.text ("Post " <> show n) ]
@@ -109,7 +126,7 @@ mkPost = do
 
 mkPostEdit :: Component Int
 mkPostEdit =
-  React.component "PostEdit" \n ->
+  component "PostEdit" \n ->
     pure (R.h1_ [ R.text ("Edit post " <> show n) ])
 
 data AppRoute
@@ -156,18 +173,24 @@ type RouterContextValue
 -- | provided (signalling that this is not a use case we want to support). We've
 -- | done similar, by wrapping our context value in `Maybe` and using `Nothing`
 -- | as the case that we pattern-match on to trigger the error.
-routerContext :: ReactContext (Maybe RouterContextValue)
-routerContext =
-  -- | We are using `unsafePerformEffect` so that we can have a "global"
-  -- | instance of this context that we can use directly in our
-  -- | `useRouterContext` hook.
-  Effect.Unsafe.unsafePerformEffect do
-    React.createContext Nothing
+type RouterContext
+  = ReactContext (Maybe RouterContextValue)
 
-useRouterContext :: Hook (UseContext (Maybe RouterContextValue)) RouterContextValue
-useRouterContext = React.do
+-- | An alternative would be to use `unsafePerformEffect` to have a "global"
+-- | `RouterContext` (not wrapped in `Effect`) that could be used directly
+-- | inside of `useRouterContext` instead of binding it in the top-level
+-- | component "bootstrapping" phase (inside of `main :: Effect Unit`) and
+-- | passing it down the component tree from there (as we're doing).
+mkRouterContext :: Effect RouterContext
+mkRouterContext = React.createContext Nothing
+
+useRouterContext ::
+  RouterContext ->
+  Hook (UseContext (Maybe RouterContextValue)) RouterContextValue
+useRouterContext routerContext = React.do
   maybeContextValue <- React.useContext routerContext
   pure case maybeContextValue of
+    -- If we have no context value from a provider, we throw a fatal error
     Nothing ->
       Partial.Unsafe.unsafeCrashWith
         "useContext can only be used in a descendant of \
@@ -176,8 +199,9 @@ useRouterContext = React.do
 
 mkRouterProvider :: Component (Array JSX)
 mkRouterProvider = do
+  routerContext <- Reader.ask
   nav <- Effect.Class.liftEffect PushState.makeInterface
-  React.component "Router" \children -> React.do
+  component "Router" \children -> React.do
     let
       routerProvider = React.Basic.provider routerContext
     route /\ setRoute <- React.useState' (Just Home)
@@ -189,8 +213,9 @@ mkRouterProvider = do
 
 mkLink :: Component { to :: String, children :: Array JSX }
 mkLink = do
-  React.component "Link" \{ to, children } -> React.do
-    { nav } <- useRouterContext
+  routerContext <- Reader.ask
+  component "Link" \{ to, children } -> React.do
+    { nav } <- useRouterContext routerContext
     pure do
       R.a
         { href: to

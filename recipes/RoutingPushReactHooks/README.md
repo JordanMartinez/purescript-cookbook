@@ -1,6 +1,6 @@
 # RoutingPushReactHooks
 
-This recipe shows how to use `purescript-routing` to do client-side push-state-based routing in a React-based single-page application (SPA).
+This recipe shows how to use `purescript-routing` to do client-side push-state routing in a React-based single-page application (SPA).
 
 ## Expected Behavior:
 
