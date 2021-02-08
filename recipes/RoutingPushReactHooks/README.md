@@ -1,0 +1,19 @@
+# RoutingPushReactHooks
+
+This recipe shows how to use `purescript-routing` to do client-side push-state-based routing in a React-based single-page application (SPA).
+
+## Expected Behavior:
+
+### Browser
+
+When you click on the links, you should see:
+* The anchor in the URL change
+* The current route rendered on the page
+* Route changes logged to the dev console
+
+You may also edit the URL directly instead of clicking on the links.
+
+## Dependencies Used:
+
+[react](https://www.npmjs.com/package/react)
+[react-dom](https://www.npmjs.com/package/react-dom)
