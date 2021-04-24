@@ -8,16 +8,13 @@ import Effect (Effect)
 import Effect.Exception as Exception
 import React.Basic.DOM as R
 import React.Basic.DOM.Events as DOM.Events
-import React.Basic.Events (SyntheticEvent)
 import React.Basic.Events as Events
 import React.Basic.Hooks (Component, (/\))
 import React.Basic.Hooks as React
-import Unsafe.Coerce as Coerce
 import Web.File.File as File
 import Web.File.FileList as FileList
 import Web.HTML as HTML
 import Web.HTML.Event.DataTransfer as DataTransfer
-import Web.HTML.Event.DragEvent (DragEvent)
 import Web.HTML.Event.DragEvent as DragEvent
 import Web.HTML.HTMLDocument as HTMLDocument
 import Web.HTML.HTMLElement as HTMLElement
@@ -71,10 +68,10 @@ mkApp = do
               Events.handler DOM.Events.preventDefault \_ -> do
                 setHover true
           , onDrop:
-              Events.handler DOM.Events.preventDefault \e -> do
+              Events.handler (DOM.Events.preventDefault >>> DOM.Events.nativeEvent) \e -> do
                 setHover false
                 let
-                  maybeFileList = DataTransfer.files (DragEvent.dataTransfer (toDragEvent e))
+                  maybeFileList = DataTransfer.files =<< DragEvent.dataTransfer <$> DragEvent.fromEvent e
                 Foldable.for_ (FileList.items <$> maybeFileList) (setFiles <<< (<>))
           , children:
               [ R.button
@@ -109,16 +106,3 @@ mkApp = do
                   }
               ]
           }
-
--- | We happen to know that we're dealing with a `DragEvent` where we're using this, but
--- | not every `SyntheticEvent` can be converted to a `DragEvent`, so this is a partial 
--- | function. A proper implementation of this would probably be typed 
--- |
--- | ```purs
--- | toDragEvent :: SyntheticEvent -> Maybe DragEvent
--- | ```
--- |
--- | and could use `Web.Internal.FFI.unsafeReadProtoTagged` to inspect the constructor
--- | of the event and verify that it is indeed a `DragEvent`.
-toDragEvent :: SyntheticEvent -> DragEvent
-toDragEvent = Coerce.unsafeCoerce
