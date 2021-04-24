@@ -1,15 +1,15 @@
 {
   "license": "MIT",
   "devDependencies": {
-    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.5",
     "purescript": "^0.13.8",
     "spago": "^0.16.0"
   },
   "dependencies": {
     "ace-builds": "^1.4.11",
     "big-integer": "^1.6.48",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "xhr2": "^0.2.0"
   }
 }
