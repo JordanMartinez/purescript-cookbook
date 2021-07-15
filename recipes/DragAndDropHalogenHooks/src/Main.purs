@@ -39,7 +39,7 @@ main =
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   hover /\ hoverIdx <- Hooks.useState false
   files /\ filesIdx <- Hooks.useState []
@@ -56,16 +56,16 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
         flexDirection column
         justifyContent center
         alignItems center
-    , HE.onDragEnter \e -> Just do
+    , HE.onDragEnter \e -> do
         preventDefault DragEvent.toEvent e
         Hooks.put hoverIdx true
-    , HE.onDragOver \e -> Just do
+    , HE.onDragOver \e -> do
         preventDefault DragEvent.toEvent e
         Hooks.put hoverIdx true
-    , HE.onDragLeave \e -> Just do
+    , HE.onDragLeave \e -> do
         preventDefault DragEvent.toEvent e
         Hooks.put hoverIdx false
-    , HE.onDrop \e -> Just do
+    , HE.onDrop \e -> do
         preventDefault DragEvent.toEvent e
         let
           mbFileList = DataTransfer.files $ dataTransfer e
@@ -89,7 +89,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
           , HP.type_ InputFile
           , HP.multiple true
           , HP.accept $ mediaType $ MediaType "image/*"
-          , HE.onFileUpload \fileArray -> Just $ Hooks.put filesIdx fileArray
+          , HE.onFileUpload \fileArray -> Hooks.put filesIdx fileArray
           ]
       ]
     , HH.span
