@@ -28,7 +28,7 @@ _button = SProxy
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 containerComponent = Hooks.component \_ _ -> Hooks.do
   parentRenders <- useRenderCount
   state /\ stateIdx <- Hooks.useState 0
@@ -56,7 +56,7 @@ _display = SProxy :: SProxy "display"
 displayComponent
   :: forall unusedQuery unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery Int unusedOutput anyMonad
+  => H.Component unusedQuery Int unusedOutput anyMonad
 displayComponent = Hooks.component \_ input -> Hooks.do
   Hooks.pure $
     HH.div_
