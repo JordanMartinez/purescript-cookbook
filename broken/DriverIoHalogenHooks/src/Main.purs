@@ -41,7 +41,7 @@ data Toggled = Toggled Boolean
 
 buttonComponent
   :: forall unusedInput anyMonad
-   . H.Component HH.HTML ButtonQuery unusedInput Toggled anyMonad
+   . H.Component ButtonQuery unusedInput Toggled anyMonad
 buttonComponent = Hooks.component \rec _ -> Hooks.do
   enabled /\ enabledIdx <- Hooks.useState false
   Hooks.useQuery rec.queryToken case _ of
