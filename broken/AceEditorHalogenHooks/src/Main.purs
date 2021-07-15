@@ -33,7 +33,7 @@ _ace = SProxy :: SProxy "ace"
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadAff anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 containerComponent = Hooks.component \rec _ -> Hooks.do
   msg /\ msgIdx <- Hooks.useState ""
   Hooks.pure $
@@ -71,7 +71,7 @@ aceElemLabel = H.RefLabel "ace"
 aceComponent
   :: forall unusedInput anyMonad
    . MonadAff anyMonad
-  => H.Component HH.HTML AceQuery unusedInput AceOutput anyMonad
+  => H.Component AceQuery unusedInput AceOutput anyMonad
 aceComponent = Hooks.component \rec _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState (Nothing :: Maybe Editor)
   Hooks.useLifecycleEffect do
