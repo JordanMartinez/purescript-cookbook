@@ -30,7 +30,7 @@ _button = SProxy
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 containerComponent = Hooks.component \rec _ -> Hooks.do
   parentRenders <- useRenderCount
   toggleCount /\ toggleCountIdx <- Hooks.useState 0
@@ -62,7 +62,7 @@ data ButtonQuery a = IsOn (Boolean -> a)
 
 buttonComponent
   :: forall unusedInput anyMonad
-   . H.Component HH.HTML ButtonQuery unusedInput ButtonMessage anyMonad
+   . H.Component ButtonQuery unusedInput ButtonMessage anyMonad
 buttonComponent = Hooks.component \rec _ -> Hooks.do
   enabled /\ enabledIdx <- Hooks.useState false
   Hooks.useQuery rec.queryToken case _ of
