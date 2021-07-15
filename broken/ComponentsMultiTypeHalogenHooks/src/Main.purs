@@ -29,7 +29,7 @@ _button = SProxy
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 containerComponent = Hooks.component \rec _ -> Hooks.do
   parentRenders <- useRenderCount
   state /\ stateIdx <- Hooks.useState { a: Nothing, b: Nothing, c: Nothing }
@@ -78,7 +78,7 @@ data QueryA a = IsOn (Boolean -> a)
 
 componentA
   :: forall unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML QueryA unusedInput unusedOutput anyMonad
+   . H.Component QueryA unusedInput unusedOutput anyMonad
 componentA = Hooks.component \rec _ -> Hooks.do
   enabled /\ enabledIdx <- Hooks.useState false
   Hooks.useQuery rec.queryToken case _ of
@@ -98,7 +98,7 @@ data QueryB a = GetCount (Int -> a)
 
 componentB
   :: forall unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML QueryB unusedInput unusedOutput anyMonad
+   . H.Component QueryB unusedInput unusedOutput anyMonad
 componentB = Hooks.component \rec _ -> Hooks.do
   count /\ countIdx <- Hooks.useState 0
   Hooks.useQuery rec.queryToken case _ of
@@ -120,7 +120,7 @@ data QueryC a = GetValue (String -> a)
 
 componentC
   :: forall unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML QueryC unusedInput unusedOutput anyMonad
+   . H.Component QueryC unusedInput unusedOutput anyMonad
 componentC = Hooks.component \rec _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState "Hello"
   Hooks.useQuery rec.queryToken case _ of
