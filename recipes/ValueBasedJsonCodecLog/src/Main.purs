@@ -18,7 +18,7 @@ import Data.String (splitAt)
 import Data.TraversableWithIndex (forWithIndex)
 import Effect (Effect)
 import Effect.Console (log, logShow)
-import Partial.Unsafe (unsafeCrashWith, unsafePartial)
+import Partial.Unsafe (unsafeCrashWith)
 
 main :: Effect Unit
 main = do
@@ -47,7 +47,7 @@ main = do
   log $ stringify $ encode entireRecordCodec exampleValue
 
 exampleJson :: Json
-exampleJson = unsafePartial $ (fromRight' \_ -> unsafeCrashWith "got Left: bad parser") $ jsonParser
+exampleJson = fromRight' (\_ -> unsafeCrashWith "got Left: bad parser") $ jsonParser
   """
   {
     "string":"string value",
