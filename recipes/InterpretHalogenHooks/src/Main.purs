@@ -23,14 +23,14 @@ main = HA.runHalogenAff do
   body <- HA.awaitBody
   runUI ui' unit body
 
-ui' :: forall f i o. H.Component HH.HTML f i o Aff
+ui' :: forall f i o. H.Component f i o Aff
 ui' = H.hoist (\app -> runReaderT app { githubToken: Nothing }) uiComponent
 
 type Config = { githubToken :: Maybe String }
 
 uiComponent
   :: forall unusedInput unusedQuery unusedOutput
-   . H.Component HH.HTML unusedQuery unusedInput unusedOutput (ReaderT Config Aff)
+   . H.Component unusedQuery unusedInput unusedOutput (ReaderT Config Aff)
 uiComponent = Hooks.component \rec _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState (Nothing :: Maybe String)
   Hooks.pure $
@@ -38,7 +38,7 @@ uiComponent = Hooks.component \rec _ -> Hooks.do
       [ HH.h1_
           [ HH.text "Fetch user data" ]
       , HH.button
-          [ HE.onClick \_ -> Just do
+          [ HE.onClick \_ -> do
               userData <- lift (searchUser "kRITZCREEK")
               Hooks.put stateIdx $ Just userData
           ]
