@@ -29,7 +29,7 @@ main = HA.runHalogenAff do
 component
   :: forall unusedInput unusedQuery unusedOutput anyMonad
    . MonadAff anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 component = Hooks.component \rec _ -> Hooks.do
   chars /\ charsIdx <- Hooks.useState ""
   Hooks.useLifecycleEffect do
