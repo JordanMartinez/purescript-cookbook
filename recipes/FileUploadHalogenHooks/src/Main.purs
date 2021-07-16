@@ -23,7 +23,7 @@ main =
 
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+   . H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   files /\ filesIdx <- Hooks.useState []
   Hooks.pure $
@@ -31,7 +31,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
     [ HH.input
         [ HP.type_ InputFile
         , HP.multiple true
-        , HE.onFileUpload \fileArray -> Just $ Hooks.put filesIdx fileArray
+        , HE.onFileUpload \fileArray -> Hooks.put filesIdx fileArray
         ]
     , HH.div_ [ HH.text $ show $ map File.name files ]
     ]

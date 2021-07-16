@@ -11,7 +11,7 @@ import Halogen.VDom.Driver (runUI)
 import Halogen.Svg.Elements (svg, circle, line, path, rect, text)
 import Halogen.Svg.Attributes (cx, cy, d, dominant_baseline, fill, height, r,
   stroke, strokeWidth, text_anchor, transform, viewBox, width, x, x1, x2, y, y1,
-  y2, D(Abs), Command(M, L), Color(RGB), TextAnchor(AnchorMiddle),
+  y2, CommandPositionReference(Abs), m, l, Color(RGB), TextAnchor(AnchorMiddle),
   Baseline(Central), Transform(Rotate))
 {- We import a lot of functions from Halogen.Svg.Attributes which makes the SVG
    code below cleaner. You may prefer to import with
@@ -27,7 +27,7 @@ main =
 
 hookComponent ::
   forall unusedQuery unusedInput unusedOutput anyMonad.
-  H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent =
   Hooks.component \_ _ ->
     Hooks.pure
@@ -61,13 +61,13 @@ hookComponent =
               ]
           , path
               [ d
-                  [ Abs (M 200.0 40.0)
-                  , Abs (L 240.0 40.0)
-                  , Abs (L 240.0 80.0)
-                  , Abs (L 280.0 80.0)
-                  , Abs (L 280.0 120.0)
-                  , Abs (L 320.0 120.0)
-                  , Abs (L 320.0 160.0)
+                  [ m Abs 200.0 40.0
+                  , l Abs 240.0 40.0
+                  , l Abs 240.0 80.0
+                  , l Abs 280.0 80.0
+                  , l Abs 280.0 120.0
+                  , l Abs 320.0 120.0
+                  , l Abs 320.0 160.0
                   ]
               , fill Nothing
               , stroke $ Just $ RGB 255 0 0

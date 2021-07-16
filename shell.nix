@@ -9,8 +9,8 @@ let
       # ```
       # $ nix-prefetch-git https://github.com/justinwoo/easy-purescript-nix.git
       # ```
-      rev = "c8c32741bc09e2ac0a94d5140cf51fa5de809e24";
-      sha256 = "0rn938nbxqsd7lp7l8z1y7bhzaq29vbziq6hq9llb3yh9xs10lmf";
+      rev = "bbef4245cd6810ea84e97a47c801947bfec9fadc";
+      sha256 = "00764zbwhbn61jwb5px2syzi2f9djyl8fmbd2p8wma985af54iwx";
     }
   ) {
     inherit pkgs;

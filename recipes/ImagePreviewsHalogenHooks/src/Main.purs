@@ -8,7 +8,7 @@ import CSS.Common (center)
 import DOM.HTML.Indexed.InputAcceptType (mediaType)
 import DOM.HTML.Indexed.InputType (InputType(..))
 import Data.Array (snoc)
-import Data.Maybe (Maybe(..), maybe)
+import Data.Maybe (maybe)
 import Data.MediaType (MediaType(..))
 import Data.Traversable (for, sequence_)
 import Data.Tuple.Nested ((/\))
@@ -43,7 +43,7 @@ main =
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   hover /\ hoverIdx <- Hooks.useState false
   _ /\ ref <- Hooks.useRef []
@@ -61,16 +61,16 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
         flexDirection column
         justifyContent center
         alignItems center
-    , HE.onDragEnter \e -> Just do
+    , HE.onDragEnter \e -> do
         preventDefault DragEvent.toEvent e
         Hooks.put hoverIdx true
-    , HE.onDragOver \e -> Just do
+    , HE.onDragOver \e -> do
         preventDefault DragEvent.toEvent e
         Hooks.put hoverIdx true
-    , HE.onDragLeave \e -> Just do
+    , HE.onDragLeave \e -> do
         preventDefault DragEvent.toEvent e
         Hooks.put hoverIdx false
-    , HE.onDrop \e -> Just do
+    , HE.onDrop \e -> do
         preventDefault DragEvent.toEvent e
         let
           mbFileList = DataTransfer.files $ dataTransfer e
@@ -103,12 +103,12 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
         [ HH.text "Upload images" ]
       ]
     , HH.input
-        [ HP.id_ "file-input"
+        [ HP.id "file-input"
         , HC.style $ display displayNone
         , HP.type_ InputFile
         , HP.accept $ mediaType $ MediaType "images/*"
         , HP.multiple true
-        , HE.onFileUpload \fileArray -> Just do
+        , HE.onFileUpload \fileArray -> do
             putFileUrls ref urlsIdx fileArray
         ]
     , HH.div

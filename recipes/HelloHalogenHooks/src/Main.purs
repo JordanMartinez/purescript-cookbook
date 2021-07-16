@@ -17,7 +17,7 @@ main =
 
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+   . H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   Hooks.pure $
     HH.text "Hello!"

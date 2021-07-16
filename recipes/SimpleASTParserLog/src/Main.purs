@@ -7,13 +7,13 @@ import Control.Lazy (defer, fix)
 import Data.Either (Either(..))
 import Data.Foldable (foldMap, for_, oneOf)
 import Data.Function (on)
-import Data.Int (fromString, toNumber)
+import Data.Int as Int
 import Data.Maybe (Maybe(..))
+import Data.Number as Number
 import Data.String.CodeUnits (drop, take)
 import Data.String.CodeUnits as SCU
 import Effect (Effect)
 import Effect.Console (log)
-import Global (isFinite, readFloat)
 import Text.Parsing.StringParser (Parser, fail, try, unParser)
 import Text.Parsing.StringParser.CodeUnits (anyDigit, char, skipSpaces, string)
 import Text.Parsing.StringParser.Combinators (between, many1, (<?>))
@@ -137,12 +137,12 @@ parseAtom = do
       void $ string "." -- decimal point
       decimalsAsString <- parseNumSequence
       let fullString = digitsAsString <> "." <> decimalsAsString
-      case readFloat fullString of
-        x | isFinite x -> pure $ LitNum x
+      case Number.fromString fullString of
+        Just x -> pure $ LitNum x
         _ -> fail $ "Not a valid decimal: " <> fullString
 
     parseInt :: String -> Parser Atom
-    parseInt digitsAsString = case fromString digitsAsString of
+    parseInt digitsAsString = case Int.fromString digitsAsString of
       Just i ->  pure $ LitInt i
       Nothing -> fail $
         "String of digit characters `" <> digitsAsString <>
@@ -189,7 +189,7 @@ evalUnaryExpr = case _ of
 
 evalAtom :: Atom -> Number
 evalAtom = case _ of
-  LitInt i -> toNumber i
+  LitInt i -> Int.toNumber i
   LitNum n -> n
   Parenthesis expr -> evalExpr expr
 

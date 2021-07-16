@@ -20,16 +20,16 @@ main =
 
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+   . H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   count /\ countIdx <- Hooks.useState 0
   Hooks.pure $
     HH.div_
       [ HH.button
-        [ HE.onClick \_ -> Just $ Hooks.modify_ countIdx (_ - 1) ]
+        [ HE.onClick \_ -> Hooks.modify_ countIdx (_ - 1) ]
         [ HH.text "-" ]
       , HH.div_ [ HH.text $ show count ]
       , HH.button
-        [ HE.onClick \_ -> Just $ Hooks.modify_ countIdx (_ + 1) ]
+        [ HE.onClick \_ -> Hooks.modify_ countIdx (_ + 1) ]
         [ HH.text "+" ]
       ]

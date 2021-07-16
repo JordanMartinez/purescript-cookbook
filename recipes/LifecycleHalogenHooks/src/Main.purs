@@ -4,7 +4,6 @@ import Prelude
 
 import Data.Array (filter, reverse, snoc)
 import Data.Maybe (Maybe(..))
-import Data.Symbol (SProxy(..))
 import Data.Tuple (Tuple(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
@@ -18,6 +17,7 @@ import Halogen.HTML.Elements.Keyed as HHK
 import Halogen.HTML.Events as HE
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
+import Type.Proxy (Proxy(..))
 
 main :: Effect Unit
 main = HA.runHalogenAff do
@@ -27,7 +27,7 @@ main = HA.runHalogenAff do
 rootComponent
   :: forall unusedInput unusedQuery unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 rootComponent = Hooks.component \rec _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState { currentId: 0, slots: []}
   Hooks.useLifecycleEffect do
@@ -37,7 +37,7 @@ rootComponent = Hooks.component \rec _ -> Hooks.do
   Hooks.pure $
     HH.div_
       [ HH.button
-          [ HE.onClick \_ -> Just do
+          [ HE.onClick \_ -> do
             Hooks.modify_ stateIdx \s ->
               { currentId: s.currentId + 1
               , slots: snoc s.slots s.currentId
@@ -45,7 +45,7 @@ rootComponent = Hooks.component \rec _ -> Hooks.do
           ]
           [ HH.text "Add" ]
       , HH.button
-          [ HE.onClick \_ -> Just do
+          [ HE.onClick \_ -> do
               Hooks.modify_ stateIdx \st -> st { slots = reverse st.slots }
           ]
           [ HH.text "Reverse" ]
@@ -53,7 +53,7 @@ rootComponent = Hooks.component \rec _ -> Hooks.do
           Tuple (show sid) $
             HH.li_
               [ HH.button
-                  [ HE.onClick \_ -> Just do
+                  [ HE.onClick \_ -> do
                       Hooks.modify_ stateIdx \st ->
                         st { slots = filter (not <<< eq sid) st.slots }
                   ]
@@ -62,10 +62,10 @@ rootComponent = Hooks.component \rec _ -> Hooks.do
               ]
       ]
   where
-    _child = SProxy :: SProxy "child"
+    _child = Proxy :: Proxy "child"
 
     listen :: Int -> Message -> _
-    listen i m = Just do
+    listen i m = do
       let
         msg = case m of
           Initialized -> "Heard Initialized from child" <> show i
@@ -82,7 +82,7 @@ childComponent
   :: forall unusedInput unusedQuery anyMonad
    . MonadEffect anyMonad
   => Int
-  -> H.Component HH.HTML unusedQuery unusedInput Message anyMonad
+  -> H.Component unusedQuery unusedInput Message anyMonad
 childComponent id = Hooks.component \rec _ -> Hooks.do
   Hooks.useLifecycleEffect do
     liftEffect $ log ("Initialize Child " <> show id)
@@ -101,10 +101,10 @@ childComponent id = Hooks.component \rec _ -> Hooks.do
         ]
       ]
   where
-    _cell = SProxy :: SProxy "cell"
+    _cell = Proxy :: Proxy "cell"
 
     listen :: _ -> Int -> Message -> _
-    listen outputToken i m = Just do
+    listen outputToken i m = do
       let
         msg = case m of
           Initialized -> "Heard Initialized from cell" <> show i
@@ -117,7 +117,7 @@ cell
   :: forall unusedInput unusedQuery anyMonad
    . MonadEffect anyMonad
   => Int
-  -> H.Component HH.HTML unusedQuery unusedInput Message anyMonad
+  -> H.Component unusedQuery unusedInput Message anyMonad
 cell id = Hooks.component \rec _ -> Hooks.do
   Hooks.useLifecycleEffect do
     liftEffect $ log ("Initialize Cell " <> show id)

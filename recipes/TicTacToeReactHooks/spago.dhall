@@ -2,7 +2,6 @@
 , dependencies =
   [ "console"
   , "effect"
-  , "generics-rep"
   , "psci-support"
   , "react-basic-dom"
   , "react-basic-hooks"

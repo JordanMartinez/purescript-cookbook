@@ -1,8 +1,8 @@
 module CardsReactHooks.Main where
 
 import Prelude
+import Data.Array.NonEmpty (cons')
 import Data.Maybe (Maybe(..))
-import Data.NonEmpty ((:|))
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM (css, render)
@@ -64,20 +64,20 @@ data Card
 cardGenerator :: Gen Card
 cardGenerator =
   elements
-    $ Ace
-    :| [ Two
-      , Three
-      , Four
-      , Five
-      , Six
-      , Seven
-      , Eight
-      , Nine
-      , Ten
-      , Jack
-      , Queen
-      , King
-      ]
+    $ cons' Ace
+        [ Two
+        , Three
+        , Four
+        , Five
+        , Six
+        , Seven
+        , Eight
+        , Nine
+        , Ten
+        , Jack
+        , Queen
+        , King
+        ]
 
 viewCard :: Card -> String
 viewCard = case _ of

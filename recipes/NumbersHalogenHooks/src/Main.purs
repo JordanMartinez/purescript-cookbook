@@ -24,14 +24,14 @@ main =
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   roll /\ rollIdx <- Hooks.useState 1
   Hooks.pure $
     HH.div_
       [ HH.h1_ [ HH.text $ show roll ]
       , HH.button
-        [ HE.onClick \_ -> Just do
+        [ HE.onClick \_ -> do
             nextRoll <- liftEffect $ randomInt 1 6
             Hooks.put rollIdx nextRoll
         ]

@@ -42,7 +42,7 @@ main = do
   void $ appendChild ulNode divNode
   traverse_ (makeAndAppendLiNode doc ulNode) groceryList
 
-makeAndAppendLiNode :: Document -> Node -> String -> Effect Node
+makeAndAppendLiNode :: Document -> Node -> String -> Effect Unit
 makeAndAppendLiNode doc parentNode text = do
   liElem <- createElement "li" doc
   let

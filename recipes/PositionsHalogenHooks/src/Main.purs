@@ -27,7 +27,7 @@ main =
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   pos /\ posIdx <- Hooks.useState { x: 100, y: 100 }
   Hooks.pure $
@@ -36,7 +36,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
           position absolute
           top $ px $ toNumber pos.x
           left $ px $ toNumber pos.y
-      , HE.onClick \_ -> Just do
+      , HE.onClick \_ -> do
           newPosition <- liftEffect do
             newX <- randomInt 50 350
             newY <- randomInt 50 350
