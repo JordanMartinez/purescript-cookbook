@@ -3,7 +3,7 @@ module RoutingHashHalogenClassic.MyRouting where
 import Prelude
 import Data.Foldable (oneOf)
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 import Routing.Match (Match, int, lit, str)
 
 type PostId
