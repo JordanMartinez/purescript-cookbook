@@ -1,12 +1,13 @@
 module SignalTrisJs.Main where
 
 import Prelude
+
 import Color (Color, black, toHexString, white)
 import Color.Scale (grayscale, sample)
 import Color.Scheme.X11 as C
 import Control.MonadZero (guard)
 import Data.Array ((..))
-import Data.Array.NonEmpty (NonEmptyArray, cons', toNonEmpty)
+import Data.Array.NonEmpty (NonEmptyArray, cons')
 import Data.Foldable (all, any, foldl)
 import Data.FoldableWithIndex (foldlWithIndex, traverseWithIndex_)
 import Data.FunctorWithIndex (mapWithIndex)
@@ -14,7 +15,7 @@ import Data.Int (toNumber)
 import Data.Map (Map, empty, insert, keys)
 import Data.Map as Map
 import Data.Maybe (Maybe(..), maybe)
-import Data.Set (Set, filter, size)
+import Data.Set (Set, filter, size, toMap)
 import Data.Set as Set
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
@@ -303,10 +304,8 @@ mapKeys' f m =
 
 -- RANDOM
 --
--- Should just be able to remove `toNonEmpty` once this issue is tackled
--- https://github.com/purescript/purescript-quickcheck/issues/109
 tileGenerator :: Gen Tile
-tileGenerator = elements $ toNonEmpty pieces
+tileGenerator = elements pieces
 
 -- RENDERING
 --
@@ -398,11 +397,6 @@ setFillStyleC :: Context2D -> Color -> Effect Unit
 setFillStyleC ctx = setFillStyle ctx <<< toHexString
 
 -----------------
--- Faster versions of these functions are proposed in
--- https://github.com/purescript/purescript-ordered-collections/pull/21
-toMap :: forall a. Ord a => Set a -> Map a Unit
-toMap = foldl (\m k -> Map.insert k unit m) mempty
-
 annotateSet :: forall a b. Ord a => (a -> b) -> Set a -> Map a b
 annotateSet f = mapWithIndex (\k _ -> f k) <<< toMap
 
