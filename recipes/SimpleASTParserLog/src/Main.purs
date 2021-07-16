@@ -138,7 +138,7 @@ parseAtom = do
       decimalsAsString <- parseNumSequence
       let fullString = digitsAsString <> "." <> decimalsAsString
       case Number.fromString fullString of
-        Just x | Number.isFinite x -> pure $ LitNum x
+        Just x -> pure $ LitNum x
         _ -> fail $ "Not a valid decimal: " <> fullString
 
     parseInt :: String -> Parser Atom
