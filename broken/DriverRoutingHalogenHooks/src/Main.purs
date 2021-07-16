@@ -60,7 +60,7 @@ data Query a = ChangeRoute String a
 
 routeLogComponent
   :: forall unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML Query unusedInput unusedOutput anyMonad
+   . H.Component Query unusedInput unusedOutput anyMonad
 routeLogComponent = Hooks.component \rec _ -> Hooks.do
   history /\ historyIdx <- Hooks.useState []
   Hooks.useQuery rec.queryToken case _ of
