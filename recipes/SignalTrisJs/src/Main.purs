@@ -397,6 +397,8 @@ setFillStyleC :: Context2D -> Color -> Effect Unit
 setFillStyleC ctx = setFillStyle ctx <<< toHexString
 
 -----------------
+-- A faster version of this function is proposed in
+-- https://github.com/purescript/purescript-ordered-collections/issues/50
 annotateSet :: forall a b. Ord a => (a -> b) -> Set a -> Map a b
 annotateSet f = mapWithIndex (\k _ -> f k) <<< toMap
 
