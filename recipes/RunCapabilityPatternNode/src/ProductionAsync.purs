@@ -21,7 +21,7 @@ type Environment = { asyncEnv :: String }
 -- The `GetUserName` dsl can be interpreted without 
 -- using `Reader` as an intermediate step (as shown in `ProductionSync`), 
 -- but I chose to use Reader here just to show off how you'd go about doing it.
-type AppMA r = Run (READER Environment + AFF + EFFECT + r )
+type AppMA r = Run (READER Environment + AFF + EFFECT + r)
 
 -- | Running our monad is just a matter of interpreter composition.
 runApp :: Environment -> AppMA (LOGGER + GET_USER_NAME + ()) ~> Aff

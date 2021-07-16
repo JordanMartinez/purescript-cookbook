@@ -24,7 +24,7 @@ runLogger = Run.interpret (on _logger handleLogger send)
   handleLogger :: LoggerF ~> TestM r 
   handleLogger (Log _ a) = pure a
 
-runGetUserName :: forall r.  TestM (GET_USER_NAME + r) ~> TestM r
+runGetUserName :: forall r. TestM (GET_USER_NAME + r) ~> TestM r
 runGetUserName = Run.interpret (on _getUserName handleUserName send)
   where
   handleUserName :: GetUserNameF ~> TestM r
