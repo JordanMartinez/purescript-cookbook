@@ -82,7 +82,7 @@ exampleJson = unsafePartial $ (\(Right json) -> json) $ jsonParser
       "key3": "stuff"
     }
   }
-  """ 
+  """
 
 type EntireRecord =
   { string :: String
