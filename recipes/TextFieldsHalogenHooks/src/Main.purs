@@ -23,7 +23,7 @@ main =
 
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
-   . H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+   . H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState ""
   Hooks.pure $
@@ -31,7 +31,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
       [ HH.input
         [ HP.placeholder "Text to reverse"
         , HP.value state
-        , HE.onValueInput \newValue -> Just $ Hooks.put stateIdx newValue
+        , HE.onValueInput \newValue -> Hooks.put stateIdx newValue
         ]
       , HH.div_ [ HH.text $ reverse state ]
       ]
