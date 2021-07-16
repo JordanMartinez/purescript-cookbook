@@ -85,7 +85,7 @@ data Message = OutputMessage String
 logComponent
   :: forall unusedInput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML Query unusedInput Message anyMonad
+  => H.Component Query unusedInput Message anyMonad
 logComponent = Hooks.component \rec _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState {inputText: "", messages: []}
   Hooks.useQuery rec.queryToken case _ of
