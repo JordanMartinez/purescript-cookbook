@@ -2,8 +2,8 @@
   "license": "MIT",
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
-    "purescript": "^0.13.8",
-    "spago": "^0.16.0"
+    "purescript": "^0.14.3",
+    "spago": "^0.19.1"
   },
   "dependencies": {
     "ace-builds": "^1.4.11",
