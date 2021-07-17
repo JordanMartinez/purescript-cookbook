@@ -12,22 +12,23 @@ import Node.Encoding (Encoding(..))
 import Node.FS.Sync (readTextFile) as Sync
 import Run (EFFECT, Run, on, runBaseEffect, send)
 import Run as Run
+import Type.Row (type (+))
 
 -- | Layer 2 Define our "Production" Monad...
 type Environment = { productionEnv :: String }
-type AppM r = Run ( effect :: EFFECT | r )
+type AppM r = Run (EFFECT + r)
 
 -- | Running our monad is just a matter of interpreter composition.
-runApp :: Environment -> AppM ( logger :: LOGGER, getUserName :: GET_USER_NAME ) ~> Effect
+runApp :: Environment -> AppM (LOGGER + GET_USER_NAME + ()) ~> Effect
 runApp env = runLogger >>> runGetUserName env >>> runBaseEffect
 
-runLogger :: forall r. AppM ( logger :: LOGGER | r ) ~> AppM r
+runLogger :: forall r. AppM (LOGGER + r) ~> AppM r
 runLogger = Run.interpret (on _logger handleLogger send)
   where
   handleLogger :: LoggerF ~> AppM r 
   handleLogger (Log message a) = log message $> a
 
-runGetUserName :: forall r. Environment -> AppM ( getUserName :: GET_USER_NAME | r ) ~> AppM r
+runGetUserName :: forall r. Environment -> AppM (GET_USER_NAME + r) ~> AppM r
 runGetUserName env = Run.interpret (on _getUserName handleUserName send)
   where
   handleUserName :: GetUserNameF ~> AppM r

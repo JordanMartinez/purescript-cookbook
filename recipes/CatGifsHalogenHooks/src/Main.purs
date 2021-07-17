@@ -36,7 +36,7 @@ main =
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadAff anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   content /\ contentIdx <- Hooks.useState RD.NotAsked
 
@@ -75,7 +75,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
             HH.div_
               [ HH.text "I could not load a random cat for some reason. "
               , HH.button
-                [ HE.onClick \_ -> Just getNextGif
+                [ HE.onClick \_ -> getNextGif
                 ]
                 [ HH.text "Try Again!" ]
               ]
@@ -83,7 +83,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
           RD.Success url ->
             HH.div_
               [ HH.button
-                [ HE.onClick \_ -> Just getNextGif
+                [ HE.onClick \_ -> getNextGif
                 , HC.style $ display block
                 ]
                 [ HH.text "More Please!" ]

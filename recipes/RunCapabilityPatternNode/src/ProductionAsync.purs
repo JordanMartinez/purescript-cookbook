@@ -13,6 +13,7 @@ import Node.FS.Aff (readTextFile) as Async
 import Run (AFF, EFFECT, Run, on, runBaseAff', send)
 import Run as Run
 import Run.Reader (READER, ask, runReader)
+import Type.Row (type (+))
 
 -- | Layer 2 Define our "Production" Monad but using Aff...
 type Environment = { asyncEnv :: String }
@@ -20,13 +21,13 @@ type Environment = { asyncEnv :: String }
 -- The `GetUserName` dsl can be interpreted without 
 -- using `Reader` as an intermediate step (as shown in `ProductionSync`), 
 -- but I chose to use Reader here just to show off how you'd go about doing it.
-type AppMA r = Run ( reader :: READER Environment,  aff :: AFF, effect :: EFFECT | r )
+type AppMA r = Run (READER Environment + AFF + EFFECT + r)
 
 -- | Running our monad is just a matter of interpreter composition.
-runApp :: Environment -> AppMA ( logger :: LOGGER, getUserName :: GET_USER_NAME ) ~> Aff
+runApp :: Environment -> AppMA (LOGGER + GET_USER_NAME + ()) ~> Aff
 runApp env = Sync.runLogger >>> runGetUserName >>> runReader env >>> runBaseAff'
 
-runGetUserName :: forall r. AppMA ( getUserName :: GET_USER_NAME | r ) ~> AppMA r
+runGetUserName :: forall r. AppMA (GET_USER_NAME + r) ~> AppMA r
 runGetUserName = Run.interpret (on _getUserName handleUserName send)
   where
   handleUserName :: GetUserNameF ~> AppMA r

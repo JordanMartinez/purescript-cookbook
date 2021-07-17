@@ -4,7 +4,7 @@ import Prelude
 
 import Control.Monad.ST.Internal as ST
 import Data.Tuple (Tuple(..))
-import Debug.Trace (spy, traceM)
+import Debug (spy, traceM)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)

@@ -1,12 +1,12 @@
 module HeterogenousArrayLog.Main where
 
 import Prelude
-import Data.Functor.Variant (SProxy(..))
 import Data.Variant (Variant)
 import Data.Variant as Variant
 import Effect (Effect)
 import Effect.Class.Console (logShow)
 import Effect.Console (log)
+import Type.Proxy (Proxy(..))
 
 main :: Effect Unit
 main = do
@@ -65,22 +65,22 @@ type VariantType
 heterogenousArrayViaVariant :: Effect Unit
 heterogenousArrayViaVariant = do
   let
-    -- Setup some SProxy values with types matching those found within our VariantType
+    -- Setup some Proxy values with types matching those found within our VariantType
     --
-    -- Read: "This particular `SProxy` value has the type
-    -- `SProxy "typeLevelString"`..."
-    _typeLevelString :: SProxy "typeLevelString"
-    _typeLevelString = SProxy
+    -- Read: "This particular `Proxy` value has the type
+    -- `Proxy "typeLevelString"`..."
+    _typeLevelString :: Proxy "typeLevelString"
+    _typeLevelString = Proxy
 
-    -- ... which differs from `SProxy "int"` and the other SProxy types below.
+    -- ... which differs from `Proxy "int"` and the other Proxy types below.
     -- Note that we can write these on one line as:
-    _intValue = (SProxy :: SProxy "int")
+    _intValue = (Proxy :: Proxy "int")
 
     -- This shorthand style is also allowed:
-    _boolean = (SProxy :: _ "boolean")
+    _boolean = (Proxy :: _ "boolean")
 
     -- Any string may be used as a type-level label
-    _arbitraryTypeLevelString = (SProxy :: _ "this type level string must match the label of the row")
+    _arbitraryTypeLevelString = (Proxy :: _ "this type level string must match the label of the row")
 
     -- Create array
     heterogenousArray :: Array VariantType
@@ -91,8 +91,8 @@ heterogenousArrayViaVariant = do
       [ Variant.inj _typeLevelString "a String value"
       , Variant.inj _intValue 4
       , Variant.inj _boolean true
-      -- You may also skip creating the SProxy helper values, and just write them inline:
-      , Variant.inj (SProxy :: _ "boolean") false
+      -- You may also skip creating the Proxy helper values, and just write them inline:
+      , Variant.inj (Proxy :: _ "boolean") false
       , Variant.inj _arbitraryTypeLevelString 82.4
       ]
 
@@ -103,7 +103,7 @@ heterogenousArrayViaVariant = do
     showElement =
       Variant.case_
         # Variant.on _typeLevelString identity
-        # Variant.on (SProxy :: _ "int") show -- inline example
+        # Variant.on (Proxy :: _ "int") show -- inline example
         # Variant.on _boolean show
         # Variant.on _arbitraryTypeLevelString show
   --

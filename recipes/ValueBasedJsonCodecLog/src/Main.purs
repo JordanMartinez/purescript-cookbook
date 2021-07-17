@@ -10,7 +10,7 @@ import Data.Codec.Argonaut (JsonCodec, JsonDecodeError(..), printJsonDecodeError
 import Data.Codec.Argonaut as CA
 import Data.Codec.Argonaut.Common as CAM
 import Data.Codec.Argonaut.Record as CAR
-import Data.Either (Either(..), either, fromRight)
+import Data.Either (Either(..), either, fromRight')
 import Data.Int as Int
 import Data.Maybe (Maybe(..))
 import Data.Profunctor (dimap)
@@ -18,7 +18,7 @@ import Data.String (splitAt)
 import Data.TraversableWithIndex (forWithIndex)
 import Effect (Effect)
 import Effect.Console (log, logShow)
-import Partial.Unsafe (unsafePartial)
+import Partial.Unsafe (unsafeCrashWith)
 
 main :: Effect Unit
 main = do
@@ -46,9 +46,8 @@ main = do
   log $ "Encoding the example value:"
   log $ stringify $ encode entireRecordCodec exampleValue
 
-
 exampleJson :: Json
-exampleJson = unsafePartial $ fromRight $ jsonParser
+exampleJson = fromRight' (\_ -> unsafeCrashWith "got Left: bad parser") $ jsonParser
   """
   {
     "string":"string value",

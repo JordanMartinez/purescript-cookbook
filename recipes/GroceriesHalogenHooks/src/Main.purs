@@ -5,7 +5,7 @@ import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Halogen as H
 import Halogen.Aff as HA
-import Halogen.HTML (HTML, div_, h1_, li_, text, ul_)
+import Halogen.HTML (div_, h1_, li_, text, ul_)
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
 
@@ -17,7 +17,7 @@ main =
 
 hookComponent ::
   forall unusedQuery unusedInput unusedOutput anyMonad.
-  H.Component HTML unusedQuery unusedInput unusedOutput anyMonad
+  H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent =
   Hooks.component \_ _ -> Hooks.do
     Hooks.pure

@@ -1,10 +1,9 @@
 module CardsHalogenHooks.Main where
 
 import Prelude
-
 import CSS (fontSize, em)
+import Data.Array.NonEmpty (cons')
 import Data.Maybe (Maybe(..))
-import Data.NonEmpty ((:|))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Class (class MonadEffect)
@@ -27,7 +26,7 @@ main =
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
    . MonadEffect anyMonad
-  => H.Component HH.HTML unusedQuery unusedInput unusedOutput anyMonad
+  => H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent = Hooks.component \_ _ -> Hooks.do
   let
     initialGenState = { newSeed: mkSeed 3, size: 1 }
@@ -37,7 +36,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   Hooks.pure $
     HH.div_
     [ HH.button
-      [ HE.onClick \_ -> Just do
+      [ HE.onClick \_ -> do
         -- Modify the card generator state by re-running the generator.
         -- We don't need the card value for this update function, so it is ignored with `_`.
         Hooks.modify_ cardStateIdx \(_ /\ genState) -> runGen cardGenerator genState
@@ -68,20 +67,20 @@ data Card
 cardGenerator :: Gen Card
 cardGenerator =
   elements
-    $ Ace
-    :| [ Two
-      , Three
-      , Four
-      , Five
-      , Six
-      , Seven
-      , Eight
-      , Nine
-      , Ten
-      , Jack
-      , Queen
-      , King
-      ]
+    $ cons' Ace
+        [ Two
+        , Three
+        , Four
+        , Five
+        , Six
+        , Seven
+        , Eight
+        , Nine
+        , Ten
+        , Jack
+        , Queen
+        , King
+        ]
 
 viewCard :: Card -> String
 viewCard = case _ of
