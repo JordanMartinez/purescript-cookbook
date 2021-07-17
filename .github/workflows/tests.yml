@@ -10,9 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Should we use setup-purescript or npm install?
-      # - name: Set up PureScript toolchain
-      #   uses: purescript-contrib/setup-purescript@main
+      # We use `npm install` rather than `setup-purescript`
 
       - name: Cache PureScript dependencies
         uses: actions/cache@v2
