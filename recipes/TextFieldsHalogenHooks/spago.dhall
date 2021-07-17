@@ -1,6 +1,16 @@
 { name = "TextFieldsHalogenHooks"
 , dependencies =
-  [ "console", "effect", "halogen-hooks", "psci-support" ]
+  [ "arrays"
+  , "console"
+  , "effect"
+  , "halogen"
+  , "halogen-hooks"
+  , "maybe"
+  , "prelude"
+  , "psci-support"
+  , "strings"
+  , "tuples"
+  ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/TextFieldsHalogenHooks/src/**/*.purs" ]
 }

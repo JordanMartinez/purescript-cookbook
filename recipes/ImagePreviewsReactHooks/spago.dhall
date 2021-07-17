@@ -1,10 +1,20 @@
 { name = "ImagePreviewsReactHooks"
 , dependencies =
-  [ "console"
+  [ "arrays"
+  , "console"
   , "effect"
+  , "exceptions"
+  , "foldable-traversable"
+  , "maybe"
+  , "nullable"
+  , "prelude"
   , "psci-support"
+  , "react-basic"
   , "react-basic-dom"
   , "react-basic-hooks"
+  , "unsafe-coerce"
+  , "web-file"
+  , "web-html"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ImagePreviewsReactHooks/src/**/*.purs" ]

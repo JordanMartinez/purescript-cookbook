@@ -1,6 +1,14 @@
 { name = "HelloJs"
 , dependencies =
-  [ "console", "effect", "psci-support", "web-html" ]
+  [ "console"
+  , "effect"
+  , "exceptions"
+  , "maybe"
+  , "prelude"
+  , "psci-support"
+  , "web-dom"
+  , "web-html"
+  ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/HelloJs/src/**/*.purs" ]
 }

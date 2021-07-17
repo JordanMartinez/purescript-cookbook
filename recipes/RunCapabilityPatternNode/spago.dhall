@@ -4,11 +4,14 @@
   , "assert"
   , "console"
   , "effect"
+  , "node-buffer"
   , "node-fs"
   , "node-fs-aff"
   , "node-readline"
-  , "transformers"
+  , "prelude"
   , "run"
+  , "transformers"
+  , "typelevel-prelude"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/RunCapabilityPatternNode/src/**/*.purs" ]

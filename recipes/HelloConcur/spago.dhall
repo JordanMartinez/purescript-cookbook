@@ -1,10 +1,6 @@
 { name = "HelloConcur"
 , dependencies =
-  [ "console"
-  , "effect"
-  , "concur-react"
-  , "psci-support"
-  ]
+  [ "concur-react", "console", "effect", "prelude", "psci-support" ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/HelloConcur/src/**/*.purs" ]
 }

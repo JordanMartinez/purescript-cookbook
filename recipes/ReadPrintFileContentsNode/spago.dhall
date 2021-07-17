@@ -1,5 +1,13 @@
 { name = "ReadPrintFileContentsNode"
-, dependencies = [ "console", "effect", "node-fs-aff", "psci-support" ]
+, dependencies =
+  [ "aff"
+  , "console"
+  , "effect"
+  , "node-buffer"
+  , "node-fs-aff"
+  , "prelude"
+  , "psci-support"
+  ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ReadPrintFileContentsNode/src/**/*.purs" ]
 }
