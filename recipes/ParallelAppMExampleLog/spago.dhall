@@ -1,27 +1,18 @@
 { name = "ParallelAppMExampleLog"
 , dependencies =
-  [ "console"
-  , "control"
+  [ "aff"
+  , "console"
   , "effect"
-  , "either"
   , "foldable-traversable"
-  , "functions"
-  , "functors"
-  , "maybe"
-  , "newtype"
+  , "integers"
+  , "parallel"
   , "prelude"
   , "psci-support"
-  , "refs"
-  , "transformers"
-  , "aff"
   , "random"
+  , "transformers"
+  , "type-equality"
   , "unfoldable"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ParallelAppMExampleLog/src/**/*.purs" ]
 }
-{-
-sources does not work with paths relative to this config
-  sources = [ "src/**/*.purs" ]
-Paths must be relative to where this command is run
--}

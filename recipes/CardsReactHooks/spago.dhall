@@ -1,12 +1,18 @@
 { name = "CardsReactHooks"
 , dependencies =
-  [ "console"
+  [ "arrays"
+  , "console"
   , "effect"
+  , "exceptions"
+  , "maybe"
   , "nonempty"
+  , "prelude"
   , "psci-support"
   , "quickcheck"
-  , "react-basic-hooks"
+  , "react-basic"
   , "react-basic-dom"
+  , "react-basic-hooks"
+  , "web-html"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/CardsReactHooks/src/**/*.purs" ]

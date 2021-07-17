@@ -21,50 +21,50 @@ array :: Array String
 array = map show $ range 1 10
 
 main :: Effect Unit
-main =
-  -- Starts running a computation and blocks until it finishes.
-  let runComputation computationName computation = do
-        liftEffect $ log $ "Running computation in 1 second: " <> computationName
-        delay (Milliseconds 1000.0)
-        computation
-
-  in launchAff_ do
-    runComputation "print all items in array sequentially" do
-      for_ array \element -> do
-        liftEffect $ log element
-
-    let delayComputationWithRandomAmount = do
-          delayAmount <- liftEffect $ randomInt 20 600
-          delay $ Milliseconds $ toNumber delayAmount
-
-    runComputation "print all items in array in parallel" do
-      sequential $ for_ array \element -> do
-        -- slow down speed of computation based on some random value
-        -- to show that things are working in parallel.
-        parallel do
-          delayComputationWithRandomAmount
-          liftEffect $ log element
-
-    -- same computation as before but with less boilerplate.
-    runComputation "print all items in array in parallel using parTraverse" do
-      array # parTraverse_ \element -> do
-        delayComputationWithRandomAmount
-        liftEffect $ log element
-
-    runComputation "race multiple computations & stop all others when one finishes" do
-      let
-        -- same as before
-        arrayComputation index = do
-          let shownIndex = "Array " <> show index <> ": "
-          array # traverse \element -> do
-            delayComputationWithRandomAmount
-            liftEffect $ log $ shownIndex <> element
-
-      void $ parOneOf [ arrayComputation 1
-                      , arrayComputation 2
-                      , arrayComputation 3
-                      , arrayComputation 4
-                      ]
+main = pure unit
+  -- -- Starts running a computation and blocks until it finishes.
+  -- let runComputation computationName computation = do
+  --       liftEffect $ log $ "Running computation in 1 second: " <> computationName
+  --       delay (Milliseconds 1000.0)
+  --       computation
+  --
+  -- in launchAff_ do
+  --   runComputation "print all items in array sequentially" do
+  --     for_ array \element -> do
+  --       liftEffect $ log element
+  --
+  --   let delayComputationWithRandomAmount = do
+  --         delayAmount <- liftEffect $ randomInt 20 600
+  --         delay $ Milliseconds $ toNumber delayAmount
+  --
+  --   runComputation "print all items in array in parallel" do
+  --     sequential $ for_ array \element -> do
+  --       -- slow down speed of computation based on some random value
+  --       -- to show that things are working in parallel.
+  --       parallel do
+  --         delayComputationWithRandomAmount
+  --         liftEffect $ log element
+  --
+  --   -- same computation as before but with less boilerplate.
+  --   runComputation "print all items in array in parallel using parTraverse" do
+  --     array # parTraverse_ \element -> do
+  --       delayComputationWithRandomAmount
+  --       liftEffect $ log element
+  --
+  --   runComputation "race multiple computations & stop all others when one finishes" do
+  --     let
+  --       -- same as before
+  --       arrayComputation index = do
+  --         let shownIndex = "Array " <> show index <> ": "
+  --         array # traverse \element -> do
+  --           delayComputationWithRandomAmount
+  --           liftEffect $ log $ shownIndex <> element
+  --
+  --     void $ parOneOf [ arrayComputation 1
+  --                     , arrayComputation 2
+  --                     , arrayComputation 3
+  --                     , arrayComputation 4
+  --                     ]
 
 -- Everything below this line is a copy of
 -- the `AppM.purs` file (excluding imports)

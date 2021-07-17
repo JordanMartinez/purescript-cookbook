@@ -1,12 +1,19 @@
 { name = "BookHalogenHooks"
 , dependencies =
-  [ "console"
+  [ "aff"
+  , "affjax"
+  , "console"
   , "effect"
+  , "either"
+  , "halogen"
   , "halogen-hooks"
+  , "http-methods"
   , "interpolate"
+  , "maybe"
+  , "prelude"
   , "psci-support"
   , "remotedata"
-  , "affjax"
+  , "tuples"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/BookHalogenHooks/src/**/*.purs" ]

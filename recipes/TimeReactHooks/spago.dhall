@@ -1,12 +1,19 @@
 { name = "TimeReactHooks"
 , dependencies =
-  [ "console"
+  [ "arrays"
+  , "console"
   , "effect"
+  , "exceptions"
+  , "integers"
   , "js-date"
   , "js-timers"
+  , "maybe"
+  , "newtype"
+  , "prelude"
   , "psci-support"
-  , "react-basic-hooks"
   , "react-basic-dom"
+  , "react-basic-hooks"
+  , "web-html"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/TimeReactHooks/src/**/*.purs" ]
