@@ -2,8 +2,6 @@ module ComponentsInputHalogenHooks.Main where
 
 import Prelude hiding (top)
 
-import Data.Maybe (Maybe(..))
-import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Class (class MonadEffect, liftEffect)
@@ -12,9 +10,10 @@ import Halogen as H
 import Halogen.Aff as HA
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
-import Halogen.Hooks (Hooked, UseEffect, UseRef)
+import Halogen.Hooks (type (<>), Hook, UseEffect, UseRef)
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
+import Type.Proxy (Proxy(..))
 
 main :: Effect Unit
 main =
@@ -22,8 +21,8 @@ main =
     body <- HA.awaitBody
     void $ runUI containerComponent unit body
 
-_button :: SProxy "button"
-_button = SProxy
+_button :: Proxy "button"
+_button = Proxy
 
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
@@ -42,16 +41,16 @@ containerComponent = Hooks.component \_ _ -> Hooks.do
         , HH.slot _display 5 displayComponent (state * state) absurd
         ]
     , HH.button
-        [ HE.onClick \_ -> Just $ Hooks.modify_ stateIdx (_ + 1) ]
+        [ HE.onClick \_ -> Hooks.modify_ stateIdx (_ + 1) ]
         [ HH.text "+1"]
     , HH.button
-        [ HE.onClick \_ -> Just $ Hooks.modify_ stateIdx (_ - 1) ]
+        [ HE.onClick \_ -> Hooks.modify_ stateIdx (_ - 1) ]
         [ HH.text "-1"]
     , HH.p_
         [ HH.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
     ]
 
-_display = SProxy :: SProxy "display"
+_display = Proxy :: Proxy "display"
 
 displayComponent
   :: forall unusedQuery unusedOutput anyMonad
@@ -67,7 +66,7 @@ displayComponent = Hooks.component \_ input -> Hooks.do
 useRenderCount
   :: forall m a
    . MonadEffect m
-  => Hooked m a (UseEffect (UseRef Int a)) Int
+  => Hook m (UseRef Int <> UseEffect <> a) Int
 useRenderCount = Hooks.do
   renders /\ rendersRef <- Hooks.useRef 1
   Hooks.captures {} Hooks.useTickEffect do

@@ -3,7 +3,6 @@ module ComponentsHalogenHooks.Main where
 import Prelude hiding (top)
 
 import Data.Maybe (Maybe(..), maybe)
-import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Class (class MonadEffect)
@@ -14,9 +13,10 @@ import Halogen.Aff as HA
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Halogen.Hooks (Hooked, UseEffect, UseRef)
+import Halogen.Hooks (type (<>), Hook, UseEffect, UseRef)
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
+import Type.Proxy (Proxy(..))
 
 main :: Effect Unit
 main =
@@ -24,8 +24,8 @@ main =
     body <- HA.awaitBody
     void $ runUI containerComponent unit body
 
-_button :: SProxy "button"
-_button = SProxy
+_button :: Proxy "button"
+_button = Proxy
 
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
@@ -37,7 +37,7 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
   buttonState /\ buttonStateIdx <- Hooks.useState (Nothing :: Maybe Boolean)
   Hooks.pure $
     HH.div_
-    [ HH.slot _button unit buttonComponent unit \_ -> Just do
+    [ HH.slot _button unit buttonComponent unit \_ -> do
         Hooks.modify_ toggleCountIdx (_ + 1)
     , HH.p_
         [ HH.text ("Button has been toggled " <> show toggleCount <> " time(s)") ]
@@ -47,8 +47,8 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
             <> (maybe "(not checked yet)" (if _ then "on" else "off") buttonState)
             <> ". "
         , HH.button
-            [ HE.onClick \_ -> Just do
-                mbBtnState <- Hooks.query rec.slotToken _button unit $ H.request IsOn
+            [ HE.onClick \_ -> do
+                mbBtnState <- Hooks.query rec.slotToken _button unit $ H.mkRequest IsOn
                 Hooks.put buttonStateIdx mbBtnState
             ]
             [ HH.text "Check now" ]
@@ -73,7 +73,7 @@ buttonComponent = Hooks.component \rec _ -> Hooks.do
   Hooks.pure $
     HH.button
       [ HP.title label
-      , HE.onClick \_ -> Just do
+      , HE.onClick \_ -> do
           newState <- Hooks.modify enabledIdx not
           Hooks.raise rec.outputToken $ Toggled newState
       ]
@@ -82,7 +82,7 @@ buttonComponent = Hooks.component \rec _ -> Hooks.do
 useRenderCount
   :: forall m a
    . MonadEffect m
-  => Hooked m a (UseEffect (UseRef Int a)) Int
+  => Hook m (UseRef Int <> UseEffect <> a) Int
 useRenderCount = Hooks.do
   renders /\ rendersRef <- Hooks.useRef 1
   Hooks.captures {} Hooks.useTickEffect do
