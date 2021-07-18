@@ -1,11 +1,15 @@
 { name = "ComponentsHalogenHooks"
 , dependencies =
-  [ "console", "effect", "psci-support", "halogen-hooks" ]
+  [ "console"
+  , "effect"
+  , "halogen"
+  , "halogen-hooks"
+  , "maybe"
+  , "prelude"
+  , "psci-support"
+  , "refs"
+  , "tuples"
+  ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ComponentsHalogenHooks/src/**/*.purs" ]
 }
-{-
-sources does not work with paths relative to this config
-  sources = [ "src/**/*.purs" ]
-Paths must be relative to where this command is run
--}
