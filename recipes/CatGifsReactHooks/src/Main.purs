@@ -73,4 +73,4 @@ getRandomCatGif = do
   pure do
     -- Using `hush` to ignore the possible error messages
     { body } <- hush response
-    hush (decodeJson body >>= (_ .: "data") >>= (_ .: "images") >>= (_ .: "fix_width_url"))
+    hush (decodeJson body >>= (_ .: "data") >>= (_ .: "images") >>= (_ .: "downsized") >>= (_ .: "url"))
