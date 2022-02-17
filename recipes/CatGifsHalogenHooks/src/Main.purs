@@ -52,7 +52,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
         httpResult = case errorOrResponse of
           Right jsonRec | jsonRec.status == StatusCode 200 ->
             case decodeJson jsonRec.body of
-              Right rec -> RD.Success rec.data.image_url
+              Right rec -> RD.Success rec.data.images.downsized.url
               _ -> RD.Failure "decode error"
           _ ->
             RD.Failure "http error"
@@ -91,9 +91,13 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
               ]
       ]
 
-decodeJson :: Json -> Either JsonDecodeError { data :: { image_url :: String }}
+decodeJson :: Json -> Either JsonDecodeError { data :: { images :: { downsized :: { url :: String } } } }
 decodeJson = decode $
   CA.object "data" $ CAR.record
-    { data: CA.object "image_url" $ CAR.record
-      { image_url: CA.string }
+    { data: CA.object "images" $ CAR.record
+        { images: CA.object "downsized" $ CAR.record
+            { downsized: CA.object "url" $ CAR.record
+                { url: CA.string }
+            }
+        }
     }
