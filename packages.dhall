@@ -18,7 +18,7 @@ let overrides =
           , "web-file"
           , "web-html"
           ]
-        , repo = "https://github.com/andys8/purescript-react-basic-dom.git"
+        , repo = "https://github.com/lumihq/purescript-react-basic-dom.git"
         , version = "4633ad95b47a5806ca559dfb3b16b5339564f0ad"
         }
       }
