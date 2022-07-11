@@ -201,7 +201,7 @@ recipes/%/web:
 %-buildWeb: export NODE_ENV=development
 %-buildWeb: $(call recipeDir,%) $(call webDir,%) %-indexCheck %-build
 > @echo === Building $* for the web browser backend ===
-> parcel build $(call webHtml,$*) --dist-dir $(call webDistDir,$*) --no-minify --no-source-maps
+> parcel build $(call webHtml,$*) --dist-dir $(call webDistDir,$*) --no-optimize --no-source-maps
 
 # How to make prodDir
 recipes/%/prod:
