@@ -2,10 +2,9 @@ module SignalTrisJs.Main where
 
 import Prelude
 
-import Color (Color, black, toHexString, white)
+import Color (Color, black, rgb, toHexString, white)
 import Color.Scale (grayscale, sample)
-import Color.Scheme.X11 as C
-import Control.MonadZero (guard)
+import Control.MonadPlus (guard)
 import Data.Array ((..))
 import Data.Array.NonEmpty (NonEmptyArray, cons')
 import Data.Foldable (all, any, foldl)
@@ -69,11 +68,11 @@ refreshRate = 60
 pieces :: NonEmptyArray Tile
 pieces =
   cons'
-    (piece [ p 0 0, p 1 0, p 0 1, p 1 1 ] C.green)
-    [ piece [ p (-1) 0, p 0 0, p 1 0, p 2 0 ] C.maroon
-    , piece [ p (-1) 0, p 0 0, p 1 0, p 1 1 ] C.mediumblue
-    , piece [ p (-1) 0, p 0 0, p 1 0, p 0 1 ] C.teal
-    , piece [ p (-1) 0, p 0 0, p 1 1, p 0 1 ] C.purple
+    (piece [ p 0 0, p 1 0, p 0 1, p 1 1 ] green)
+    [ piece [ p (-1) 0, p 0 0, p 1 0, p 2 0 ] maroon
+    , piece [ p (-1) 0, p 0 0, p 1 0, p 1 1 ] mediumblue
+    , piece [ p (-1) 0, p 0 0, p 1 0, p 0 1 ] teal
+    , piece [ p (-1) 0, p 0 0, p 1 1, p 0 1 ] purple
     ]
   where
   -- Convenience functions for creating points and pieces
@@ -85,6 +84,12 @@ pieces =
     { cells: Set.fromFoldable indices
     , color
     }
+
+  green = rgb 0 128 0
+  maroon = rgb 128 0 0
+  mediumblue = rgb 0 0 205
+  teal = rgb 0 128 128
+  purple = rgb 128 0 128
 
 -- Where pieces are dropped into the board
 initialOffset :: Point
