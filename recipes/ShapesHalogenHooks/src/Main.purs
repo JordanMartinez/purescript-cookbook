@@ -9,8 +9,8 @@ import Halogen.Hooks as Hooks
 import Halogen.HTML as HH
 import Halogen.VDom.Driver (runUI)
 import Halogen.Svg.Elements (svg, circle, line, path, rect, text)
-import Halogen.Svg.Attributes (cx, cy, d, dominant_baseline, fill, height, r,
-  stroke, strokeWidth, text_anchor, transform, viewBox, width, x, x1, x2, y, y1,
+import Halogen.Svg.Attributes (cx, cy, d, dominantBaseline, fill, height, r,
+  stroke, strokeWidth, textAnchor, transform, viewBox, width, x, x1, x2, y, y1,
   y2, CommandPositionReference(Abs), m, l, Color(RGB), TextAnchor(AnchorMiddle),
   Baseline(Central), Transform(Rotate))
 {- We import a lot of functions from Halogen.Svg.Attributes which makes the SVG
@@ -40,23 +40,23 @@ hookComponent =
               [ cx 50.0
               , cy 50.0
               , r 40.0
-              , fill $ Just $ RGB 255 0 0
-              , stroke $ Just $ RGB 0 0 0
+              , fill $ RGB 255 0 0
+              , stroke $ RGB 0 0 0
               ]
           , rect
               [ x 100.0
               , y 10.0
               , width 40.0
               , height 40.0
-              , fill $ Just $ RGB 0 120 0
-              , stroke $ Just $ RGB 0 0 0
+              , fill $ RGB 0 120 0
+              , stroke $ RGB 0 0 0
               ]
           , line
               [ x1 20.0
               , y1 200.0
               , x2 200.0
               , y2 20.0
-              , stroke $ Just $ RGB 0 0 255
+              , stroke $ RGB 0 0 255
               , strokeWidth 10.0
               ]
           , path
@@ -69,15 +69,14 @@ hookComponent =
                   , l Abs 320.0 120.0
                   , l Abs 320.0 160.0
                   ]
-              , fill Nothing
-              , stroke $ Just $ RGB 255 0 0
+              , stroke $ RGB 255 0 0
               ]
           , text
               [ x 130.0
               , y 130.0
-              , fill $ Just $ RGB 0 0 0
-              , text_anchor AnchorMiddle
-              , dominant_baseline Central
+              , fill $ RGB 0 0 0
+              , textAnchor AnchorMiddle
+              , dominantBaseline Central
               , transform $ [ Rotate (-45.0) 130.0 130.0 ]
               ]
               [ HH.text "Welcome to Shapes Club"
