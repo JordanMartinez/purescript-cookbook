@@ -1,2 +1,3 @@
-"use strict";
-require("../../../output/ButtonsReactHooks.Main/index.js").main();
+import { main } from "../../../output/ButtonsReactHooks.Main/index.js";
+
+main();
