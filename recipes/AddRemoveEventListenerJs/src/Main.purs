@@ -85,7 +85,7 @@ main = do
       -- In this approach, we use a better approach to add an event listener
       -- where we don't need to store a reference to the listener since
       -- it is still in scope.
-      removeListener <- addBetterListener METypes.click false buttonMain \e -> do
+      removeListener <- addBetterListener METypes.click false buttonMain \_e -> do
         log $ "Better listener: this is a better way to add/remove \
               \an event listener."
 

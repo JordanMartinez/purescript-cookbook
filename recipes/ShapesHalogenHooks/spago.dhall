@@ -1,7 +1,6 @@
 { name = "ShapesHalogenHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "halogen"
   , "halogen-hooks"
   , "halogen-svg-elems"

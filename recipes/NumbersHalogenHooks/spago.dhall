@@ -1,7 +1,6 @@
 { name = "NumbersHalogenHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "halogen"
   , "halogen-hooks"
   , "maybe"

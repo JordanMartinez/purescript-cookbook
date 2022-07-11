@@ -1,7 +1,6 @@
 { name = "GroceriesReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"

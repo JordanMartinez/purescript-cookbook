@@ -1,7 +1,6 @@
 { name = "FileUploadHalogenHooks"
 , dependencies =
-  [ "console"
-  , "dom-indexed"
+  [ "dom-indexed"
   , "effect"
   , "halogen"
   , "halogen-hooks"

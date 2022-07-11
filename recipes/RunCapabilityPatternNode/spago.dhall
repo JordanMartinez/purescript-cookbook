@@ -7,10 +7,8 @@
   , "node-buffer"
   , "node-fs"
   , "node-fs-aff"
-  , "node-readline"
   , "prelude"
   , "run"
-  , "transformers"
   , "typelevel-prelude"
   ]
 , packages = ../../packages.dhall

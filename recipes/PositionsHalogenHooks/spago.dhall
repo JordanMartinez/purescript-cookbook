@@ -1,7 +1,6 @@
 { name = "PositionsHalogenHooks"
 , dependencies =
-  [ "console"
-  , "css"
+  [ "css"
   , "effect"
   , "halogen"
   , "halogen-css"

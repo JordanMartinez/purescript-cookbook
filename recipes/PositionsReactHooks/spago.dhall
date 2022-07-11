@@ -1,7 +1,6 @@
 { name = "PositionsReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"

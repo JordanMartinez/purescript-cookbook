@@ -1,7 +1,6 @@
 { name = "SignalRenderJs"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"

@@ -1,7 +1,7 @@
 { name = "LifecycleHalogenHooks"
 , dependencies =
-  [ "arrays"
-  , "console"
+  [ "console"
+  , "arrays"
   , "effect"
   , "halogen"
   , "halogen-hooks"

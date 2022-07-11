@@ -1,7 +1,6 @@
 { name = "HelloReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"

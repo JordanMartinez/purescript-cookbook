@@ -1,7 +1,6 @@
 { name = "RoutingHashReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "foldable-traversable"

@@ -1,7 +1,6 @@
 { name = "DragAndDropReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "foldable-traversable"
   , "maybe"

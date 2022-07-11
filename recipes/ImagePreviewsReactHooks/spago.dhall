@@ -1,7 +1,6 @@
 { name = "ImagePreviewsReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "foldable-traversable"

@@ -3,7 +3,6 @@
   [ "console"
   , "effect"
   , "foldable-traversable"
-  , "interpolate"
   , "prelude"
   , "web-dom"
   , "web-html"

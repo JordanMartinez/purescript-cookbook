@@ -1,7 +1,6 @@
 { name = "WriteFileNode"
 , dependencies =
   [ "aff"
-  , "console"
   , "effect"
   , "node-buffer"
   , "node-fs-aff"

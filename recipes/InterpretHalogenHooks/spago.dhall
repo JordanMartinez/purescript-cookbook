@@ -3,7 +3,6 @@
   [ "aff"
   , "affjax"
   , "affjax-web"
-  , "console"
   , "effect"
   , "either"
   , "halogen"

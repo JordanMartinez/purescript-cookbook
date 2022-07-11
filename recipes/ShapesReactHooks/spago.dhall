@@ -1,7 +1,6 @@
 { name = "ShapesReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"

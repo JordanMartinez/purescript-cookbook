@@ -1,7 +1,6 @@
 { name = "TicTacToeReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "control"
   , "effect"
   , "exceptions"

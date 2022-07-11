@@ -3,7 +3,6 @@
   [ "arrays"
   , "canvas"
   , "colors"
-  , "console"
   , "control"
   , "effect"
   , "exceptions"

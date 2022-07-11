@@ -1,7 +1,6 @@
 { name = "TextFieldsReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "maybe"

@@ -1,7 +1,6 @@
 { name = "TextFieldsHalogenHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "halogen"
   , "halogen-hooks"

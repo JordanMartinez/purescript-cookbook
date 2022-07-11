@@ -1,7 +1,7 @@
 { name = "ParallelAppMExampleLog"
 , dependencies =
-  [ "aff"
-  , "console"
+  [ "console"
+  , "aff"
   , "effect"
   , "foldable-traversable"
   , "integers"

@@ -1,7 +1,6 @@
 { name = "TimeReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "integers"

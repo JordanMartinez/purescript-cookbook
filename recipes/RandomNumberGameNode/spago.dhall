@@ -1,8 +1,8 @@
 { name = "RandomNumberGameNode"
 , dependencies =
-  [ "aff"
+  [ "console"
+  , "aff"
   , "arrays"
-  , "console"
   , "effect"
   , "either"
   , "integers"
