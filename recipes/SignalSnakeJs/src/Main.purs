@@ -2,13 +2,12 @@ module SignalSnakeJs.Main where
 
 import Prelude
 
-import Color (Color, black, toHexString, white)
-import Color.Scheme.Clrs (green, red)
+import Color (Color, black, rgb, toHexString, white)
 import Control.Monad.Rec.Loops (iterateWhile)
-import Control.MonadZero (guard)
+import Control.MonadPlus (guard)
 import Data.Array.NonEmpty (NonEmptyArray, cons, cons', dropEnd, head, singleton)
 import Data.Int (toNumber)
-import Data.Maybe (Maybe, maybe)
+import Data.Maybe (maybe)
 import Data.Traversable (elem, for)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
@@ -52,10 +51,10 @@ bgColor :: Color
 bgColor = black
 
 foodColor :: Color
-foodColor = red
+foodColor = rgb 255 0 0
 
 wallColor :: Color
-wallColor = green
+wallColor = rgb 0 128 0
 
 -- STATE MODEL AND TYPES
 --
