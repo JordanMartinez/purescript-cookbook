@@ -2,6 +2,7 @@
 , dependencies =
   [ "aff"
   , "affjax"
+  , "affjax-web"
   , "argonaut-core"
   , "codec"
   , "codec-argonaut"

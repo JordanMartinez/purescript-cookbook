@@ -1,6 +1,7 @@
 { name = "BookReactHooks"
 , dependencies =
   [ "affjax"
+  , "affjax-web"
   , "console"
   , "effect"
   , "either"

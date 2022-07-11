@@ -2,6 +2,7 @@
 , dependencies =
   [ "aff"
   , "affjax"
+  , "affjax-node"
   , "argonaut"
   , "console"
   , "effect"

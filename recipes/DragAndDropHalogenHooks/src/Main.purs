@@ -2,7 +2,7 @@ module DragAndDropHalogenHooks.Main where
 
 import Prelude hiding (top)
 
-import CSS (alignItems, backgroundColor, border, borderRadius, color, column, dashed, display, displayNone, flex, flexDirection, gray, height, justifyContent, lightblue, margin, padding, purple, px, solid, width)
+import CSS (alignItems, backgroundColor, border, borderRadius, color, column, dashed, display, displayNone, flex, flexDirection, height, justifyContent, margin, padding, px, solid, width)
 import CSS as CSS
 import CSS.Common (center)
 import DOM.HTML.Indexed.InputAcceptType (mediaType)
@@ -46,7 +46,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   Hooks.pure $
     HH.div
     [ HC.style do
-        border dashed (px 6.0) $ if hover then purple else CSS.fromInt 0xcccccc
+        border dashed (px 6.0) $ if hover then CSS.fromInt 0xB10DC9 else CSS.fromInt 0xcccccc
         borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
         width (px 480.0)
         height (px 100.0)
@@ -77,10 +77,10 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
       -- simulate button-like appearance
       [ HC.style do
           margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
-          border solid (px 2.0) gray
+          border solid (px 2.0) (CSS.fromInt 0xAAAAAA)
           borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
           padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-          backgroundColor lightblue
+          backgroundColor (CSS.rgb 3 169 244)
       , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
       ]
       [ HH.text "Upload images"

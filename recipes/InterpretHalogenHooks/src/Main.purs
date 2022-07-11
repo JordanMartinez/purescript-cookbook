@@ -2,7 +2,7 @@ module InterpretHalogenHooks.Main where
 
 import Prelude
 
-import Affjax as AX
+import Affjax.Web as AX
 import Affjax.ResponseFormat as AXRF
 import Control.Monad.Reader (ReaderT, ask, runReaderT)
 import Data.Either (either)

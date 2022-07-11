@@ -1,7 +1,7 @@
 module CatGifsReactHooks.Main where
 
 import Prelude
-import Affjax as Affjax
+import Affjax.Web as Affjax
 import Affjax.ResponseFormat as ResponseFormat
 import Data.Argonaut.Decode (decodeJson)
 import Data.Argonaut.Decode.Combinators ((.:))
