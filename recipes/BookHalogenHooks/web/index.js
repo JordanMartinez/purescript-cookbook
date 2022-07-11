@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/BookHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/BookHalogenHooks.Main/index.js";
+
+main();

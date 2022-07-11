@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/RoutingHashReactHooks.Main/index.js").main();
+import { main } from "../../../output/RoutingHashReactHooks.Main/index.js";
+
+main();

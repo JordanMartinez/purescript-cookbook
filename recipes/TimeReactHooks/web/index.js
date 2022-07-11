@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/TimeReactHooks.Main/index.js").main();
+import { main } from "../../../output/TimeReactHooks.Main/index.js";
+
+main();

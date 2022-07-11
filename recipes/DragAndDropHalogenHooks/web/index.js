@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/DragAndDropHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/DragAndDropHalogenHooks.Main/index.js";
+
+main();

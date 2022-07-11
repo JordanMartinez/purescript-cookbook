@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/NumbersReactHooks.Main/index.js").main();
+import { main } from "../../../output/NumbersReactHooks.Main/index.js";
+
+main();

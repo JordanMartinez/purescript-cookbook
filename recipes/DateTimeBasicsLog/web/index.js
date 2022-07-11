@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/DateTimeBasicsLog.Main/index.js").main();
+import { main } from "../../../output/DateTimeBasicsLog.Main/index.js";
+
+main();

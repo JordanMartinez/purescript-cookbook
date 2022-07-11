@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/ImagePreviewsReactHooks.Main/index.js").main();
+import { main } from "../../../output/ImagePreviewsReactHooks.Main/index.js";
+
+main();

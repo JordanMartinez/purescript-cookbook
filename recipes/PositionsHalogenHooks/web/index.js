@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/PositionsHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/PositionsHalogenHooks.Main/index.js";
+
+main();

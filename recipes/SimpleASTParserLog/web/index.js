@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/SimpleASTParserLog.Main/index.js").main();
+import { main } from "../../../output/SimpleASTParserLog.Main/index.js";
+
+main();

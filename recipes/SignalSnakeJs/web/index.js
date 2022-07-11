@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/SignalSnakeJs.Main/index.js").main();
+import { main } from "../../../output/SignalSnakeJs.Main/index.js";
+
+main();

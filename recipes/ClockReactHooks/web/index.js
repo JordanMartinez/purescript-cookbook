@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/ClockReactHooks.Main/index.js").main();
+import { main } from "../../../output/ClockReactHooks.Main/index.js";
+
+main();

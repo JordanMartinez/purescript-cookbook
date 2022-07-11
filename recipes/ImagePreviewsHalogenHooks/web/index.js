@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/ImagePreviewsHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/ImagePreviewsHalogenHooks.Main/index.js";
+
+main();

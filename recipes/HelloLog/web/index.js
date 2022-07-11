@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/HelloLog.Main/index.js").main();
+import { main } from "../../../output/HelloLog.Main/index.js";
+
+main();

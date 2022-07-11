@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/ComponentsInputHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/ComponentsInputHalogenHooks.Main/index.js";
+
+main();

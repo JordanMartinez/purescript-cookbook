@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/TextFieldsReactHooks.Main/index.js").main();
+import { main } from "../../../output/TextFieldsReactHooks.Main/index.js";
+
+main();

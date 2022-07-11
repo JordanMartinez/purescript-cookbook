@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/HelloJs.Main/index.js").main();
+import { main } from "../../../output/HelloJs.Main/index.js";
+
+main();

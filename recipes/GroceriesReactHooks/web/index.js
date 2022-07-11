@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/GroceriesReactHooks.Main/index.js").main();
+import { main } from "../../../output/GroceriesReactHooks.Main/index.js";
+
+main();

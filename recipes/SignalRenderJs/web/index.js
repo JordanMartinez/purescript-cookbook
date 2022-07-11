@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/SignalRenderJs.Main/index.js").main();
+import { main } from "../../../output/SignalRenderJs.Main/index.js";
+
+main();

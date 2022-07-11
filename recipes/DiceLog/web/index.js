@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/DiceLog.Main/index.js").main();
+import { main } from "../../../output/DiceLog.Main/index.js";
+
+main();

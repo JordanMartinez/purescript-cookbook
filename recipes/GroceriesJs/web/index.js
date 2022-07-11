@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/GroceriesJs.Main/index.js").main();
+import { main } from "../../../output/GroceriesJs.Main/index.js";
+
+main();

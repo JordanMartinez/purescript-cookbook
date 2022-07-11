@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/CardsReactHooks.Main/index.js").main();
+import { main } from "../../../output/CardsReactHooks.Main/index.js";
+
+main();

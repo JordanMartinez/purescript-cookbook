@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/DragAndDropReactHooks.Main/index.js").main();
+import { main } from "../../../output/DragAndDropReactHooks.Main/index.js";
+
+main();

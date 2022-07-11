@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/FileUploadReactHooks.Main/index.js").main();
+import { main } from "../../../output/FileUploadReactHooks.Main/index.js";
+
+main();

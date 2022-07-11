@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/FormsReactHooks.Main/index.js").main();
+import { main } from "../../../output/FormsReactHooks.Main/index.js";
+
+main();

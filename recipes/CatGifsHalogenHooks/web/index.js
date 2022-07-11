@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/CatGifsHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/CatGifsHalogenHooks.Main/index.js";
+
+main();

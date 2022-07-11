@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/FindDomElementJs.Main/index.js").main();
+import { main } from "../../../output/FindDomElementJs.Main/index.js";
+
+main();
