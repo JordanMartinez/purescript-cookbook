@@ -1,5 +1,5 @@
 { name = "HelloLog"
-, dependencies = [ "console", "effect", "prelude", "psci-support" ]
+, dependencies = [ "console", "effect", "prelude" ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/HelloLog/src/**/*.purs" ]
 }

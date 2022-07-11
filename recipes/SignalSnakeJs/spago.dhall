@@ -13,7 +13,6 @@
   , "maybe"
   , "monad-loops"
   , "prelude"
-  , "psci-support"
   , "quickcheck"
   , "signal"
   , "tuples"

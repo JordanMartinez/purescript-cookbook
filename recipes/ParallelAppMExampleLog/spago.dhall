@@ -7,7 +7,6 @@
   , "integers"
   , "parallel"
   , "prelude"
-  , "psci-support"
   , "random"
   , "transformers"
   , "type-equality"

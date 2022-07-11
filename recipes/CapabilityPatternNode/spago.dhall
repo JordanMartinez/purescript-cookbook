@@ -7,7 +7,6 @@
   , "node-buffer"
   , "node-fs"
   , "node-fs-aff"
-  , "node-readline"
   , "prelude"
   , "transformers"
   , "type-equality"

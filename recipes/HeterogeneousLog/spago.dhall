@@ -5,7 +5,6 @@
   , "heterogeneous"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "record"
   , "tuples"
   ]

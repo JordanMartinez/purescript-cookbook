@@ -5,7 +5,6 @@
   , "interpolate"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "refs"
   , "unsafe-coerce"
   , "web-dom"

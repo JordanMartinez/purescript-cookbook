@@ -7,7 +7,6 @@
   , "halogen-hooks"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "tuples"
   ]
 , packages = ../../packages.dhall

@@ -5,7 +5,6 @@
   , "debug"
   , "effect"
   , "prelude"
-  , "psci-support"
   , "st"
   , "tuples"
   ]

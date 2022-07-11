@@ -13,7 +13,6 @@
   , "partial"
   , "prelude"
   , "profunctor"
-  , "psci-support"
   , "strings"
   ]
 , packages = ../../packages.dhall

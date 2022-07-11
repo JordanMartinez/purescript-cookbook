@@ -5,7 +5,6 @@
   , "exceptions"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "random"
   , "react-basic"
   , "react-basic-dom"

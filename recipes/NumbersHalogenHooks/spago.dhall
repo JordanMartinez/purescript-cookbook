@@ -6,7 +6,6 @@
   , "halogen-hooks"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "random"
   , "tuples"
   ]

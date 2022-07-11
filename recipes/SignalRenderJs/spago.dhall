@@ -5,7 +5,6 @@
   , "exceptions"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "signal"
   , "web-dom"
   , "web-html"

@@ -7,7 +7,6 @@
   , "halogen-svg-elems"
   , "maybe"
   , "prelude"
-  , "psci-support"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ShapesHalogenHooks/src/**/*.purs" ]

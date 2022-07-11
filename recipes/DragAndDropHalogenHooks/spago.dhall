@@ -12,7 +12,6 @@
   , "maybe"
   , "media-types"
   , "prelude"
-  , "psci-support"
   , "random"
   , "strings"
   , "tuples"

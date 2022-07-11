@@ -1,7 +1,6 @@
 { name = "ClockReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "js-date"
   , "js-timers"
@@ -9,7 +8,6 @@
   , "newtype"
   , "numbers"
   , "prelude"
-  , "psci-support"
   , "react-basic-dom"
   , "react-basic-hooks"
   , "web-html"

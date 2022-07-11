@@ -1,13 +1,10 @@
 { name = "CardsReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "maybe"
-  , "nonempty"
   , "prelude"
-  , "psci-support"
   , "quickcheck"
   , "react-basic"
   , "react-basic-dom"

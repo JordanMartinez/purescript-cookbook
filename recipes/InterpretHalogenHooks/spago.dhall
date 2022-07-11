@@ -10,7 +10,6 @@
   , "halogen-hooks"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "transformers"
   , "tuples"
   ]

@@ -6,7 +6,6 @@
   , "foldable-traversable"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "web-dom"
   , "web-html"
   ]

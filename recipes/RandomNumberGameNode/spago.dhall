@@ -10,7 +10,6 @@
   , "maybe"
   , "node-readline"
   , "prelude"
-  , "psci-support"
   , "random"
   , "refs"
   , "transformers"
