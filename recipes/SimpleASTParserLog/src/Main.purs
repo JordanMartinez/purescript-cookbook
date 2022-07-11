@@ -14,9 +14,9 @@ import Data.String.CodeUnits (drop, take)
 import Data.String.CodeUnits as SCU
 import Effect (Effect)
 import Effect.Console (log)
-import Text.Parsing.StringParser (Parser, fail, try, unParser)
-import Text.Parsing.StringParser.CodeUnits (anyDigit, char, skipSpaces, string)
-import Text.Parsing.StringParser.Combinators (between, many1, (<?>))
+import StringParser (Parser, fail, try, unParser)
+import StringParser.CodeUnits (anyDigit, char, skipSpaces, string)
+import StringParser.Combinators (between, many1, (<?>))
 
 -- | Language only supports the following:
 -- | - basic binary operations (e.g. +, -, /, *)
@@ -40,7 +40,7 @@ main = do
   for_ mathProblems \prob -> do
     log "" -- add a blank line as separator
     log $ "Problem is: " <> prob
-    case unParser parseExpr {str:prob, pos: 0} of
+    case unParser parseExpr {substring: prob, position: 0} of
       Left e -> do
         log $ show e.error <>
           "\nleft side: `"  <> take e.pos prob <>
@@ -89,7 +89,7 @@ parseExpr = fix \parseInfix -> do
       leftOp <- try $ between skipSpaces skipSpaces parseBinaryOperator
       nextPart <- parseInfix
       pure case nextPart of
-        UnaryOp right -> do
+        UnaryOp _right -> do
           -- no need to handle operator precedence on a UnaryExpr
           BinaryOp left leftOp nextPart
 
