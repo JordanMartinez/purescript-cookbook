@@ -16,7 +16,7 @@ import Test.Assert (assert)
 main :: Effect Unit
 main = launchAff_ do
   -- we can do aff-ish things here with Async/ProductionA version
-  result <- Async.runApp { asyncEnv: "recipes/RunCapabilityPatternNode/async.txt" } program
+  _ <- Async.runApp { asyncEnv: "recipes/RunCapabilityPatternNode/async.txt" } program
   -- ...also able to do synchronous things (within Aff) using liftEffect
   liftEffect $ mainSync { productionEnv: "recipes/RunCapabilityPatternNode/sync.txt" }
   liftEffect $ mainTest { testEnv: "Test" }
@@ -32,4 +32,4 @@ mainTest _ = do
   -- assert $ (Test.runApp program) == "failing test"
 
 mainAff1 :: Async.Environment -> Effect Unit
-mainAff1 env = launchAff_ $ Async.runApp env program
+mainAff1 env = launchAff_ $ void $ Async.runApp env program
