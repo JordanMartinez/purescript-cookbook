@@ -19,7 +19,7 @@ main = do
   let docAsParent = Document.toParentNode doc
 
   mbDiv <- querySelector (QuerySelector ".class") docAsParent
-  for_ mbDiv \e -> do
+  for_ mbDiv \_ -> do
     log "Found `div` element with class"
 
   mbP <- querySelector (QuerySelector "#id") docAsParent

@@ -31,7 +31,7 @@ type Config = { githubToken :: Maybe String }
 uiComponent
   :: forall unusedInput unusedQuery unusedOutput
    . H.Component unusedQuery unusedInput unusedOutput (ReaderT Config Aff)
-uiComponent = Hooks.component \_rec _ -> Hooks.do
+uiComponent = Hooks.component \_ _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState (Nothing :: Maybe String)
   Hooks.pure $
     HH.div_

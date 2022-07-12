@@ -89,7 +89,7 @@ parseExpr = fix \parseInfix -> do
       leftOp <- try $ between skipSpaces skipSpaces parseBinaryOperator
       nextPart <- parseInfix
       pure case nextPart of
-        UnaryOp _right -> do
+        UnaryOp _ -> do
           -- no need to handle operator precedence on a UnaryExpr
           BinaryOp left leftOp nextPart
 
