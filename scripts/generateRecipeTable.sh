@@ -28,7 +28,7 @@ for d in recipes/*; do
 
     # Check if Try PureScript is supported (not unsupported)
     if [ ! -f $d/tryUnsupported.md ]; then
-      tryLink="[try](https://try.ps.ai/?github=JordanMartinez/purescript-cookbook/master/recipes/$base/src/Main.purs)"
+      tryLink="[try](https://try.purescript.org/?github=/JordanMartinez/purescript-cookbook/master/recipes/$base/src/Main.purs)"
 
       # Check if the recipe needs to be fixed for TPS
       if [ -f $d/tryFixMe.md ]; then
