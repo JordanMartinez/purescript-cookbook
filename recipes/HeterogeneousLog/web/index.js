@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/HeterogeneousLog.Main/index.js").main();
+import { main } from "../../../output/HeterogeneousLog.Main/index.js";
+
+main();

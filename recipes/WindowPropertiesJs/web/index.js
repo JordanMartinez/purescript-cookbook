@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/WindowPropertiesJs.Main/index.js").main();
+import { main } from "../../../output/WindowPropertiesJs.Main/index.js";
+
+main();

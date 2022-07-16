@@ -1,14 +1,15 @@
 module ClockReactHooks.Main where
 
 import Prelude
+
 import Data.JSDate (JSDate)
 import Data.JSDate as JSDate
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype)
+import Data.Number (cos, sin, tau)
 import Effect (Effect)
 import Effect.Exception (throw)
 import Effect.Timer (clearInterval, setInterval)
-import Math (cos, sin, tau)
 import React.Basic.DOM (render)
 import React.Basic.DOM.SVG as SVG
 import React.Basic.Hooks (Component, Hook, JSX, UseEffect, UseState, coerceHook, component, useEffectOnce, useState', (/\))

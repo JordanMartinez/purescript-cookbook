@@ -1,12 +1,10 @@
 { name = "GroceriesJs"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "foldable-traversable"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "web-dom"
   , "web-html"
   ]

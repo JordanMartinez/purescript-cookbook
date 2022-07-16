@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/DebuggingLog.Main/index.js").main();
+import { main } from "../../../output/DebuggingLog.Main/index.js";
+
+main();

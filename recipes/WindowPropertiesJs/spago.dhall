@@ -5,7 +5,6 @@
   , "interpolate"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "web-html"
   ]
 , packages = ../../packages.dhall

@@ -2,14 +2,13 @@
 , dependencies =
   [ "aff"
   , "affjax"
-  , "console"
+  , "affjax-web"
   , "effect"
   , "either"
   , "halogen"
   , "halogen-hooks"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "transformers"
   , "tuples"
   ]

@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/RoutingHashLog.Main/index.js").main();
+import { main } from "../../../output/RoutingHashLog.Main/index.js";
+
+main();

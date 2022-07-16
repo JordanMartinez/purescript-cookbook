@@ -9,7 +9,6 @@
   , "maybe"
   , "numbers"
   , "prelude"
-  , "psci-support"
   , "string-parsers"
   , "strings"
   ]

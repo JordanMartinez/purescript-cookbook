@@ -2,7 +2,7 @@ module AffjaxPostNode.Main where
 
 import Data.Argonaut
 
-import Affjax as AX
+import Affjax.Node as AX
 import Affjax.RequestBody (json)
 import Affjax.ResponseFormat as ResponseFormat
 import Data.Argonaut as J

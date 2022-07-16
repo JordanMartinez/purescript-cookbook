@@ -2,16 +2,14 @@
 , dependencies =
   [ "aff"
   , "affjax"
-  , "console"
+  , "affjax-web"
   , "effect"
   , "either"
   , "halogen"
   , "halogen-hooks"
   , "http-methods"
-  , "interpolate"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "remotedata"
   , "tuples"
   ]

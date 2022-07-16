@@ -1,7 +1,6 @@
 { name = "PositionsHalogenHooks"
 , dependencies =
-  [ "console"
-  , "css"
+  [ "css"
   , "effect"
   , "halogen"
   , "halogen-css"
@@ -9,7 +8,6 @@
   , "integers"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "random"
   , "tuples"
   ]

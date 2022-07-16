@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/ShapesReactHooks.Main/index.js").main();
+import { main } from "../../../output/ShapesReactHooks.Main/index.js";
+
+main();

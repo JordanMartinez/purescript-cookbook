@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/GroceriesHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/GroceriesHalogenHooks.Main/index.js";
+
+main();

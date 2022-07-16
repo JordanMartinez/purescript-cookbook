@@ -182,7 +182,7 @@ recipes/%/web:
 
 # Check if index.js points to another recipe.
 %-indexCheck:
-> @if ! grep "require(\"../../../output/$*.Main/index.js\").main();" $(call webJs,$*) --quiet
+> @if ! grep "import { main } from \"../../../output/$*.Main/index.js\";" $(call webJs,$*) --quiet
 > then
 >   echo Error: $(call webJs,$*) points to another recipe:
 >   cat $(call webJs,$*)
@@ -193,7 +193,7 @@ recipes/%/web:
 # Launches recipe in web browser
 %-web: $(call recipeDir,%) $(call webDir,%) %-indexCheck %-build
 > @echo === Launching $* in the web browser ===
-> parcel $(call webHtml,$*) --out-dir $(call webDistDir,$*) --open
+> parcel $(call webHtml,$*) --dist-dir $(call webDistDir,$*) --open
 
 .PHONY: %-buildWeb
 # Uses parcel to quickly create an unminified build.
@@ -201,7 +201,7 @@ recipes/%/web:
 %-buildWeb: export NODE_ENV=development
 %-buildWeb: $(call recipeDir,%) $(call webDir,%) %-indexCheck %-build
 > @echo === Building $* for the web browser backend ===
-> parcel build $(call webHtml,$*) --out-dir $(call webDistDir,$*) --no-minify --no-source-maps
+> parcel build $(call webHtml,$*) --dist-dir $(call webDistDir,$*) --no-optimize --no-source-maps
 
 # How to make prodDir
 recipes/%/prod:
@@ -217,7 +217,7 @@ recipes/%/prod/index.html: $(call prodDir,%)
 %-buildProd: $(call recipeDir,%) $(call webDir,%) $(call prodHtml,%)
 > @echo === Building $* for production ===
 > spago -x $(call recipeSpago,$*) bundle-app --main $(call main,$*) --to $(call prodJs,$*)
-> parcel build $(call prodHtml,$*) --out-dir $(call prodDistDir,$*)
+> parcel build $(call prodHtml,$*) --dist-dir $(call prodDistDir,$*)
 
 # Build everything. For editor tags.
 .PHONY: buildAll

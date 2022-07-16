@@ -1,13 +1,12 @@
 { name = "LifecycleHalogenHooks"
 , dependencies =
-  [ "arrays"
-  , "console"
+  [ "console"
+  , "arrays"
   , "effect"
   , "halogen"
   , "halogen-hooks"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "tuples"
   ]
 , packages = ../../packages.dhall

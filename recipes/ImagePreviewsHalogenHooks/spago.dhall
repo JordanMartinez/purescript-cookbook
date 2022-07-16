@@ -1,7 +1,6 @@
 { name = "ImagePreviewsHalogenHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "css"
   , "dom-indexed"
   , "effect"
@@ -13,8 +12,6 @@
   , "maybe"
   , "media-types"
   , "prelude"
-  , "psci-support"
-  , "random"
   , "refs"
   , "tuples"
   , "web-file"

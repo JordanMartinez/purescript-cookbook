@@ -1,14 +1,6 @@
 { name = "ButtonsHalogenHooks"
 , dependencies =
-  [ "console"
-  , "effect"
-  , "halogen"
-  , "halogen-hooks"
-  , "maybe"
-  , "prelude"
-  , "psci-support"
-  , "tuples"
-  ]
+  [ "effect", "halogen", "halogen-hooks", "maybe", "prelude", "tuples" ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ButtonsHalogenHooks/src/**/*.purs" ]
 }

@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/AddRemoveEventListenerJs.Main/index.js").main();
+import { main } from "../../../output/AddRemoveEventListenerJs.Main/index.js";
+
+main();

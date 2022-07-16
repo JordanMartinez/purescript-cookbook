@@ -1,19 +1,6 @@
 { name = "DateTimeBasicsLog"
 , dependencies =
-  [ "bifunctors"
-  , "console"
-  , "datetime"
-  , "effect"
-  , "enums"
-  , "foldable-traversable"
-  , "integers"
-  , "maybe"
-  , "partial"
-  , "prelude"
-  , "profunctor"
-  , "psci-support"
-  , "strings"
-  ]
+  [ "console", "datetime", "effect", "enums", "maybe", "partial", "prelude" ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/DateTimeBasicsLog/src/**/*.purs" ]
 }

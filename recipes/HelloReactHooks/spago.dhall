@@ -1,11 +1,9 @@
 { name = "HelloReactHooks"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "react-basic-dom"
   , "react-basic-hooks"
   , "web-html"

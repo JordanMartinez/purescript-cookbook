@@ -2,7 +2,7 @@ module InterpretHalogenHooks.Main where
 
 import Prelude
 
-import Affjax as AX
+import Affjax.Web as AX
 import Affjax.ResponseFormat as AXRF
 import Control.Monad.Reader (ReaderT, ask, runReaderT)
 import Data.Either (either)
@@ -31,7 +31,7 @@ type Config = { githubToken :: Maybe String }
 uiComponent
   :: forall unusedInput unusedQuery unusedOutput
    . H.Component unusedQuery unusedInput unusedOutput (ReaderT Config Aff)
-uiComponent = Hooks.component \rec _ -> Hooks.do
+uiComponent = Hooks.component \_ _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState (Nothing :: Maybe String)
   Hooks.pure $
     HH.div_

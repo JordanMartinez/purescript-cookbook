@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/ComponentsMultiTypeReactHooks.Main/index.js").main();
+import { main } from "../../../output/ComponentsMultiTypeReactHooks.Main/index.js";
+
+main();

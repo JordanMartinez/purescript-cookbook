@@ -2,18 +2,13 @@ module ParallelAppMExampleLog.Main where
 
 import Prelude
 
-import Control.Parallel (class Parallel, parallel, sequential, parOneOf, parTraverse_)
+import Control.Parallel (class Parallel)
 import Control.Monad.Reader (class MonadAsk, ReaderT, asks, runReaderT)
-import Data.Foldable (for_)
-import Data.Int (toNumber)
-import Data.Traversable (traverse)
 import Data.Unfoldable (range)
 import Effect (Effect)
-import Effect.Aff (Aff, ParAff, Milliseconds(..), delay, launchAff_, parallel, sequential)
+import Effect.Aff (Aff, ParAff, parallel, sequential)
 import Effect.Aff.Class (class MonadAff)
-import Effect.Class (class MonadEffect, liftEffect)
-import Effect.Console (log)
-import Effect.Random (randomInt)
+import Effect.Class (class MonadEffect)
 import Type.Equality (class TypeEquals, from)
 
 -- Create an array from 1 to 10 as Strings.

@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/TicTacToeReactHooks.Main/index.js").main();
+import { main } from "../../../output/TicTacToeReactHooks.Main/index.js";
+
+main();

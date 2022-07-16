@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/HelloReactHooks.Main/index.js").main();
+import { main } from "../../../output/HelloReactHooks.Main/index.js";
+
+main();

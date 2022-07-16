@@ -7,7 +7,6 @@
   , "maybe"
   , "partial"
   , "prelude"
-  , "psci-support"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/BigIntJs/src/**/*.purs" ]

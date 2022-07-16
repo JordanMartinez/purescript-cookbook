@@ -1,7 +1,6 @@
 { name = "DragAndDropHalogenHooks"
 , dependencies =
-  [ "console"
-  , "css"
+  [ "css"
   , "dom-indexed"
   , "effect"
   , "halogen"
@@ -12,8 +11,6 @@
   , "maybe"
   , "media-types"
   , "prelude"
-  , "psci-support"
-  , "random"
   , "strings"
   , "tuples"
   , "web-file"

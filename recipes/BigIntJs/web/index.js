@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/BigIntJs.Main/index.js").main();
+import { main } from "../../../output/BigIntJs.Main/index.js";
+
+main();

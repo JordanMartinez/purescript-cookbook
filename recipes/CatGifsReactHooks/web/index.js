@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/CatGifsReactHooks.Main/index.js").main();
+import { main } from "../../../output/CatGifsReactHooks.Main/index.js";
+
+main();

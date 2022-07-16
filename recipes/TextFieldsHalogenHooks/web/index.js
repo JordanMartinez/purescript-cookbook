@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/TextFieldsHalogenHooks.Main/index.js").main();
+import { main } from "../../../output/TextFieldsHalogenHooks.Main/index.js";
+
+main();

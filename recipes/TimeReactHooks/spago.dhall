@@ -1,7 +1,6 @@
 { name = "TimeReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "integers"
@@ -10,7 +9,6 @@
   , "maybe"
   , "newtype"
   , "prelude"
-  , "psci-support"
   , "react-basic-dom"
   , "react-basic-hooks"
   , "web-html"

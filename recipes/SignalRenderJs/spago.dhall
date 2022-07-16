@@ -1,11 +1,9 @@
 { name = "SignalRenderJs"
 , dependencies =
-  [ "console"
-  , "effect"
+  [ "effect"
   , "exceptions"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "signal"
   , "web-dom"
   , "web-html"

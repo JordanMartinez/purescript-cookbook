@@ -28,7 +28,7 @@ rootComponent
   :: forall unusedInput unusedQuery unusedOutput anyMonad
    . MonadEffect anyMonad
   => H.Component unusedQuery unusedInput unusedOutput anyMonad
-rootComponent = Hooks.component \rec _ -> Hooks.do
+rootComponent = Hooks.component \_ _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState { currentId: 0, slots: []}
   Hooks.useLifecycleEffect do
     liftEffect $ log "Initialize Root"

@@ -1,15 +1,6 @@
 { name = "ComponentsInputHalogenHooks"
 , dependencies =
-  [ "console"
-  , "effect"
-  , "halogen"
-  , "halogen-hooks"
-  , "maybe"
-  , "prelude"
-  , "psci-support"
-  , "refs"
-  , "tuples"
-  ]
+  [ "effect", "halogen", "halogen-hooks", "prelude", "refs", "tuples" ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/ComponentsInputHalogenHooks/src/**/*.purs" ]
 }

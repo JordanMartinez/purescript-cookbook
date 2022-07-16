@@ -1,7 +1,6 @@
 { name = "RoutingPushReactHooks"
 , dependencies =
   [ "arrays"
-  , "console"
   , "effect"
   , "exceptions"
   , "foldable-traversable"
@@ -9,7 +8,6 @@
   , "maybe"
   , "partial"
   , "prelude"
-  , "psci-support"
   , "react-basic"
   , "react-basic-dom"
   , "react-basic-hooks"

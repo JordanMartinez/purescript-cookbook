@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/BookReactHooks.Main/index.js").main();
+import { main } from "../../../output/BookReactHooks.Main/index.js";
+
+main();

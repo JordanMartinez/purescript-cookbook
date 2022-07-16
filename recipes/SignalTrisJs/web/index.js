@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/SignalTrisJs.Main/index.js").main();
+import { main } from "../../../output/SignalTrisJs.Main/index.js";
+
+main();

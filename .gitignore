@@ -9,3 +9,5 @@
 /.psa*
 /.spago
 /.cache
+/.parcel-cache
+/package-lock.json

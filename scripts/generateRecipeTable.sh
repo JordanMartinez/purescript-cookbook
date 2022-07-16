@@ -28,14 +28,16 @@ for d in recipes/*; do
 
     # Check if Try PureScript is supported (not unsupported)
     if [ ! -f $d/tryUnsupported.md ]; then
-      tryLink="[try](https://try.ps.ai/?github=JordanMartinez/purescript-cookbook/master/recipes/$base/src/Main.purs)"
+      tryLink="[try](https://try.purescript.org/?github=/JordanMartinez/purescript-cookbook/master/recipes/$base/src/Main.purs)"
 
       # Check if the recipe needs to be fixed for TPS
       if [ -f $d/tryFixMe.md ]; then
         tryLink="$tryLink - [fixme]($d/tryFixMe.md)"
       fi
 
-      browser="$browser ($tryLink)"
+      # TODO: Trylink is temporarily removed until issues are resolved
+      # See <https://github.com/JordanMartinez/purescript-cookbook/pull/292#pullrequestreview-1040714662>
+      # browser="$browser ($tryLink)"
     fi
   fi
   # Render table row for recipe

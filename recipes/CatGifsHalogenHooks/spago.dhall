@@ -2,10 +2,10 @@
 , dependencies =
   [ "aff"
   , "affjax"
+  , "affjax-web"
   , "argonaut-core"
   , "codec"
   , "codec-argonaut"
-  , "console"
   , "css"
   , "effect"
   , "either"
@@ -13,10 +13,8 @@
   , "halogen-css"
   , "halogen-hooks"
   , "http-methods"
-  , "interpolate"
   , "maybe"
   , "prelude"
-  , "psci-support"
   , "remotedata"
   , "tuples"
   ]

@@ -1,2 +1,4 @@
 "use strict";
-require("../../../output/RoutingPushReactHooks.Main/index.js").main();
+import { main } from "../../../output/RoutingPushReactHooks.Main/index.js";
+
+main();
