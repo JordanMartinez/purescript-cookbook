@@ -21,10 +21,10 @@ main = do
     Nothing -> throw "Could not find root."
     Just container -> do
       reactRoot <- createRoot container
-      helloComponent <- mkHelloComponent
-      renderRoot reactRoot (helloComponent {})
+      app <- mkApp
+      renderRoot reactRoot (app {})
 
-mkHelloComponent :: Component {}
-mkHelloComponent = do
-  component "HelloComponent" \_ -> React.do
+mkApp :: Component {}
+mkApp = do
+  component "App" \_ -> React.do
     pure (R.text "Hello!")
