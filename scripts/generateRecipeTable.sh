@@ -7,6 +7,8 @@ echo
 # Then output the Recipe ToC
 echo "## Recipes"
 echo
+echo '**Note:** for the `try` links in the "Web Browser" column, any content logged to the console will appear in the web browser'"'"'s console, not in the page rendered by Try PureScript.'
+echo
 echo "| Node | Web Browser | Recipe | Description |"
 echo "| :-: | :-: | - | - |"
 for d in recipes/*; do
@@ -35,9 +37,7 @@ for d in recipes/*; do
         tryLink="$tryLink - [fixme]($d/tryFixMe.md)"
       fi
 
-      # TODO: Trylink is temporarily removed until issues are resolved
-      # See <https://github.com/JordanMartinez/purescript-cookbook/pull/292#pullrequestreview-1040714662>
-      # browser="$browser ($tryLink)"
+      browser="$browser ($tryLink)"
     fi
   fi
   # Render table row for recipe
