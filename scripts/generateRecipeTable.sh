@@ -7,6 +7,8 @@ echo
 # Then output the Recipe ToC
 echo "## Recipes"
 echo
+echo '**Note:** for the `try` links in the "Web Browser" column, any content logged to the console will appear in the web browser'"'"'s console, not in the page rendered by Try PureScript.'
+echo
 echo "| Node | Web Browser | Recipe | Description |"
 echo "| :-: | :-: | - | - |"
 for d in recipes/*; do
