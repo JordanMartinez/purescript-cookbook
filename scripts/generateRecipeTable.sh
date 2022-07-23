@@ -35,9 +35,7 @@ for d in recipes/*; do
         tryLink="$tryLink - [fixme]($d/tryFixMe.md)"
       fi
 
-      # TODO: Trylink is temporarily removed until issues are resolved
-      # See <https://github.com/JordanMartinez/purescript-cookbook/pull/292#pullrequestreview-1040714662>
-      # browser="$browser ($tryLink)"
+      browser="$browser ($tryLink)"
     fi
   fi
   # Render table row for recipe
