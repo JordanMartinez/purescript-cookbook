@@ -1,27 +1,30 @@
 module HelloReactHooks.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
-import React.Basic.DOM (render)
 import React.Basic.DOM as R
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.Hooks (Component, component)
+import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (body)
-import Web.HTML.HTMLElement (toElement)
+import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  body <- body =<< document =<< window
-  case body of
-    Nothing -> throw "Could not find body."
-    Just b -> do
-      helloComponent <- mkHelloComponent
-      render (helloComponent {}) (toElement b)
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
+      app <- mkApp
+      renderRoot reactRoot (app {})
 
-mkHelloComponent :: Component {}
-mkHelloComponent = do
-  component "HelloComponent" \_ -> React.do
+mkApp :: Component {}
+mkApp = do
+  component "App" \_ -> React.do
     pure (R.text "Hello!")

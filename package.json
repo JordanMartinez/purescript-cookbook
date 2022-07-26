@@ -2,16 +2,16 @@
   "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.14.49",
-    "parcel": "^2.6.0",
+    "parcel": "^2.6.2",
     "process": "^0.11.10",
-    "purescript": "^0.15.3",
-    "spago": "^0.20.3"
+    "purescript": "^0.15.4",
+    "spago": "^0.20.9"
   },
   "dependencies": {
-    "ace-builds": "^1.4.11",
-    "big-integer": "^1.6.48",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "xhr2": "^0.2.0"
+    "ace-builds": "^1.7.1",
+    "big-integer": "^1.6.51",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "xhr2": "^0.2.1"
   }
 }
