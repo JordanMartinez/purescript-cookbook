@@ -35,8 +35,10 @@ main = do
 
   mbThirdParInDivInDiv <- querySelector (QuerySelector "div.example div.third p.c") docAsParent
   for_ mbThirdParInDivInDiv \_ -> do
-    log $ "Found third `p` in a `div` with `third` class in a `div` with \
-          \`example` class."
+    log $
+      "Found third `p` in a `div` with `third` class in a `div` with \
+      \`example` class."
 
-  log $ "If any of the above queries did not find their corresponding element, \
-        \please open an issue in the PureScript cookbook repository."
+  log $
+    "If any of the above queries did not find their corresponding element, \
+    \please open an issue in the PureScript cookbook repository."

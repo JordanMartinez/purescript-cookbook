@@ -31,9 +31,9 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
     HH.div_
       [ HH.h1_ [ HH.text $ show roll ]
       , HH.button
-        [ HE.onClick \_ -> do
-            nextRoll <- liftEffect $ randomInt 1 6
-            Hooks.put rollIdx nextRoll
-        ]
-        [ HH.text "Roll" ]
+          [ HE.onClick \_ -> do
+              nextRoll <- liftEffect $ randomInt 1 6
+              Hooks.put rollIdx nextRoll
+          ]
+          [ HH.text "Roll" ]
       ]

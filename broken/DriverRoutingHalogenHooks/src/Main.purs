@@ -5,8 +5,8 @@ import Prelude
 import Control.Coroutine as CR
 import Control.Coroutine.Aff (emit)
 import Control.Coroutine.Aff as CRA
-import Data.Foldable (traverse_)
 import Data.Array (snoc)
+import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..))
 import Data.String.CodeUnits as Str
 import Data.Tuple.Nested ((/\))
@@ -19,7 +19,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
-import Web.Event.EventTarget (eventListener, addEventListener) as DOM
+import Web.Event.EventTarget (addEventListener, eventListener) as DOM
 import Web.HTML (window) as DOM
 import Web.HTML.Event.HashChangeEvent as HCE
 import Web.HTML.Event.HashChangeEvent.EventTypes as HCET
@@ -43,7 +43,7 @@ hashChangeProducer = CRA.produce \emitter -> do
   liftEffect $
     DOM.window
       >>= Window.toEventTarget
-      >>> DOM.addEventListener HCET.hashchange listener false
+        >>> DOM.addEventListener HCET.hashchange listener false
 
 -- A consumer coroutine that takes the `query` function from our component IO
 -- record and sends `ChangeRoute` queries in when it receives inputs from the
@@ -69,12 +69,12 @@ routeLogComponent = Hooks.component \rec _ -> Hooks.do
       pure $ Just next
   Hooks.pure $
     HH.div_
-    [ HH.p_ [ HH.text "Change the URL hash or choose an anchor link..." ]
-    , HH.ul_
-        [ HH.li_ [ HH.a [ HP.href "#link-a" ] [ HH.text "Link A" ] ]
-        , HH.li_ [ HH.a [ HP.href "#link-b" ] [ HH.text "Link B" ] ]
-        , HH.li_ [ HH.a [ HP.href "#link-c" ] [ HH.text "Link C" ] ]
-        ]
-    , HH.p_ [ HH.text "...to see it logged below:" ]
-    , HH.ol_ $ map (\msg -> HH.li_ [ HH.text msg ]) history
-    ]
+      [ HH.p_ [ HH.text "Change the URL hash or choose an anchor link..." ]
+      , HH.ul_
+          [ HH.li_ [ HH.a [ HP.href "#link-a" ] [ HH.text "Link A" ] ]
+          , HH.li_ [ HH.a [ HP.href "#link-b" ] [ HH.text "Link B" ] ]
+          , HH.li_ [ HH.a [ HP.href "#link-c" ] [ HH.text "Link C" ] ]
+          ]
+      , HH.p_ [ HH.text "...to see it logged below:" ]
+      , HH.ol_ $ map (\msg -> HH.li_ [ HH.text msg ]) history
+      ]

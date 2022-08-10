@@ -1,6 +1,7 @@
 module RoutingHashReactHooks.Main where
 
 import Prelude
+
 import Data.Array as Array
 import Data.Foldable as Foldable
 import Data.Maybe (Maybe(..))
@@ -80,13 +81,13 @@ mkPostIndex =
   postLinks =
     Array.range 1 10
       <#> \n ->
-          R.li_
-            [ R.a
-                { href: "#/posts/" <> show n
-                , children:
-                    [ R.text ("Post " <> show n) ]
-                }
-            ]
+        R.li_
+          [ R.a
+              { href: "#/posts/" <> show n
+              , children:
+                  [ R.text ("Post " <> show n) ]
+              }
+          ]
 
 mkPost :: Component Int
 mkPost =
@@ -125,8 +126,8 @@ appRoute =
   postRoute =
     Match.root *> Match.lit "posts"
       *> Foldable.oneOf
-          [ PostEdit <$> Match.int <* Match.lit "edit"
-          , Post <$> Match.int
-          , pure PostIndex
-          ]
+        [ PostEdit <$> Match.int <* Match.lit "edit"
+        , Post <$> Match.int
+        , pure PostIndex
+        ]
       <* Match.end

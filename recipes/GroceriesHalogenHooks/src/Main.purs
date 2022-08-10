@@ -1,6 +1,7 @@
 module GroceriesHalogenHooks.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Halogen as H
@@ -15,9 +16,9 @@ main =
     body <- HA.awaitBody
     void $ runUI hookComponent Nothing body
 
-hookComponent ::
-  forall unusedQuery unusedInput unusedOutput anyMonad.
-  H.Component unusedQuery unusedInput unusedOutput anyMonad
+hookComponent
+  :: forall unusedQuery unusedInput unusedOutput anyMonad
+   . H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent =
   Hooks.component \_ _ -> Hooks.do
     Hooks.pure

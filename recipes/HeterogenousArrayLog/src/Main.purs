@@ -1,6 +1,7 @@
 module HeterogenousArrayLog.Main where
 
 import Prelude
+
 import Data.Variant (Variant)
 import Data.Variant as Variant
 import Effect (Effect)
@@ -54,13 +55,12 @@ heterogenousArrayViaSumType = do
 --
 -- Variant Type for array elements
 -- Created from a "row type" of tags and other types
-type VariantType
-  = Variant
-      ( typeLevelString :: String
-      , int :: Int
-      , boolean :: Boolean
-      , "this type level string must match the label of the row" :: Number
-      )
+type VariantType = Variant
+  ( typeLevelString :: String
+  , int :: Int
+  , boolean :: Boolean
+  , "this type level string must match the label of the row" :: Number
+  )
 
 heterogenousArrayViaVariant :: Effect Unit
 heterogenousArrayViaVariant = do

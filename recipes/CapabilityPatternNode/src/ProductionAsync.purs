@@ -1,10 +1,11 @@
 module App.Production.Async where
+
 -- Layers One and Two have to be in same file due to orphan instance restriction
 
 import Prelude
 
+import App.Application (class GetUserName, class Logger)
 import App.Types (Name(..))
-import App.Application (class Logger, class GetUserName)
 import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks, runReaderT)
 import Effect.Aff (Aff, Milliseconds(..), delay)
 import Effect.Aff.Class (class MonadAff, liftAff)
@@ -23,13 +24,13 @@ runApp :: forall a. AppMA a -> Environment -> Aff a
 runApp (AppMA reader_T) env = runReaderT reader_T env
 
 -- | Layer 1 Production in Aff
-derive newtype instance functorAppMA     :: Functor AppMA
-derive newtype instance applyAppMA       :: Apply AppMA
+derive newtype instance functorAppMA :: Functor AppMA
+derive newtype instance applyAppMA :: Apply AppMA
 derive newtype instance applicativeAppMA :: Applicative AppMA
-derive newtype instance bindAppMA        :: Bind AppMA
-derive newtype instance monadAppMA       :: Monad AppMA
+derive newtype instance bindAppMA :: Bind AppMA
+derive newtype instance monadAppMA :: Monad AppMA
 derive newtype instance monadEffectAppMA :: MonadEffect AppMA
-derive newtype instance monadAffAppMA    :: MonadAff AppMA
+derive newtype instance monadAffAppMA :: MonadAff AppMA
 
 -- | Reader instance not quite as simple a derivation as "derive newtype",
 -- | as it needs TypeEquals for the env

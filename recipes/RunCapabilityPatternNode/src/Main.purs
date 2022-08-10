@@ -3,8 +3,8 @@ module RunCapabilityPatternNode.Main where
 import Prelude
 
 import App.Application (program)
-import App.Production.Async (Environment,  runApp) as Async
-import App.Production.Sync (Environment,  runApp) as Sync
+import App.Production.Async (Environment, runApp) as Async
+import App.Production.Sync (Environment, runApp) as Sync
 import App.Test (Environment, runApp) as Test
 import Effect (Effect)
 import Effect.Aff (launchAff_)
@@ -29,7 +29,8 @@ mainTest :: Test.Environment -> Effect Unit
 mainTest _ = do
   assert $ (Test.runApp program) == "succeeds"
   log "first test succeeded, now a failing test which will crash"
-  -- assert $ (Test.runApp program) == "failing test"
+
+-- assert $ (Test.runApp program) == "failing test"
 
 mainAff1 :: Async.Environment -> Effect Unit
 mainAff1 env = launchAff_ $ void $ Async.runApp env program

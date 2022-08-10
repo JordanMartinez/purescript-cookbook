@@ -58,10 +58,10 @@ wallColor = rgb 0 128 0
 
 -- STATE MODEL AND TYPES
 --
-type Point
-  = { x :: Int
-    , y :: Int
-    }
+type Point =
+  { x :: Int
+  , y :: Int
+  }
 
 -- Convenience function for creating points
 p :: Int -> Int -> Point
@@ -75,16 +75,15 @@ data Direction
 
 derive instance eqDirection :: Eq Direction
 
-type Snake
-  = NonEmptyArray Point
+type Snake = NonEmptyArray Point
 
 -- The type of our game state
-type Model
-  = { food :: Point
-    , snake :: Snake
-    , direction :: Direction
-    , genState :: GenState
-    }
+type Model =
+  { food :: Point
+  , snake :: Snake
+  , direction :: Direction
+  , genState :: GenState
+  }
 
 -- Some initial state values
 initialDirection :: Direction
@@ -247,9 +246,9 @@ sigArrowsEff = do
   -- * Wraps in an Effect
   pure $ SetDir
     <$> mapKey Left left
-    <> mapKey Right right
-    <> mapKey Up up
-    <> mapKey Down down
+      <> mapKey Right right
+      <> mapKey Up up
+      <> mapKey Down down
 
 {- Note that this strategy for merging signals only considers the
 most recent start of a keypress to determine a single key that

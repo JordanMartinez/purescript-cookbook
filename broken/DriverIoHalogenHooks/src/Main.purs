@@ -25,12 +25,12 @@ main = HA.runHalogenAff do
     liftEffect $ log $ "Button was internally toggled to: " <> show newState
     pure Nothing
 
-  state0 ← io.query $ H.request IsOn
+  state0 <- io.query $ H.request IsOn
   liftEffect $ log $ "The button state is currently: " <> show state0
 
   void $ io.query $ H.tell (SetState true)
 
-  state1 ← io.query $ H.request IsOn
+  state1 <- io.query $ H.request IsOn
   liftEffect $ log $ "The button state is now: " <> show state1
 
 data ButtonQuery a

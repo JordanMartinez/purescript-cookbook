@@ -1,6 +1,7 @@
 module ComponentsReactHooks.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..), maybe)
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -57,8 +58,8 @@ mkContainer = do
           , R.p_
               [ R.text
                   $ "Last time I checked, the button was: "
-                  <> (maybe "(not checked yet)" (if _ then "on" else "off") buttonState)
-                  <> ". "
+                      <> (maybe "(not checked yet)" (if _ then "on" else "off") buttonState)
+                      <> ". "
               , R.button
                   { onClick: handler_ (setButtonState \_ -> Just enabled)
                   , children: [ R.text "Check now" ]

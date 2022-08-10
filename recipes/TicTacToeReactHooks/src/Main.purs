@@ -7,12 +7,12 @@ import Data.Array (concat, (:))
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
+import Data.Eq.Generic (genericEq)
 import Data.Foldable (or)
 import Data.Generic.Rep (class Generic)
-import Data.Eq.Generic (genericEq)
-import Data.Show.Generic (genericShow)
 import Data.Int (even)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
+import Data.Show.Generic (genericShow)
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM (CSS, css, render)
@@ -49,8 +49,7 @@ mkSquare =
           , children: [ R.text text ]
           }
 
-type Square
-  = Maybe Player
+type Square = Maybe Player
 
 data Player
   = X
@@ -64,11 +63,11 @@ instance showPlayer :: Show Player where
 instance eqPlayer :: Eq Player where
   eq = genericEq
 
-mkBoard ::
-  Component
-    { onClick :: Int -> Int -> EventHandler
-    , squares :: BoardState
-    }
+mkBoard
+  :: Component
+       { onClick :: Int -> Int -> EventHandler
+       , squares :: BoardState
+       }
 mkBoard = do
   square <- mkSquare
   component "Board" \props -> React.do
@@ -94,14 +93,13 @@ data Action
   = JumpToStep Int
   | FillSquare Int Int
 
-type BoardState
-  = Int -> Int -> Square
+type BoardState = Int -> Int -> Square
 
-type State
-  = { history :: NonEmptyArray BoardState
-    , stepNumber :: Int
-    , xIsNext :: Boolean
-    }
+type State =
+  { history :: NonEmptyArray BoardState
+  , stepNumber :: Int
+  , xIsNext :: Boolean
+  }
 
 reducerFn :: Effect (Reducer State Action)
 reducerFn =
@@ -204,19 +202,18 @@ calculateWinner f =
   let
     winByPlayer :: Player -> Maybe Player
     winByPlayer p =
-      if 
-      -- Check for a row full of player 'p'
-      [ [ 0, 1, 2 ] <#> \i -> [ 0, 1, 2 ] <#> \j -> f i j
-      -- Check for a full column
-      , [ 0, 1, 2 ] <#> \j -> [ 0, 1, 2 ] <#> \i -> f i j
-      -- Check diagonals
-      , [ [ 0, 1, 2 ] <#> \k -> f k k ]
-      , [ [ 0, 1, 2 ] <#> \k -> f k (2 - k) ]
-      ]
-        # concat
-        >>> map (Array.all (_ == Just p))
-        >>> or
-      then
+      if
+        -- Check for a row full of player 'p'
+        [ [ 0, 1, 2 ] <#> \i -> [ 0, 1, 2 ] <#> \j -> f i j
+        -- Check for a full column
+        , [ 0, 1, 2 ] <#> \j -> [ 0, 1, 2 ] <#> \i -> f i j
+        -- Check diagonals
+        , [ [ 0, 1, 2 ] <#> \k -> f k k ]
+        , [ [ 0, 1, 2 ] <#> \k -> f k (2 - k) ]
+        ]
+          # concat
+              >>> map (Array.all (_ == Just p))
+              >>> or then
         Just p
       else
         Nothing
@@ -225,13 +222,13 @@ calculateWinner f =
 
 -- These styles could be provided by a proper stylesheet, we are only
 -- defining them here for the sake of compatibility with TryPureScript
-styles ::
-  { list :: CSS
-  , boardRow :: CSS
-  , square :: CSS
-  , game :: CSS
-  , gameInfo :: CSS
-  }
+styles
+  :: { list :: CSS
+     , boardRow :: CSS
+     , square :: CSS
+     , game :: CSS
+     , gameInfo :: CSS
+     }
 styles =
   { list:
       css

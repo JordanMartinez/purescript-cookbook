@@ -39,7 +39,7 @@ demoMapping = do
         { field1: Tuple 1 true
         , field2: Tuple true 1
         , field3: Tuple "a value" unit
-        , field4: Tuple (Just [1]) (Just [2])
+        , field4: Tuple (Just [ 1 ]) (Just [ 2 ])
         }
     log $ append "GetFirst: " $ show $ getFirst recordValue
 
@@ -62,7 +62,7 @@ else instance Fail (Text "This only works on fields whose types are Tuple") => M
 getFirst
   :: forall rowsIn rowsInRL rowsOut
    . RL.RowToList rowsIn rowsInRL
-  => HMap GetFirst  { | rowsIn } { | rowsOut }
+  => HMap GetFirst { | rowsIn } { | rowsOut }
   => { | rowsIn }
   -> { | rowsOut }
 getFirst r = hmap GetFirst r
@@ -92,7 +92,7 @@ demoMappingWithIndex = do
         { field1: Tuple 1 true
         , field2: Tuple true 1
         , field3: Tuple "a value" unit
-        , field4: Tuple (Just [1]) (Just [2])
+        , field4: Tuple (Just [ 1 ]) (Just [ 2 ])
         }
     log $ append "ReflectFieldLabels: " $ show $ reflectFieldLabels recordValue
 
@@ -146,8 +146,8 @@ demoFoldingWithIndex = do
       prefix = RenameFields :: RenameFields (Prepend "prefix-")
       suffix = RenameFields :: RenameFields (Append "-suffix")
 
-    log $ append "Prefix: " $ show (renameFields prefix { one: 1, two: "foo"})
-    log $ append "Suffix: " $ show (renameFields suffix { one: 1, two: "foo"})
+    log $ append "Prefix: " $ show (renameFields prefix { one: 1, two: "foo" })
+    log $ append "Suffix: " $ show (renameFields suffix { one: 1, two: "foo" })
 
 data RenameFields :: FieldRenamer -> Type
 data RenameFields renamer = RenameFields
@@ -163,7 +163,7 @@ instance
   , Row.Lacks newName withoutNewField
   , Row.Cons newName fieldType withoutNewField withNewField
   ) =>
-  FoldingWithIndex (RenameFields (Prepend prefix)) (Proxy fieldName) { | withoutNewField } fieldType { | withNewField }  where
+  FoldingWithIndex (RenameFields (Prepend prefix)) (Proxy fieldName) { | withoutNewField } fieldType { | withNewField } where
   foldingWithIndex RenameFields _ acc next =
     Record.insert (Proxy :: Proxy newName) next acc
 
@@ -173,7 +173,7 @@ else instance
   , Row.Lacks newName withoutNewField
   , Row.Cons newName fieldType withoutNewField withNewField
   ) =>
-  FoldingWithIndex (RenameFields (Append suffix)) (Proxy fieldName) { | withoutNewField } fieldType { | withNewField }  where
+  FoldingWithIndex (RenameFields (Append suffix)) (Proxy fieldName) { | withoutNewField } fieldType { | withNewField } where
   foldingWithIndex RenameFields _ acc next =
     Record.insert (Proxy :: Proxy newName) next acc
 
@@ -183,8 +183,8 @@ else instance
 renameFields
   :: forall rowsIn rowsInRL modification rowsOut
    . RL.RowToList rowsIn rowsInRL
-  => HFoldlWithIndex (RenameFields modification) { } { | rowsIn } { | rowsOut }
+  => HFoldlWithIndex (RenameFields modification) {} { | rowsIn } { | rowsOut }
   => RenameFields modification
   -> { | rowsIn }
   -> { | rowsOut }
-renameFields renamer r = hfoldlWithIndex renamer { } r
+renameFields renamer r = hfoldlWithIndex renamer {} r

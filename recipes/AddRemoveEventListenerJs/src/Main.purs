@@ -10,7 +10,7 @@ import Effect.Ref as Ref
 import Unsafe.Coerce (unsafeCoerce)
 import Web.DOM.Element as Element
 import Web.DOM.ParentNode (QuerySelector(..), querySelector)
-import Web.Event.Event (EventType, Event)
+import Web.Event.Event (Event, EventType)
 import Web.Event.EventTarget (EventTarget, addEventListener, eventListener, removeEventListener)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument as Document
@@ -34,11 +34,11 @@ main = do
   case mbButtonAddEL, mbButtonRemoveEL, mbButtonMain, mbButtonRemove2nd of
     Just bAddEL, Just bRemoveEL, Just bMain, Just bRemove2nd -> do
       let
-      -- make it possible to add event listeners to these elements
-      -- by changing their types from `Element` to `EventTarget`
-        buttonAddEL     = Element.toEventTarget bAddEL
-        buttonRemoveEL  = Element.toEventTarget bRemoveEL
-        buttonMain      = Element.toEventTarget bMain
+        -- make it possible to add event listeners to these elements
+        -- by changing their types from `Element` to `EventTarget`
+        buttonAddEL = Element.toEventTarget bAddEL
+        buttonRemoveEL = Element.toEventTarget bRemoveEL
+        buttonMain = Element.toEventTarget bMain
         buttonRemove2nd = Element.toEventTarget bRemove2nd
 
       -- In this first approach, we will add an event listener,
@@ -86,8 +86,9 @@ main = do
       -- where we don't need to store a reference to the listener since
       -- it is still in scope.
       removeListener <- addBetterListener METypes.click false buttonMain \_ -> do
-        log $ "Better listener: this is a better way to add/remove \
-              \an event listener."
+        log $
+          "Better listener: this is a better way to add/remove \
+          \an event listener."
 
       remove2ndApproachListener <- eventListener \_ -> do
         log "Now removing event listener using better approach"
@@ -95,8 +96,9 @@ main = do
       addEventListener METypes.click remove2ndApproachListener false buttonRemove2nd
 
     _, _, _, _ -> do
-      log $ "Could not get all three buttons. Please open an issue for this \
-            \recipe on the PureScript cookbook."
+      log $
+        "Could not get all three buttons. Please open an issue for this \
+        \recipe on the PureScript cookbook."
 
 printMessage :: Event -> Effect Unit
 printMessage e = do
@@ -104,8 +106,10 @@ printMessage e = do
     mouseEvent :: MouseEvent
     mouseEvent = unsafeCoerce e
   log "Triggered a mouse click event handler."
-  log $ i "Screen X: "(show (screenX mouseEvent))"\n\
-          \Screen Y: "(show (screenY mouseEvent))
+  log $ i "Screen X: " (show (screenX mouseEvent))
+    "\n\
+    \Screen Y: "
+    (show (screenY mouseEvent))
 
 -- | Intended usage:
 -- | ```
@@ -117,7 +121,11 @@ printMessage e = do
 -- | ```
 addBetterListener
   :: forall a
-   . EventType -> Boolean -> EventTarget -> (Event -> Effect a) -> Effect (Effect Unit)
+   . EventType
+  -> Boolean
+  -> EventTarget
+  -> (Event -> Effect a)
+  -> Effect (Effect Unit)
 addBetterListener type_ useCaptureRatherThanBubble target listener = do
   evListener <- eventListener listener
   addEventListener type_ evListener useCaptureRatherThanBubble target

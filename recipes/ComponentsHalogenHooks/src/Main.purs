@@ -37,25 +37,25 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
   buttonState /\ buttonStateIdx <- Hooks.useState (Nothing :: Maybe Boolean)
   Hooks.pure $
     HH.div_
-    [ HH.slot _button unit buttonComponent unit \_ -> do
-        Hooks.modify_ toggleCountIdx (_ + 1)
-    , HH.p_
-        [ HH.text ("Button has been toggled " <> show toggleCount <> " time(s)") ]
-    , HH.p_
-        [ HH.text
-            $ "Last time I checked, the button was: "
-            <> (maybe "(not checked yet)" (if _ then "on" else "off") buttonState)
-            <> ". "
-        , HH.button
-            [ HE.onClick \_ -> do
-                mbBtnState <- Hooks.query rec.slotToken _button unit $ H.mkRequest IsOn
-                Hooks.put buttonStateIdx mbBtnState
-            ]
-            [ HH.text "Check now" ]
-        ]
-    , HH.p_
-        [ HH.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
-    ]
+      [ HH.slot _button unit buttonComponent unit \_ -> do
+          Hooks.modify_ toggleCountIdx (_ + 1)
+      , HH.p_
+          [ HH.text ("Button has been toggled " <> show toggleCount <> " time(s)") ]
+      , HH.p_
+          [ HH.text
+              $ "Last time I checked, the button was: "
+                  <> (maybe "(not checked yet)" (if _ then "on" else "off") buttonState)
+                  <> ". "
+          , HH.button
+              [ HE.onClick \_ -> do
+                  mbBtnState <- Hooks.query rec.slotToken _button unit $ H.mkRequest IsOn
+                  Hooks.put buttonStateIdx mbBtnState
+              ]
+              [ HH.text "Check now" ]
+          ]
+      , HH.p_
+          [ HH.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
+      ]
 
 data ButtonMessage = Toggled Boolean
 data ButtonQuery a = IsOn (Boolean -> a)

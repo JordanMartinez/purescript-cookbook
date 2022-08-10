@@ -1,6 +1,7 @@
 module RoutingPushReactHooks.Main where
 
 import Prelude
+
 import Control.Monad.Reader (ReaderT(..))
 import Control.Monad.Reader as Reader
 import Data.Array as Array
@@ -16,7 +17,7 @@ import React.Basic as React.Basic
 import React.Basic.DOM as R
 import React.Basic.DOM.Events as DOM.Events
 import React.Basic.Events as Events
-import React.Basic.Hooks (Hook, UseContext, (/\), Render)
+import React.Basic.Hooks (Hook, Render, UseContext, (/\))
 import React.Basic.Hooks as React
 import Routing.Match (Match)
 import Routing.Match as Match
@@ -46,12 +47,13 @@ main = do
 -- | `useRouterContext`). By using `ReaderT` we can avoid explicitly threading
 -- | the context through to all the components that use it, instead we can just
 -- | use `ask` to access it as needed.
-type Component props
-  = ReaderT RouterContext Effect (props -> JSX)
+type Component props = ReaderT RouterContext Effect (props -> JSX)
 
-component ::
-  forall props hooks.
-  String -> (props -> Render Unit hooks JSX) -> Component props
+component
+  :: forall props hooks
+   . String
+  -> (props -> Render Unit hooks JSX)
+  -> Component props
 component name render = ReaderT \_ -> React.component name render
 
 mkApp :: Component Unit
@@ -99,13 +101,13 @@ mkPostIndex = do
       R.ul_
         ( Array.range 1 10
             <#> \n ->
-                R.li_
-                  [ link
-                      { to: "/posts/" <> show n
-                      , children:
-                          [ R.text ("Post " <> show n) ]
-                      }
-                  ]
+              R.li_
+                [ link
+                    { to: "/posts/" <> show n
+                    , children:
+                        [ R.text ("Post " <> show n) ]
+                    }
+                ]
         )
 
 mkPost :: Component Int
@@ -146,16 +148,16 @@ appRoute =
   postRoute =
     Match.root *> Match.lit "posts"
       *> Foldable.oneOf
-          [ PostEdit <$> Match.int <* Match.lit "edit"
-          , Post <$> Match.int
-          , pure PostIndex
-          ]
+        [ PostEdit <$> Match.int <* Match.lit "edit"
+        , Post <$> Match.int
+        , pure PostIndex
+        ]
       <* Match.end
 
-type RouterContextValue
-  = { route :: Maybe AppRoute
-    , nav :: PushStateInterface
-    }
+type RouterContextValue =
+  { route :: Maybe AppRoute
+  , nav :: PushStateInterface
+  }
 
 -- | Note that we actually want a `RouterContextValue` where the context is
 -- | being consumed, not a `Maybe RouterContextValue`, but `createContext`
@@ -173,8 +175,7 @@ type RouterContextValue
 -- | provided (signalling that this is not a use case we want to support). We've
 -- | done similar, by wrapping our context value in `Maybe` and using `Nothing`
 -- | as the case that we pattern-match on to trigger the error.
-type RouterContext
-  = ReactContext (Maybe RouterContextValue)
+type RouterContext = ReactContext (Maybe RouterContextValue)
 
 -- | An alternative would be to use `unsafePerformEffect` to have a "global"
 -- | `RouterContext` (not wrapped in `Effect`) that could be used directly
@@ -184,9 +185,9 @@ type RouterContext
 mkRouterContext :: Effect RouterContext
 mkRouterContext = React.createContext Nothing
 
-useRouterContext ::
-  RouterContext ->
-  Hook (UseContext (Maybe RouterContextValue)) RouterContextValue
+useRouterContext
+  :: RouterContext
+  -> Hook (UseContext (Maybe RouterContextValue)) RouterContextValue
 useRouterContext routerContext = React.do
   maybeContextValue <- React.useContext routerContext
   pure case maybeContextValue of
@@ -221,7 +222,8 @@ mkLink = do
         { href: to
         , onClick:
             Events.handler
-              DOM.Events.preventDefault \_ -> do
-              nav.pushState (Foreign.unsafeToForeign unit) to
+              DOM.Events.preventDefault
+              \_ -> do
+                nav.pushState (Foreign.unsafeToForeign unit) to
         , children
         }

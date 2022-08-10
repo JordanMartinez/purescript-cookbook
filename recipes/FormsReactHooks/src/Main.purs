@@ -1,6 +1,7 @@
 module FormsReactHooks.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..), fromMaybe)
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -8,7 +9,7 @@ import React.Basic.DOM (css, render)
 import React.Basic.DOM as R
 import React.Basic.DOM.Events (preventDefault, targetValue)
 import React.Basic.Events (EventHandler, handler)
-import React.Basic.Hooks (Component, component, useState, (/\), Hook, UseState, type (/\))
+import React.Basic.Hooks (type (/\), Component, Hook, UseState, component, useState, (/\))
 import React.Basic.Hooks as React
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (body)
@@ -61,11 +62,11 @@ mkForm = do
               ]
           }
 
-useInput ::
-  String ->
-  Hook
-    (UseState String)
-    (String /\ EventHandler)
+useInput
+  :: String
+  -> Hook
+       (UseState String)
+       (String /\ EventHandler)
 useInput initialValue = React.do
   value /\ setValue <- useState initialValue
   let

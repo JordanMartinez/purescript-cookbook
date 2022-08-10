@@ -3,6 +3,7 @@ module ButtonsHalogenHooks.Main where
 import Prelude
 
 import Data.Maybe (Maybe(..))
+import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Halogen as H
 import Halogen.Aff as HA
@@ -10,7 +11,6 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.Hooks as Hooks
 import Halogen.VDom.Driver (runUI)
-import Data.Tuple.Nested ((/\))
 
 main :: Effect Unit
 main =
@@ -26,10 +26,10 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   Hooks.pure $
     HH.div_
       [ HH.button
-        [ HE.onClick \_ -> Hooks.modify_ countIdx (_ - 1) ]
-        [ HH.text "-" ]
+          [ HE.onClick \_ -> Hooks.modify_ countIdx (_ - 1) ]
+          [ HH.text "-" ]
       , HH.div_ [ HH.text $ show count ]
       , HH.button
-        [ HE.onClick \_ -> Hooks.modify_ countIdx (_ + 1) ]
-        [ HH.text "+" ]
+          [ HE.onClick \_ -> Hooks.modify_ countIdx (_ + 1) ]
+          [ HH.text "+" ]
       ]

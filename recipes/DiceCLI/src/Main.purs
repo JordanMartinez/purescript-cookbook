@@ -1,10 +1,11 @@
 module DiceCLI.Main where
 
 import Prelude
+
 import Effect (Effect)
 import Effect.Console (log)
 import Effect.Random (randomInt)
-import Node.ReadLine (prompt, close, setLineHandler, setPrompt, noCompletion, createConsoleInterface)
+import Node.ReadLine (close, createConsoleInterface, noCompletion, prompt, setLineHandler, setPrompt)
 
 main :: Effect Unit
 main = do

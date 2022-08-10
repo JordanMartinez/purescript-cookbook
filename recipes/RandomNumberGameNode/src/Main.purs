@@ -51,14 +51,16 @@ class (Monad m) <= GameCapabilities m where
   storeGuess :: Int -> m Unit
 
 -- Game logic using only the above capabilities
-game :: forall m.
-        GameCapabilities m =>
-        m Unit
+game
+  :: forall m
+   . GameCapabilities m
+  => m Unit
 game = do
   remaining <- getRemainingGuesses
   notifyUser $ i "Guess the random number. It's between 1 and 10. You have "
-                 (remaining + 1) " guesses. Enter 'q' to quit. \
-                 \Invalid inputs will not count against you."
+    (remaining + 1)
+    " guesses. Enter 'q' to quit. \
+    \Invalid inputs will not count against you."
 
   result <- gameLoop
 
@@ -79,8 +81,10 @@ game = do
 gameLoop :: forall m. GameCapabilities m => m GameResult
 gameLoop = do
   prev <- getPreviousGuesses
-  notifyUser $ i "\n\
-                 \Prevous guesses: " (show prev)
+  notifyUser $ i
+    "\n\
+    \Prevous guesses: "
+    (show prev)
   nextInput <- getUserInput "Guess a number between 1 - 10: "
   case nextInput of
     "q" -> pure PlayerQuits
@@ -93,8 +97,9 @@ gameLoop = do
             notifyUser $ i guess " was not between 1 and 10. Try again."
             gameLoop
         | elem guess prev -> do
-            notifyUser $ i "You already guessed " guess " previously. \
-                           \Please guess a different number."
+            notifyUser $ i "You already guessed " guess
+              " previously. \
+              \Please guess a different number."
             gameLoop
         | otherwise -> do
             answer <- getRandomNumber
@@ -116,11 +121,12 @@ data GameResult
 
 -- ReaderT Design Pattern
 
-type Environment = { randomNumber :: Int
-                   , interface :: Interface
-                   , remainingGuesses :: Ref Int
-                   , previousGuesses :: Ref (Array Int)
-                   }
+type Environment =
+  { randomNumber :: Int
+  , interface :: Interface
+  , remainingGuesses :: Ref Int
+  , previousGuesses :: Ref (Array Int)
+  }
 
 newtype AppM a = AppM (ReaderT Environment Aff a)
 

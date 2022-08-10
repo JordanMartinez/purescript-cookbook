@@ -2,9 +2,9 @@ module BookHalogenHooks.Main where
 
 import Prelude
 
-import Affjax.Web as AX
 import Affjax.ResponseFormat as AXRF
 import Affjax.StatusCode (StatusCode(..))
+import Affjax.Web as AX
 import Data.Either (Either(..))
 import Data.HTTP.Method (Method(..))
 import Data.Maybe (Maybe(..))

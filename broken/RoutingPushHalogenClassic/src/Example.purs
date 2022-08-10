@@ -1,18 +1,17 @@
 module RoutingPushHalogenClassic.Example where
 
 import Prelude
+
 import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import RoutingPushHalogenClassic.MyRouting (MyRoute)
 
-type State
-  = Maybe MyRoute
+type State = Maybe MyRoute
 
 -- Query must be (Type -> Type)
-data Query a
-  = Nav MyRoute a
+data Query a = Nav MyRoute a
 
 component :: forall i o m. H.Component Query i o m
 component =
@@ -40,7 +39,7 @@ render state =
       , renderLink "/posts/?b=2&a=1" "Set 'a' and 'b' query parameters"
       ]
 
-handleQuery ∷ forall a ac o m. Query a → H.HalogenM State ac () o m (Maybe a)
+handleQuery :: forall a ac o m. Query a -> H.HalogenM State ac () o m (Maybe a)
 handleQuery (Nav route a) = do
   H.put $ Just route
   pure (Just a)

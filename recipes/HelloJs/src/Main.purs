@@ -1,6 +1,7 @@
 module HelloJs.Main where
 
 import Prelude
+
 import Data.Maybe (maybe)
 import Effect (Effect)
 import Effect.Exception (throw)

@@ -1,18 +1,19 @@
 module RoutingPushHalogenClassic.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Class.Console (log)
-import RoutingPushHalogenClassic.Example (Query(..))
-import RoutingPushHalogenClassic.Example as Example
 import Halogen as H
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
-import RoutingPushHalogenClassic.MyRouting (myRoute)
 import Routing.PushState (makeInterface, matches)
+import RoutingPushHalogenClassic.Example (Query(..))
+import RoutingPushHalogenClassic.Example as Example
+import RoutingPushHalogenClassic.MyRouting (myRoute)
 
 main :: Effect Unit
 main =

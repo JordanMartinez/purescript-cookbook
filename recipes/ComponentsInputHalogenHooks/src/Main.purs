@@ -33,22 +33,22 @@ containerComponent = Hooks.component \_ _ -> Hooks.do
   state /\ stateIdx <- Hooks.useState 0
   Hooks.pure $
     HH.div_
-    [ HH.ul_
-        [ HH.slot _display 1 displayComponent state absurd
-        , HH.slot _display 2 displayComponent (state * 2) absurd
-        , HH.slot _display 3 displayComponent (state * 3) absurd
-        , HH.slot _display 4 displayComponent (state * 10) absurd
-        , HH.slot _display 5 displayComponent (state * state) absurd
-        ]
-    , HH.button
-        [ HE.onClick \_ -> Hooks.modify_ stateIdx (_ + 1) ]
-        [ HH.text "+1"]
-    , HH.button
-        [ HE.onClick \_ -> Hooks.modify_ stateIdx (_ - 1) ]
-        [ HH.text "-1"]
-    , HH.p_
-        [ HH.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
-    ]
+      [ HH.ul_
+          [ HH.slot _display 1 displayComponent state absurd
+          , HH.slot _display 2 displayComponent (state * 2) absurd
+          , HH.slot _display 3 displayComponent (state * 3) absurd
+          , HH.slot _display 4 displayComponent (state * 10) absurd
+          , HH.slot _display 5 displayComponent (state * state) absurd
+          ]
+      , HH.button
+          [ HE.onClick \_ -> Hooks.modify_ stateIdx (_ + 1) ]
+          [ HH.text "+1" ]
+      , HH.button
+          [ HE.onClick \_ -> Hooks.modify_ stateIdx (_ - 1) ]
+          [ HH.text "-1" ]
+      , HH.p_
+          [ HH.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
+      ]
 
 _display = Proxy :: Proxy "display"
 
@@ -59,9 +59,9 @@ displayComponent
 displayComponent = Hooks.component \_ input -> Hooks.do
   Hooks.pure $
     HH.div_
-    [ HH.text "My input value is:"
-    , HH.strong_ [ HH.text (show input) ]
-    ]
+      [ HH.text "My input value is:"
+      , HH.strong_ [ HH.text (show input) ]
+      ]
 
 useRenderCount
   :: forall m a

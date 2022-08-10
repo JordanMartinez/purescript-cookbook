@@ -2,7 +2,7 @@ module PositionsHalogenHooks.Main where
 
 import Prelude hiding (top)
 
-import CSS (position, absolute, top, left, px)
+import CSS (absolute, left, position, px, top)
 import Data.Int (toNumber)
 import Data.Maybe (Maybe(..))
 import Data.Tuple.Nested ((/\))

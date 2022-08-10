@@ -19,8 +19,7 @@ import Web.HTML.HTMLDocument (body)
 import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
-type Time
-  = { hours :: Number, minutes :: Number, seconds :: Number }
+type Time = { hours :: Number, minutes :: Number, seconds :: Number }
 
 main :: Effect Unit
 main = do
@@ -68,8 +67,7 @@ hand width length turns =
       , strokeLinecap: "round"
       }
 
-newtype UseCurrentTime hooks
-  = UseCurrentTime (UseEffect Unit (UseState Time hooks))
+newtype UseCurrentTime hooks = UseCurrentTime (UseEffect Unit (UseState Time hooks))
 
 derive instance ntUseCurrentTime :: Newtype (UseCurrentTime hooks) _
 

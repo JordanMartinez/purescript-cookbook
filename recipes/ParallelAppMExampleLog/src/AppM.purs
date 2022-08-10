@@ -1,7 +1,8 @@
 -- | This module demonstrates how to implement a `Parallel` instance
 -- | correctly for a `ReaderT r Aff`-based `AppM` Monad
 module ParallelAppMExampleLog.AppM
-  ( AppM(..), runAppM
+  ( AppM(..)
+  , runAppM
   -- Don't forget to export ParAppM!
   -- Otherwise, you get an unhelpful Type Class Constraint error
   , ParAppM(..)

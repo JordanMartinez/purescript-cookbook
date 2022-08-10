@@ -50,113 +50,113 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   urls /\ urlsIdx <- Hooks.useState []
   Hooks.pure $
     HH.div
-    [ HC.style do
-        border dashed (px 6.0) $ if hover then CSS.fromInt 0xB10DC9 else CSS.fromInt 0xcccccc
-        borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-        width (px 480.0)
-        height (px 100.0)
-        margin (px 100.0) (px 100.0) (px 100.0) (px 100.0)
-        padding (px 40.0) (px 40.0) (px 40.0) (px 40.0)
-        display flex
-        flexDirection column
-        justifyContent center
-        alignItems center
-    , HE.onDragEnter \e -> do
-        preventDefault DragEvent.toEvent e
-        Hooks.put hoverIdx true
-    , HE.onDragOver \e -> do
-        preventDefault DragEvent.toEvent e
-        Hooks.put hoverIdx true
-    , HE.onDragLeave \e -> do
-        preventDefault DragEvent.toEvent e
-        Hooks.put hoverIdx false
-    , HE.onDrop \e -> do
-        preventDefault DragEvent.toEvent e
-        let
-          mbFileList = DataTransfer.files $ dataTransfer e
-          fileArray = maybe [] FileList.items mbFileList
-        putFileUrls ref urlsIdx fileArray
-    ]
-    -- Note: Elm uses a button that, when clicked, will do the following:
-    -- 1. create an input element
-    -- 2. add it to the DOM
-    -- 3. create a mouse event
-    -- 4. dispatch the mouse event to the input element
-    -- 5. (implication) file dialogue appears
-    -- 6. user selects a file
-    -- 7. input event handler runs a callback using user's selected file
-    -- 8. input element is removed from DOM
-    --
-    -- The approach used below is based on this SO answer:
-    -- https://stackoverflow.com/a/47094148
-    [ HH.label
-      [ HP.for "file-input" ]
-      [ HH.div
-        -- simulate button-like appearance
-        [ HC.style do
-            margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
-            border solid (px 2.0) (CSS.fromInt 0xAAAAAA)
-            borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-            padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-        , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
-        ]
-        [ HH.text "Upload images" ]
+      [ HC.style do
+          border dashed (px 6.0) $ if hover then CSS.fromInt 0xB10DC9 else CSS.fromInt 0xcccccc
+          borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+          width (px 480.0)
+          height (px 100.0)
+          margin (px 100.0) (px 100.0) (px 100.0) (px 100.0)
+          padding (px 40.0) (px 40.0) (px 40.0) (px 40.0)
+          display flex
+          flexDirection column
+          justifyContent center
+          alignItems center
+      , HE.onDragEnter \e -> do
+          preventDefault DragEvent.toEvent e
+          Hooks.put hoverIdx true
+      , HE.onDragOver \e -> do
+          preventDefault DragEvent.toEvent e
+          Hooks.put hoverIdx true
+      , HE.onDragLeave \e -> do
+          preventDefault DragEvent.toEvent e
+          Hooks.put hoverIdx false
+      , HE.onDrop \e -> do
+          preventDefault DragEvent.toEvent e
+          let
+            mbFileList = DataTransfer.files $ dataTransfer e
+            fileArray = maybe [] FileList.items mbFileList
+          putFileUrls ref urlsIdx fileArray
       ]
-    , HH.input
-        [ HP.id "file-input"
-        , HC.style $ display displayNone
-        , HP.type_ InputFile
-        , HP.accept $ mediaType $ MediaType "images/*"
-        , HP.multiple true
-        , HE.onFileUpload \fileArray -> do
-            putFileUrls ref urlsIdx fileArray
-        ]
-    , HH.div
+      -- Note: Elm uses a button that, when clicked, will do the following:
+      -- 1. create an input element
+      -- 2. add it to the DOM
+      -- 3. create a mouse event
+      -- 4. dispatch the mouse event to the input element
+      -- 5. (implication) file dialogue appears
+      -- 6. user selects a file
+      -- 7. input event handler runs a callback using user's selected file
+      -- 8. input element is removed from DOM
+      --
+      -- The approach used below is based on this SO answer:
+      -- https://stackoverflow.com/a/47094148
+      [ HH.label
+          [ HP.for "file-input" ]
+          [ HH.div
+              -- simulate button-like appearance
+              [ HC.style do
+                  margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
+                  border solid (px 2.0) (CSS.fromInt 0xAAAAAA)
+                  borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+                  padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+              , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
+              ]
+              [ HH.text "Upload images" ]
+          ]
+      , HH.input
+          [ HP.id "file-input"
+          , HC.style $ display displayNone
+          , HP.type_ InputFile
+          , HP.accept $ mediaType $ MediaType "images/*"
+          , HP.multiple true
+          , HE.onFileUpload \fileArray -> do
+              putFileUrls ref urlsIdx fileArray
+          ]
+      , HH.div
           [ HC.style do
               display flex
               alignItems center
               height (px 60.0)
               padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
           ]
-          (urls <#> \fileUrl ->
-            HH.div
-              [ HC.style do
-                  width (px 60.0)
-                  height (px 60.0)
-                  backgroundImage $ url fileUrl
-                  backgroundPosition $ placed sideCenter sideCenter
-                  backgroundRepeat noRepeat
-                  backgroundSize contain
-              ]
-              []
+          ( urls <#> \fileUrl ->
+              HH.div
+                [ HC.style do
+                    width (px 60.0)
+                    height (px 60.0)
+                    backgroundImage $ url fileUrl
+                    backgroundPosition $ placed sideCenter sideCenter
+                    backgroundRepeat noRepeat
+                    backgroundSize contain
+                ]
+                []
           )
-    ]
+      ]
   where
-    putFileUrls
-      :: Ref (Array (Effect Unit))
-      -> StateId (Array String)
-      -> Array File
-      -> HookM anyMonad Unit
-    putFileUrls arrayRef idx files = do
-      -- revoke all prior object urls
-      -- by running their effects and ignoring the result
+  putFileUrls
+    :: Ref (Array (Effect Unit))
+    -> StateId (Array String)
+    -> Array File
+    -> HookM anyMonad Unit
+  putFileUrls arrayRef idx files = do
+    -- revoke all prior object urls
+    -- by running their effects and ignoring the result
+    liftEffect do
+      arrayOfRemovePriorObjectUrls <- Ref.read arrayRef
+      sequence_ arrayOfRemovePriorObjectUrls
+
+    arrayOfUrls <- for files \file -> do
       liftEffect do
-        arrayOfRemovePriorObjectUrls <- Ref.read arrayRef
-        sequence_ arrayOfRemovePriorObjectUrls
+        -- create the object url
+        urlString <- createObjectURL (toBlob file)
 
-      arrayOfUrls <- for files \file -> do
-        liftEffect do
-          -- create the object url
-          urlString <- createObjectURL (toBlob file)
+        -- create an effect that, when run, will revoke the url
+        -- and clean up memory
+        let
+          revokeUrl :: Effect Unit
+          revokeUrl = revokeObjectURL urlString
+        -- add that effect to our mutable reference
+        Ref.modify_ (\arr -> arr `snoc` revokeUrl) arrayRef
 
-          -- create an effect that, when run, will revoke the url
-          -- and clean up memory
-          let
-            revokeUrl :: Effect Unit
-            revokeUrl = revokeObjectURL urlString
-          -- add that effect to our mutable reference
-          Ref.modify_ (\arr -> arr `snoc` revokeUrl) arrayRef
-
-          -- now return the original url
-          pure urlString
-      Hooks.put idx arrayOfUrls
+        -- now return the original url
+        pure urlString
+    Hooks.put idx arrayOfUrls

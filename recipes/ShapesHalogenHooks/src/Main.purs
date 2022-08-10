@@ -1,18 +1,44 @@
 module ShapesHalogenHooks.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Halogen as H
 import Halogen.Aff as HA
-import Halogen.Hooks as Hooks
 import Halogen.HTML as HH
+import Halogen.Hooks as Hooks
+import Halogen.Svg.Attributes
+  ( Baseline(Central)
+  , Color(RGB)
+  , CommandPositionReference(Abs)
+  , TextAnchor(AnchorMiddle)
+  , Transform(Rotate)
+  , cx
+  , cy
+  , d
+  , dominantBaseline
+  , fill
+  , height
+  , l
+  , m
+  , r
+  , stroke
+  , strokeWidth
+  , textAnchor
+  , transform
+  , viewBox
+  , width
+  , x
+  , x1
+  , x2
+  , y
+  , y1
+  , y2
+  )
+import Halogen.Svg.Elements (circle, line, path, rect, svg, text)
 import Halogen.VDom.Driver (runUI)
-import Halogen.Svg.Elements (svg, circle, line, path, rect, text)
-import Halogen.Svg.Attributes (cx, cy, d, dominantBaseline, fill, height, r,
-  stroke, strokeWidth, textAnchor, transform, viewBox, width, x, x1, x2, y, y1,
-  y2, CommandPositionReference(Abs), m, l, Color(RGB), TextAnchor(AnchorMiddle),
-  Baseline(Central), Transform(Rotate))
+
 {- We import a lot of functions from Halogen.Svg.Attributes which makes the SVG
    code below cleaner. You may prefer to import with
       `import Halogen.Svg.Attributes as SA`
@@ -25,9 +51,9 @@ main =
     body <- HA.awaitBody
     void $ runUI hookComponent Nothing body
 
-hookComponent ::
-  forall unusedQuery unusedInput unusedOutput anyMonad.
-  H.Component unusedQuery unusedInput unusedOutput anyMonad
+hookComponent
+  :: forall unusedQuery unusedInput unusedOutput anyMonad
+   . H.Component unusedQuery unusedInput unusedOutput anyMonad
 hookComponent =
   Hooks.component \_ _ ->
     Hooks.pure

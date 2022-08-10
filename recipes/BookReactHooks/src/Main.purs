@@ -1,9 +1,10 @@
 module BookReactHooks.Main where
 
 import Prelude
-import Affjax.Web as Affjax
+
 import Affjax.ResponseFormat as ResponseFormat
 import Affjax.StatusCode (StatusCode(..))
+import Affjax.Web as Affjax
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Effect (Effect)

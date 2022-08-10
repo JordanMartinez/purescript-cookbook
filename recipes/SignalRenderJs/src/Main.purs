@@ -22,13 +22,13 @@ import Web.HTML.Window (document)
 -- Model is the type of our application state.
 -- We track a direction to move on each tick,
 -- and our position.
-type Model
-  = { direction :: Direction
-    , pos :: Int
-    }
+type Model =
+  { direction :: Direction
+  , pos :: Int
+  }
 
 initialState :: Model
-initialState = {pos: 0, direction: Right}
+initialState = { pos: 0, direction: Right }
 
 data Direction
   = Left
@@ -51,12 +51,12 @@ data Action
 -- How we update our model with each Action.
 -- For example changing direction or moving a step.
 update :: Action -> Model -> Model
-update (SetDir d) m = m {direction = d}
+update (SetDir d) m = m { direction = d }
 update Tick m = m { pos = m.pos + step m.direction }
   where
-    step :: Direction -> Int
-    step Left = -1
-    step Right = 1
+  step :: Direction -> Int
+  step Left = -1
+  step Right = 1
 
 -- RENDERING
 --

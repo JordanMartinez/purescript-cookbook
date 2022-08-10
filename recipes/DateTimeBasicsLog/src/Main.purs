@@ -14,20 +14,23 @@ import Partial.Unsafe (unsafePartial)
 
 main :: Effect Unit
 main = do
-  log "To create a specific part of a `Time` value, you must use \
-      \the `toEnum` function. This ensures that the value you provide \
-      \is within the correct bounds. "
-  log "For example, a Minute must be between 0 and 59. If you happen \
-      \to pass it -1, what should it's value be? Should it be clamped to 0? \
-      \Or should it be set to 59? Rather than deciding for you, it forces \
-      \you to do the checking by using `toEnum` to return a `Maybe Minute`."
+  log
+    "To create a specific part of a `Time` value, you must use \
+    \the `toEnum` function. This ensures that the value you provide \
+    \is within the correct bounds. "
+  log
+    "For example, a Minute must be between 0 and 59. If you happen \
+    \to pass it -1, what should it's value be? Should it be clamped to 0? \
+    \Or should it be set to 59? Rather than deciding for you, it forces \
+    \you to do the checking by using `toEnum` to return a `Maybe Minute`."
 
   log $ "toEnum 4: " <> show (toEnum 4 :: Maybe Minute)
   log $ "toEnum -8: " <> show (toEnum (-8) :: Maybe Minute)
   log $ "toEnum 69: " <> show (toEnum 69 :: Maybe Minute)
 
-  log "The same goes for Hour (0 - 23), Second (0 - 59), and \
-      \Millisecond (0 - 999)."
+  log
+    "The same goes for Hour (0 - 23), Second (0 - 59), and \
+    \Millisecond (0 - 999)."
   log $ "toEnum 4: " <> show (toEnum 4 :: Maybe Hour)
   log $ "toEnum -8: " <> show (toEnum (-8) :: Maybe Hour)
   log $ "toEnum 69: " <> show (toEnum 69 :: Maybe Hour)
@@ -38,11 +41,11 @@ main = do
     mkTime :: Int -> Int -> Int -> Int -> Maybe Time
     mkTime h m s ms = do
       Time <$> toEnum h
-           <*> toEnum m
-           <*> toEnum s
-           <*> toEnum ms
+        <*> toEnum m
+        <*> toEnum s
+        <*> toEnum ms
 
-  log $ "mkTime 4 24 4 3: " <> show (mkTime 4 24 4 3)       -- valid
+  log $ "mkTime 4 24 4 3: " <> show (mkTime 4 24 4 3) -- valid
   log $ "mkTime 42 842 2 -42: " <> show (mkTime 42 842 2 (-42)) -- invalid
 
   log "To create a `Date` value, we use the `Maybe` monad again:"

@@ -29,10 +29,10 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   Hooks.pure $
     HH.div_
       [ HH.input
-        [ HP.placeholder "Text to reverse"
-        , HP.value state
-        , HE.onValueInput \newValue -> Hooks.put stateIdx newValue
-        ]
+          [ HP.placeholder "Text to reverse"
+          , HP.value state
+          , HE.onValueInput \newValue -> Hooks.put stateIdx newValue
+          ]
       , HH.div_ [ HH.text $ reverse state ]
       ]
 

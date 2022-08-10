@@ -53,12 +53,12 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
       Hooks.unsubscribe subId
 
   Hooks.pure $
-    HH.h1_ [ HH.text $ i hour":"minute":"second ]
+    HH.h1_ [ HH.text $ i hour ":" minute ":" second ]
 
   where
-    getTime = liftEffect do
-      now <- JSDate.now
-      hour <- floor <$> JSDate.getHours now
-      minute <- floor <$> JSDate.getMinutes now
-      second <- floor <$> JSDate.getSeconds now
-      pure { hour, minute, second }
+  getTime = liftEffect do
+    now <- JSDate.now
+    hour <- floor <$> JSDate.getHours now
+    minute <- floor <$> JSDate.getMinutes now
+    second <- floor <$> JSDate.getSeconds now
+    pure { hour, minute, second }

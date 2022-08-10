@@ -1,6 +1,7 @@
 module ComponentsMultiTypeReactHooks.Main where
 
 import Prelude
+
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Tuple (fst)
 import Effect (Effect)
@@ -98,8 +99,7 @@ mkContainer = do
               [ R.text ("Parent has been rendered " <> show parentRenders <> " time(s)") ]
           ]
 
-type SetState state
-  = (state -> state) -> Effect Unit
+type SetState state = (state -> state) -> Effect Unit
 
 mkComponentA :: Component (Boolean /\ SetState Boolean)
 mkComponentA =

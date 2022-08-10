@@ -97,8 +97,7 @@ initialOffset = { x: width / 2 - 1, y: 0 }
 
 -- STATE MODEL AND TYPES
 --
-type Point
-  = { x :: Int, y :: Int }
+type Point = { x :: Int, y :: Int }
 
 data Direction
   = Left
@@ -108,28 +107,27 @@ data Direction
 
 derive instance eqDirection :: Eq Direction
 
-type Board
-  = Map Point Color
+type Board = Map Point Color
 
-type Tile
-  = { cells :: Set Point
-    , color :: Color
-    }
+type Tile =
+  { cells :: Set Point
+  , color :: Color
+  }
 
-type ActiveTile
-  = { tile :: Tile
-    , offset :: Point
-    }
+type ActiveTile =
+  { tile :: Tile
+  , offset :: Point
+  }
 
-type Model
-  = { activeTile :: ActiveTile
-    , nextTile :: Tile
-    , board :: Board
-    , score :: Int
-    , frameCounter :: Int
-    , status :: Status
-    , genState :: GenState
-    }
+type Model =
+  { activeTile :: ActiveTile
+  , nextTile :: Tile
+  , board :: Board
+  , score :: Int
+  , frameCounter :: Int
+  , status :: Status
+  , genState :: GenState
+  }
 
 data Status
   = GameOver
@@ -273,10 +271,10 @@ An improved algorithm would:
   * Perform board remapping on single pass
 But this is not a big performance issue for tiny boards, so leaving as-is for now.
 -}
-type BoardAndScore
-  = { board :: Board
-    , score :: Int
-    }
+type BoardAndScore =
+  { board :: Board
+  , score :: Int
+  }
 
 flushBoard :: BoardAndScore -> BoardAndScore
 flushBoard = foldl (>>>) identity (map flushRow (2 .. (height - 1)))
@@ -387,10 +385,12 @@ drawCell ctx { x, y } color = do
 --
 -- A wrapper for `rect` that accepts a `Rectangle` where the fields
 -- are `Int` rather than `Number`.
-rectInt ::
-  forall intRect.
-  HMap (Int -> Number) intRect Rectangle =>
-  Context2D -> intRect -> Effect Unit
+rectInt
+  :: forall intRect
+   . HMap (Int -> Number) intRect Rectangle
+  => Context2D
+  -> intRect
+  -> Effect Unit
 rectInt ctx r = rect ctx $ hmap toNumber r
 
 -- Wrapper with Int, rather than Number params
@@ -426,9 +426,9 @@ sigArrowsEff = do
   -- * Wraps in an Effect
   pure $ Move
     <$> mapKeypress Left left
-    <> mapKeypress Right right
-    <> mapKeypress Rotate up
-    <> mapKeypress Down down
+      <> mapKeypress Right right
+      <> mapKeypress Rotate up
+      <> mapKeypress Down down
 
 -- Convert a keypress (bool) signal to a Direction signal.
 -- Note that Signals must always have a value, so aritrarily

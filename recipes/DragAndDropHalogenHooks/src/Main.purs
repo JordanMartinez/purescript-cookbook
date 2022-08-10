@@ -45,57 +45,57 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   files /\ filesIdx <- Hooks.useState []
   Hooks.pure $
     HH.div
-    [ HC.style do
-        border dashed (px 6.0) $ if hover then CSS.fromInt 0xB10DC9 else CSS.fromInt 0xcccccc
-        borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-        width (px 480.0)
-        height (px 100.0)
-        margin (px 100.0) (px 100.0) (px 100.0) (px 100.0)
-        padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-        display flex
-        flexDirection column
-        justifyContent center
-        alignItems center
-    , HE.onDragEnter \e -> do
-        preventDefault DragEvent.toEvent e
-        Hooks.put hoverIdx true
-    , HE.onDragOver \e -> do
-        preventDefault DragEvent.toEvent e
-        Hooks.put hoverIdx true
-    , HE.onDragLeave \e -> do
-        preventDefault DragEvent.toEvent e
-        Hooks.put hoverIdx false
-    , HE.onDrop \e -> do
-        preventDefault DragEvent.toEvent e
-        let
-          mbFileList = DataTransfer.files $ dataTransfer e
-          fileArray = maybe [] FileList.items mbFileList
-        Hooks.put filesIdx fileArray
-        Hooks.put hoverIdx false
-    ]
-    [ HH.label
-      -- simulate button-like appearance
       [ HC.style do
-          margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
-          border solid (px 2.0) (CSS.fromInt 0xAAAAAA)
+          border dashed (px 6.0) $ if hover then CSS.fromInt 0xB10DC9 else CSS.fromInt 0xcccccc
           borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+          width (px 480.0)
+          height (px 100.0)
+          margin (px 100.0) (px 100.0) (px 100.0) (px 100.0)
           padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
-          backgroundColor (CSS.rgb 3 169 244)
-      , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
+          display flex
+          flexDirection column
+          justifyContent center
+          alignItems center
+      , HE.onDragEnter \e -> do
+          preventDefault DragEvent.toEvent e
+          Hooks.put hoverIdx true
+      , HE.onDragOver \e -> do
+          preventDefault DragEvent.toEvent e
+          Hooks.put hoverIdx true
+      , HE.onDragLeave \e -> do
+          preventDefault DragEvent.toEvent e
+          Hooks.put hoverIdx false
+      , HE.onDrop \e -> do
+          preventDefault DragEvent.toEvent e
+          let
+            mbFileList = DataTransfer.files $ dataTransfer e
+            fileArray = maybe [] FileList.items mbFileList
+          Hooks.put filesIdx fileArray
+          Hooks.put hoverIdx false
       ]
-      [ HH.text "Upload images"
-      , HH.input
-          [ HC.style $ display displayNone
-          , HP.type_ InputFile
-          , HP.multiple true
-          , HP.accept $ mediaType $ MediaType "image/*"
-          , HE.onFileUpload \fileArray -> Hooks.put filesIdx fileArray
+      [ HH.label
+          -- simulate button-like appearance
+          [ HC.style do
+              margin (px 4.0) (px 4.0) (px 4.0) (px 4.0)
+              border solid (px 2.0) (CSS.fromInt 0xAAAAAA)
+              borderRadius (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+              padding (px 20.0) (px 20.0) (px 20.0) (px 20.0)
+              backgroundColor (CSS.rgb 3 169 244)
+          , HP.class_ $ ClassName "otherCssNotInPurescript-Css"
           ]
+          [ HH.text "Upload images"
+          , HH.input
+              [ HC.style $ display displayNone
+              , HP.type_ InputFile
+              , HP.multiple true
+              , HP.accept $ mediaType $ MediaType "image/*"
+              , HE.onFileUpload \fileArray -> Hooks.put filesIdx fileArray
+              ]
+          ]
+      , HH.span
+          [ HC.style $ color $ CSS.fromInt 0xcccccc ]
+          [ HH.text $ i "{ files = " (show $ map File.name files) ", hover = " (toUpper $ show hover) " }" ]
       ]
-    , HH.span
-      [ HC.style $ color $ CSS.fromInt 0xcccccc ]
-      [ HH.text $ i "{ files = "(show $ map File.name files)", hover = "(toUpper $ show hover)" }" ]
-    ]
 {-
 The easiest way to create a file input dialog is with the input element:
 

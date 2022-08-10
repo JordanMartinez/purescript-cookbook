@@ -1,7 +1,8 @@
 module CardsHalogenHooks.Main where
 
 import Prelude
-import CSS (fontSize, em)
+
+import CSS (em, fontSize)
 import Data.Array.NonEmpty (cons')
 import Data.Maybe (Maybe(..))
 import Data.Tuple.Nested ((/\))
@@ -35,19 +36,19 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   (card /\ _) /\ cardStateIdx <- Hooks.useState (runGen cardGenerator initialGenState)
   Hooks.pure $
     HH.div_
-    [ HH.button
-      [ HE.onClick \_ -> do
-        -- Modify the card generator state by re-running the generator.
-        -- We don't need the card value for this update function, so it is ignored with `_`.
-        Hooks.modify_ cardStateIdx \(_ /\ genState) -> runGen cardGenerator genState
+      [ HH.button
+          [ HE.onClick \_ -> do
+              -- Modify the card generator state by re-running the generator.
+              -- We don't need the card value for this update function, so it is ignored with `_`.
+              Hooks.modify_ cardStateIdx \(_ /\ genState) -> runGen cardGenerator genState
+          ]
+          [ HH.text "Draw" ]
+      , HH.div
+          [ HC.style do
+              fontSize $ em 12.0
+          ]
+          [ HH.text $ viewCard card ]
       ]
-      [ HH.text "Draw" ]
-    , HH.div
-      [ HC.style do
-        fontSize $ em 12.0
-      ]
-      [ HH.text $ viewCard card ]
-    ]
 
 data Card
   = Ace

@@ -1,6 +1,7 @@
 module TextFieldsReactHooks.Main where
 
 import Prelude
+
 import Data.Array as Array
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (fromCodePointArray, toCodePointArray)
