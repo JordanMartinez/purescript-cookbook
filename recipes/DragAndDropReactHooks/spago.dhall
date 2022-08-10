@@ -9,6 +9,7 @@
   , "react-basic"
   , "react-basic-dom"
   , "react-basic-hooks"
+  , "web-dom"
   , "web-file"
   , "web-html"
   ]
