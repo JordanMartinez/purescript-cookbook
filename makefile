@@ -97,6 +97,16 @@ installDeps:
 > npm i
 > rm package-lock.json
 
+# Format PureScript code
+.PHONY: format
+format:
+> npx purs-tidy format-in-place recipes broken
+
+# Check PureScript code is formatted
+.PHONY: formatCheck
+formatCheck:
+> npx purs-tidy check recipes broken
+
 # ===== Makefile - Recipe-related Commands =====
 
 # Tests if recipe actually exists.
