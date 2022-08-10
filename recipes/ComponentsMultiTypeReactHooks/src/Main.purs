@@ -7,44 +7,30 @@ import Data.Tuple (fst)
 import Effect (Effect)
 import Effect.Exception (throw)
 import Effect.Unsafe (unsafePerformEffect)
-import React.Basic.DOM (render)
 import React.Basic.DOM as R
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.DOM.Events (targetValue)
 import React.Basic.Events (EventHandler, handler, handler_)
-import React.Basic.Hooks
-  ( type (/\)
-  , Component
-  , Hook
-  , Render
-  , UseEffect
-  , UseRef
-  , UseState
-  , component
-  , readRef
-  , useEffectAlways
-  , useRef
-  , useState
-  , useState'
-  , writeRef
-  , (/\)
-  )
+import React.Basic.Hooks (type (/\), Component, Hook, Render, UseEffect, UseRef, UseState, component, readRef, useEffectAlways, useRef, useState, useState', writeRef, (/\))
 import React.Basic.Hooks as React
+import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (body)
-import Web.HTML.HTMLElement (toElement)
+import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  body <- body =<< document =<< window
-  case body of
-    Nothing -> throw "Could not find body."
-    Just b -> do
-      container <- mkContainer
-      render (container unit) (toElement b)
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
+      app <- mkApp
+      renderRoot reactRoot (app {})
 
-mkContainer :: Component Unit
-mkContainer = do
+mkApp :: Component {}
+mkApp = do
   componentA <- mkComponentA
   componentB <- mkComponentB
   componentC <- mkComponentC
@@ -140,8 +126,7 @@ mkComponentC =
 useInput :: String -> Hook (UseState String) (String /\ EventHandler)
 useInput initialValue = React.do
   state /\ setState <- useState' initialValue
-  let
-    onChange = handler targetValue \t -> setState (fromMaybe "" t)
+  let onChange = handler targetValue \t -> setState (fromMaybe "" t)
   pure (state /\ onChange)
 
 useRenderCount :: forall a. Render a (UseEffect Unit (UseRef Int a)) Int
@@ -151,6 +136,5 @@ useRenderCount = React.do
     renders <- readRef rendersRef
     writeRef rendersRef (renders + 1)
     pure mempty
-  let
-    renders = unsafePerformEffect (readRef rendersRef)
+  let renders = unsafePerformEffect (readRef rendersRef)
   pure renders
