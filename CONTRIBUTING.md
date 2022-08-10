@@ -80,6 +80,7 @@ Follow these instructions for contributing new recipes. The Goal headers indicat
     1. Link to any other resources that a reader might find helpful. No need for detailed explanations of libraries here.
     1. List the `npm` dependencies your recipe uses (if any).
 1. Regenerate the table of recipes by running `make readme` while in the root folder
+1. Make sure the code is formatted consistently by running `make format`
 1. Submit a PR.
    - If this addresses a "Recipe Request" issue, the first line should read `Fixes #X` where `X` is the issue number.
 
