@@ -11,6 +11,7 @@
   , "react-basic-dom"
   , "react-basic-hooks"
   , "unsafe-coerce"
+  , "web-dom"
   , "web-file"
   , "web-html"
   ]
