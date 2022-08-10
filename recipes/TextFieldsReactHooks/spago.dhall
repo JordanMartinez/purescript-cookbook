@@ -9,6 +9,7 @@
   , "react-basic-dom"
   , "react-basic-hooks"
   , "strings"
+  , "web-dom"
   , "web-html"
   ]
 , packages = ../../packages.dhall
