@@ -1,13 +1,13 @@
 module RoutingPushHalogenClassic.MyRouting where
 
 import Prelude
+
 import Data.Foldable (oneOf)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Routing.Match (Match, int, lit, param, root, str)
 
-type PostId
-  = Int
+type PostId = Int
 
 data MyRoute
   = PostIndex
@@ -25,9 +25,9 @@ myRoute :: Match MyRoute
 myRoute =
   root *> lit "posts"
     *> oneOf
-        [ PostEdit <$> int <* lit "edit"
-        , Post <$> int
-        , PostBrowse <$> (lit "browse" *> int) <*> str
-        , ParamsAB <$> (param "a") <*> (param "b")
-        , pure PostIndex -- Unmatched goes to index too
-        ]
+      [ PostEdit <$> int <* lit "edit"
+      , Post <$> int
+      , PostBrowse <$> (lit "browse" *> int) <*> str
+      , ParamsAB <$> (param "a") <*> (param "b")
+      , pure PostIndex -- Unmatched goes to index too
+      ]

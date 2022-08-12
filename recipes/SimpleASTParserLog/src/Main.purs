@@ -40,11 +40,14 @@ main = do
   for_ mathProblems \prob -> do
     log "" -- add a blank line as separator
     log $ "Problem is: " <> prob
-    case unParser parseExpr {substring: prob, position: 0} of
+    case unParser parseExpr { substring: prob, position: 0 } of
       Left e -> do
-        log $ show e.error <>
-          "\nleft side: `"  <> take e.pos prob <>
-          "\nright side: `" <> drop e.pos prob <> "`"
+        log $ show e.error
+          <> "\nleft side: `"
+          <> take e.pos prob
+          <> "\nright side: `"
+          <> drop e.pos prob
+          <> "`"
       Right r -> do
         log $ (show $ evalExpr r.result) <> " = " <> printExpr r.result
         when showStructure do
@@ -59,8 +62,7 @@ data Expr
 data BinaryOperator = Plus | Minus | Multiply | Divide
 data Sign = Negative | Positive
 
-data UnaryExpr
-  = Unary Sign Atom
+data UnaryExpr = Unary Sign Atom
 
 data Atom
   = LitInt Int
@@ -74,50 +76,51 @@ parseExpr = fix \parseInfix -> do
   left <- UnaryOp <$> lazyParseUnaryExpr
   try (parseRightHandSide left parseInfix) <|> pure left
   where
-    lazyParseUnaryExpr :: Parser UnaryExpr
-    lazyParseUnaryExpr = defer \_ -> parseUnaryExpr
+  lazyParseUnaryExpr :: Parser UnaryExpr
+  lazyParseUnaryExpr = defer \_ -> parseUnaryExpr
 
-    operatorPrecedence :: BinaryOperator -> Int
-    operatorPrecedence = case _ of
-      Plus -> 1
-      Minus -> 1
-      Multiply -> 2
-      Divide -> 2
+  operatorPrecedence :: BinaryOperator -> Int
+  operatorPrecedence = case _ of
+    Plus -> 1
+    Minus -> 1
+    Multiply -> 2
+    Divide -> 2
 
-    parseRightHandSide :: Expr -> Parser Expr -> Parser Expr
-    parseRightHandSide left parseInfix = do
-      leftOp <- try $ between skipSpaces skipSpaces parseBinaryOperator
-      nextPart <- parseInfix
-      pure case nextPart of
-        UnaryOp _ -> do
-          -- no need to handle operator precedence on a UnaryExpr
-          BinaryOp left leftOp nextPart
+  parseRightHandSide :: Expr -> Parser Expr -> Parser Expr
+  parseRightHandSide left parseInfix = do
+    leftOp <- try $ between skipSpaces skipSpaces parseBinaryOperator
+    nextPart <- parseInfix
+    pure case nextPart of
+      UnaryOp _ -> do
+        -- no need to handle operator precedence on a UnaryExpr
+        BinaryOp left leftOp nextPart
 
-        BinaryOp middle rightOp right ->
-          -- Evaluation runs from left to right. Ensure we have fully evaluated
-          -- the left part before we evaluate the right part by reassociating
-          -- terms with the correct operations.
-          case (compare `on` operatorPrecedence) leftOp rightOp of
-            LT -> do
-              -- No term reassociation here because leftOp < rightOp
-              -- For example
-              --   `1 + 2 * 4` becomes `(1 + (2 * 4))`
-              BinaryOp left leftOp nextPart
+      BinaryOp middle rightOp right ->
+        -- Evaluation runs from left to right. Ensure we have fully evaluated
+        -- the left part before we evaluate the right part by reassociating
+        -- terms with the correct operations.
+        case (compare `on` operatorPrecedence) leftOp rightOp of
+          LT -> do
+            -- No term reassociation here because leftOp < rightOp
+            -- For example
+            --   `1 + 2 * 4` becomes `(1 + (2 * 4))`
+            BinaryOp left leftOp nextPart
 
-            _ {- GT or EQ -} -> do
-              -- Always reassociate terms here
-              -- For example:
-              --  `1 * 2 + 4` becomes `((1 * 2) + 4)`
-              BinaryOp (BinaryOp left leftOp middle) rightOp right
+          _ {- GT or EQ -} -> do
+            -- Always reassociate terms here
+            -- For example:
+            --  `1 * 2 + 4` becomes `((1 * 2) + 4)`
+            BinaryOp (BinaryOp left leftOp middle) rightOp right
 
-    parseBinaryOperator :: Parser BinaryOperator
-    parseBinaryOperator = do
-      oneOf [ Multiply <$ string "*"
-            , Divide <$ string "/"
-            , Plus <$ string "+"
-            , Minus <$ string "-"
-            , fail "Could not parse a binary operator"
-            ]
+  parseBinaryOperator :: Parser BinaryOperator
+  parseBinaryOperator = do
+    oneOf
+      [ Multiply <$ string "*"
+      , Divide <$ string "/"
+      , Plus <$ string "+"
+      , Minus <$ string "-"
+      , fail "Could not parse a binary operator"
+      ]
 
 parseUnaryExpr :: Parser UnaryExpr
 parseUnaryExpr = do
@@ -125,42 +128,42 @@ parseUnaryExpr = do
   atom <- lazyParseAtom
   pure $ Unary sign atom
   where
-    lazyParseAtom :: Parser Atom
-    lazyParseAtom = defer \_ -> parseAtom
+  lazyParseAtom :: Parser Atom
+  lazyParseAtom = defer \_ -> parseAtom
 
 parseAtom :: Parser Atom
 parseAtom = do
   parseLiteral <|> parseParenthesis
   where
-    parseNumber :: String -> Parser Atom
-    parseNumber digitsAsString = do
-      void $ string "." -- decimal point
-      decimalsAsString <- parseNumSequence
-      let fullString = digitsAsString <> "." <> decimalsAsString
-      case Number.fromString fullString of
-        Just x -> pure $ LitNum x
-        _ -> fail $ "Not a valid decimal: " <> fullString
+  parseNumber :: String -> Parser Atom
+  parseNumber digitsAsString = do
+    void $ string "." -- decimal point
+    decimalsAsString <- parseNumSequence
+    let fullString = digitsAsString <> "." <> decimalsAsString
+    case Number.fromString fullString of
+      Just x -> pure $ LitNum x
+      _ -> fail $ "Not a valid decimal: " <> fullString
 
-    parseInt :: String -> Parser Atom
-    parseInt digitsAsString = case Int.fromString digitsAsString of
-      Just i ->  pure $ LitInt i
-      Nothing -> fail $
-        "String of digit characters `" <> digitsAsString <>
+  parseInt :: String -> Parser Atom
+  parseInt digitsAsString = case Int.fromString digitsAsString of
+    Just i -> pure $ LitInt i
+    Nothing -> fail $
+      "String of digit characters `" <> digitsAsString <>
         "` is outside the bounds of `Int`"
 
-    parseLiteral :: Parser Atom
-    parseLiteral = do
-      digitsAsString <- parseNumSequence
-      try (parseNumber digitsAsString) <|> (parseInt digitsAsString)
+  parseLiteral :: Parser Atom
+  parseLiteral = do
+    digitsAsString <- parseNumSequence
+    try (parseNumber digitsAsString) <|> (parseInt digitsAsString)
 
-    lazyParseExpr :: Parser Expr
-    lazyParseExpr = defer \_ -> parseExpr
+  lazyParseExpr :: Parser Expr
+  lazyParseExpr = defer \_ -> parseExpr
 
-    parseParenthesis :: Parser Atom
-    parseParenthesis = do
-      between (char '(') (char ')') do
-        between skipSpaces skipSpaces do
-          Parenthesis <$> lazyParseExpr
+  parseParenthesis :: Parser Atom
+  parseParenthesis = do
+    between (char '(') (char ')') do
+      between skipSpaces skipSpaces do
+        Parenthesis <$> lazyParseExpr
 
 parseNumSequence :: Parser String
 parseNumSequence = do
@@ -174,12 +177,12 @@ evalExpr = case _ of
   BinaryOp l op r -> (evalOp op) (evalExpr l) (evalExpr r)
   UnaryOp unaryExpr -> evalUnaryExpr unaryExpr
   where
-    evalOp :: forall a. EuclideanRing a => BinaryOperator -> (a -> a -> a)
-    evalOp = case _ of
-      Plus -> (+)
-      Minus -> (-)
-      Multiply -> (*)
-      Divide -> (/)
+  evalOp :: forall a. EuclideanRing a => BinaryOperator -> (a -> a -> a)
+  evalOp = case _ of
+    Plus -> (+)
+    Minus -> (-)
+    Multiply -> (*)
+    Divide -> (/)
 
 evalUnaryExpr :: UnaryExpr -> Number
 evalUnaryExpr = case _ of
@@ -200,12 +203,12 @@ printExpr = case _ of
   BinaryOp l op r -> (printExpr l) <> " " <> (printOp op) <> " " <> (printExpr r)
   UnaryOp unaryExpr -> printUnaryExpr unaryExpr
   where
-    printOp :: BinaryOperator -> String
-    printOp = case _ of
-      Plus -> "+"
-      Minus -> "-"
-      Multiply -> "*"
-      Divide -> "/"
+  printOp :: BinaryOperator -> String
+  printOp = case _ of
+    Plus -> "+"
+    Minus -> "-"
+    Multiply -> "*"
+    Divide -> "/"
 
 printUnaryExpr :: UnaryExpr -> String
 printUnaryExpr = case _ of

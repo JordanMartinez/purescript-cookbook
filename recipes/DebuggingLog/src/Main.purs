@@ -16,14 +16,16 @@ main :: Effect Unit
 main = do
   log "When we are in the 'Effect' monad, we can print content to the console."
   launchAff_ do
-    liftEffect $ log $ "We can still print values to the console as long as \
-                       \the monad in question implements the MonadEffect \
-                       \type class. Since `Aff` implements MonadEffect, we \
-                       \can lift that effect into `Aff`."
+    liftEffect $ log $
+      "We can still print values to the console as long as \
+      \the monad in question implements the MonadEffect \
+      \type class. Since `Aff` implements MonadEffect, we \
+      \can lift that effect into `Aff`."
 
-  log "However, there are times when we want to debug some code and wish \
-      \to use print-based debugging. Since PureScript is pure, how do we \
-      \do that?"
+  log
+    "However, there are times when we want to debug some code and wish \
+    \to use print-based debugging. Since PureScript is pure, how do we \
+    \do that?"
 
   usingSpy
 
@@ -41,13 +43,13 @@ usingSpy = do
   let
     x = 5
     y = spy "y" 8
-    adt = spy "adt" $ MyADT 1 (Tuple 4 ["a", "b"]) { foo: "foo value" }
+    adt = spy "adt" $ MyADT 1 (Tuple 4 [ "a", "b" ]) { foo: "foo value" }
     function = spy "function" $ \intValue -> show $ 4 + intValue
 
     -- quick way of debugging something without showing it or using a
     -- variable name
     _ = spy "debug for me what x + y is" $ x + y
-    arrayOfStrings = spy "debug some array" $ map show [1, 2, 3, 4, 5]
+    arrayOfStrings = spy "debug some array" $ map show [ 1, 2, 3, 4, 5 ]
 
     -- quickly drop-in `spy` to see every step of a recursive function
     fact :: Int -> Int -> Int
@@ -56,16 +58,18 @@ usingSpy = do
 
     _ = fact 5 1
 
-  log $ "Thus, spying is an effective way of quickly adding debugging where \
-        \you need it without affecting any other part of your code. \
-        \Note: you should not use `spy` to do logging in production code. \
-        \Use a proper logger in production code."
+  log $
+    "Thus, spying is an effective way of quickly adding debugging where \
+    \you need it without affecting any other part of your code. \
+    \Note: you should not use `spy` to do logging in production code. \
+    \Use a proper logger in production code."
 
 usingTraceM :: Effect Unit
 usingTraceM = do
   log "usingTraceM"
-  traceM "Notice how this text's color is different than what is outputted \
-         \via `log`."
+  traceM
+    "Notice how this text's color is different than what is outputted \
+    \via `log`."
 
   let
     localMutationComputation
@@ -84,6 +88,7 @@ usingTraceM = do
 
 compareSpyAndTraceM :: Effect Unit
 compareSpyAndTraceM = do
-  let x = 5
-      _ = spy "x" x
+  let
+    x = 5
+    _ = spy "x" x
   traceM x

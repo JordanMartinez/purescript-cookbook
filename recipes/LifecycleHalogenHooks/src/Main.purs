@@ -29,7 +29,7 @@ rootComponent
    . MonadEffect anyMonad
   => H.Component unusedQuery unusedInput unusedOutput anyMonad
 rootComponent = Hooks.component \_ _ -> Hooks.do
-  state /\ stateIdx <- Hooks.useState { currentId: 0, slots: []}
+  state /\ stateIdx <- Hooks.useState { currentId: 0, slots: [] }
   Hooks.useLifecycleEffect do
     liftEffect $ log "Initialize Root"
     pure Nothing
@@ -38,10 +38,10 @@ rootComponent = Hooks.component \_ _ -> Hooks.do
     HH.div_
       [ HH.button
           [ HE.onClick \_ -> do
-            Hooks.modify_ stateIdx \s ->
-              { currentId: s.currentId + 1
-              , slots: snoc s.slots s.currentId
-              }
+              Hooks.modify_ stateIdx \s ->
+                { currentId: s.currentId + 1
+                , slots: snoc s.slots s.currentId
+                }
           ]
           [ HH.text "Add" ]
       , HH.button
@@ -62,16 +62,16 @@ rootComponent = Hooks.component \_ _ -> Hooks.do
               ]
       ]
   where
-    _child = Proxy :: Proxy "child"
+  _child = Proxy :: Proxy "child"
 
-    listen :: Int -> Message -> _
-    listen i m = do
-      let
-        msg = case m of
-          Initialized -> "Heard Initialized from child" <> show i
-          Finalized -> "Heard Finalized from child" <> show i
-          Reported msg' -> "Re-reporting from child" <> show i <> ": " <> msg'
-      liftEffect $ log ("Root >>> " <> msg)
+  listen :: Int -> Message -> _
+  listen i m = do
+    let
+      msg = case m of
+        Initialized -> "Heard Initialized from child" <> show i
+        Finalized -> "Heard Finalized from child" <> show i
+        Reported msg' -> "Re-reporting from child" <> show i <> ": " <> msg'
+    liftEffect $ log ("Root >>> " <> msg)
 
 data Message
   = Initialized
@@ -95,23 +95,23 @@ childComponent id = Hooks.component \rec _ -> Hooks.do
     HH.div_
       [ HH.text ("Child " <> show id)
       , HH.ul_
-        [ HH.slot _cell 0 (cell 0) unit (listen rec.outputToken 0)
-        , HH.slot _cell 1 (cell 1) unit (listen rec.outputToken 1)
-        , HH.slot _cell 2 (cell 2) unit (listen rec.outputToken 2)
-        ]
+          [ HH.slot _cell 0 (cell 0) unit (listen rec.outputToken 0)
+          , HH.slot _cell 1 (cell 1) unit (listen rec.outputToken 1)
+          , HH.slot _cell 2 (cell 2) unit (listen rec.outputToken 2)
+          ]
       ]
   where
-    _cell = Proxy :: Proxy "cell"
+  _cell = Proxy :: Proxy "cell"
 
-    listen :: _ -> Int -> Message -> _
-    listen outputToken i m = do
-      let
-        msg = case m of
-          Initialized -> "Heard Initialized from cell" <> show i
-          Finalized -> "Heard Finalized from cell" <> show i
-          Reported msg' -> "Re-reporting from cell" <> show i <> ": " <> msg'
-      liftEffect $ log $ "Child " <> show i <> " >>> " <> msg
-      Hooks.raise outputToken (Reported msg)
+  listen :: _ -> Int -> Message -> _
+  listen outputToken i m = do
+    let
+      msg = case m of
+        Initialized -> "Heard Initialized from cell" <> show i
+        Finalized -> "Heard Finalized from cell" <> show i
+        Reported msg' -> "Re-reporting from cell" <> show i <> ": " <> msg'
+    liftEffect $ log $ "Child " <> show i <> " >>> " <> msg
+    Hooks.raise outputToken (Reported msg)
 
 cell
   :: forall unusedInput unusedQuery anyMonad

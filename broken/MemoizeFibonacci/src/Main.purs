@@ -1,6 +1,7 @@
 module MemoizeFibonacci.Main where
 
 import Prelude
+
 import Data.Function.Memoize (memoize)
 import Data.Interpolate (i)
 import Debug.Trace (spy)
@@ -13,15 +14,15 @@ main = do
   log $ i "fibFast result: " $ fibFast 7
   log $ i "fibSlow result: " $ fibSlow 7
 
-  -- The following variations type-check, but do not correctly memoize
-  -- the functions. They are commented out intentionally. Uncomment them
-  -- and run them to see for yourself.
-  -- log $ i "fibBroken1 result: " $ fibBroken1 7
-  -- log $ i "fibBroken2 result: " $ fibBroken2 7
-  -- log $ i "fibBroken3 result: " $ fibBroken3 7
+-- The following variations type-check, but do not correctly memoize
+-- the functions. They are commented out intentionally. Uncomment them
+-- and run them to see for yourself.
+-- log $ i "fibBroken1 result: " $ fibBroken1 7
+-- log $ i "fibBroken2 result: " $ fibBroken2 7
+-- log $ i "fibBroken3 result: " $ fibBroken3 7
 
-  -- Note: this one fails to compile.
-  -- log $ i "fibBroken4 result: " $ fibBroken4 7
+-- Note: this one fails to compile.
+-- log $ i "fibBroken4 result: " $ fibBroken4 7
 
 -- Basic fibonacci implementation
 fib :: Int -> Int
@@ -38,7 +39,7 @@ fibSlow 1 = spy "fibSlow 1" 1
 fibSlow n =
   spy ("fibSlow " <> show n)
     $ fibSlow (n - 2)
-    + fibSlow (n - 1)
+        + fibSlow (n - 1)
 
 --------------------------------------------------------------------------
 
@@ -49,7 +50,7 @@ fibFast 1 = spy "fibFast 1" 1
 fibFast n =
   spy ("fibFast " <> show n)
     $ fibMemo (n - 2)
-    + fibMemo (n - 1)
+        + fibMemo (n - 1)
 
 fibMemo :: Int -> Int
 fibMemo = memoize \n -> fibFast n
@@ -64,7 +65,7 @@ fibBroken1 1 = spy "fibBroken1 1" 1
 fibBroken1 n =
   spy ("fibBroken1 " <> show n)
     $ fibNonThunkedMemoize (n - 2)
-    + fibNonThunkedMemoize (n - 1)
+        + fibNonThunkedMemoize (n - 1)
 
 fibNonThunkedMemoize :: Int -> Int
 fibNonThunkedMemoize n = memoize fibBroken1 n
@@ -79,9 +80,10 @@ fibBroken2 1 = spy "fibBroken2 1" 1
 fibBroken2 n =
   let
     fibLetClauseMemoize = memoize \n -> fibBroken2 n
-  in spy ("fibBroken2 " <> show n)
-    $ fibLetClauseMemoize (n - 2)
-    + fibLetClauseMemoize (n - 1)
+  in
+    spy ("fibBroken2 " <> show n)
+      $ fibLetClauseMemoize (n - 2)
+          + fibLetClauseMemoize (n - 1)
 
 --------------------------------------------------------------------------
 
@@ -93,9 +95,9 @@ fibBroken3 1 = spy "fibBroken3 1" 1
 fibBroken3 n =
   spy ("fibBroken3 " <> show n)
     $ fibWhereClauseMemoize (n - 2)
-    + fibWhereClauseMemoize (n - 1)
+        + fibWhereClauseMemoize (n - 1)
   where
-    fibWhereClauseMemoize = memoize \n -> fibBroken3 n
+  fibWhereClauseMemoize = memoize \n -> fibBroken3 n
 
 --------------------------------------------------------------------------
 

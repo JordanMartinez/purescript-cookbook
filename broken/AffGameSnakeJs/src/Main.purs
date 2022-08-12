@@ -77,16 +77,15 @@ data Direction
 
 derive instance eqDirection :: Eq Direction
 
-type Snake
-  = NonEmptyArray Point
+type Snake = NonEmptyArray Point
 
 -- The type of our game state
-type Model
-  = { food :: Point
-    , snake :: Snake
-    , direction :: Direction
-    , genState :: GenState
-    }
+type Model =
+  { food :: Point
+  , snake :: Snake
+  , direction :: Direction
+  , genState :: GenState
+  }
 
 -- Some initial state values
 initialDirection :: Direction
@@ -206,8 +205,10 @@ render m = liftCanvasAction do
     -- `Vector2`s `ToRegion` instance:
     -- https://pursuit.purescript.org/packages/purescript-polymorphic-vectors/1.1.1/docs/Data.Vector.Polymorphic.Class#v:toRegionVector2
     fillRect
-      $  cellSizeNum * toNumber (xmax + 2)
-      >< cellSizeNum * toNumber (ymax + 2)
+      $ cellSizeNum
+          * toNumber (xmax + 2)
+              >< cellSizeNum
+          * toNumber (ymax + 2)
   -- Interior
   filled bgColor do
     fillRect $ makeRect
@@ -219,7 +220,6 @@ render m = liftCanvasAction do
   for_ m.snake (drawPoint snakeColor)
   -- Food
   drawPoint foodColor m.food
-
 
 -- AFFGAME
 --
@@ -261,31 +261,29 @@ game = mkAffGame
           , direction: initialDirection
           }
       pure
-        { env:       unit      :: Env
+        { env: unit :: Env
         -- We're using our `Model` type as the state of the game.
         , initState: initState :: Model
         }
   , updates:
-    -- We have a `keydown` update that updates the state with the direction we
-    -- pressed
-    [ keydown documentEventTarget do
-        mDir <- asksAt _keyboardEvent $ key >>> case _ of
-          "ArrowLeft"  -> Just Left
-          "ArrowUp"    -> Just Up
-          "ArrowRight" -> Just Right
-          "ArrowDown"  -> Just Down
-          _ -> Nothing
-        for_ mDir \dir -> modify (update (SetDir dir))
-    -- We also have an update that runs at our `ticksPerSecond` interval,
-    -- but approximated to the closest (future) animation frame. We simply
-    -- update the state, then read it again and render it to the canvas.
-    , animationFrameMatchInterval (pure $ FPS ticksPerSecond) do
-        modify (update Tick)
-        get >>= render
-    ]
+      -- We have a `keydown` update that updates the state with the direction we
+      -- pressed
+      [ keydown documentEventTarget do
+          mDir <- asksAt _keyboardEvent $ key >>> case _ of
+            "ArrowLeft" -> Just Left
+            "ArrowUp" -> Just Up
+            "ArrowRight" -> Just Right
+            "ArrowDown" -> Just Down
+            _ -> Nothing
+          for_ mDir \dir -> modify (update (SetDir dir))
+      -- We also have an update that runs at our `ticksPerSecond` interval,
+      -- but approximated to the closest (future) animation frame. We simply
+      -- update the state, then read it again and render it to the canvas.
+      , animationFrameMatchInterval (pure $ FPS ticksPerSecond) do
+          modify (update Tick)
+          get >>= render
+      ]
   }
-
-
 
 -- MAIN
 --

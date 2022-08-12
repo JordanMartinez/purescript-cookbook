@@ -2,9 +2,9 @@ module FileUploadHalogenHooks.Main where
 
 import Prelude
 
-import Data.Tuple.Nested ((/\))
 import DOM.HTML.Indexed.InputType (InputType(..))
 import Data.Maybe (Maybe(..))
+import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Halogen as H
 import Halogen.Aff as HA
@@ -28,10 +28,10 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   files /\ filesIdx <- Hooks.useState []
   Hooks.pure $
     HH.div_
-    [ HH.input
-        [ HP.type_ InputFile
-        , HP.multiple true
-        , HE.onFileUpload \fileArray -> Hooks.put filesIdx fileArray
-        ]
-    , HH.div_ [ HH.text $ show $ map File.name files ]
-    ]
+      [ HH.input
+          [ HP.type_ InputFile
+          , HP.multiple true
+          , HE.onFileUpload \fileArray -> Hooks.put filesIdx fileArray
+          ]
+      , HH.div_ [ HH.text $ show $ map File.name files ]
+      ]

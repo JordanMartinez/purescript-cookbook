@@ -1,6 +1,7 @@
 module TimeReactHooks.Main where
 
 import Prelude
+
 import Data.Array (intercalate)
 import Data.Int (floor)
 import Data.JSDate (JSDate)
@@ -19,8 +20,7 @@ import Web.HTML.HTMLDocument (body)
 import Web.HTML.HTMLElement (toElement)
 import Web.HTML.Window (document)
 
-type Time
-  = { hours :: Int, minutes :: Int, seconds :: Int }
+type Time = { hours :: Int, minutes :: Int, seconds :: Int }
 
 main :: Effect Unit
 main = do
@@ -46,8 +46,7 @@ mkTime = do
                   ]
           ]
 
-newtype UseCurrentTime hooks
-  = UseCurrentTime (UseEffect Unit (UseState Time hooks))
+newtype UseCurrentTime hooks = UseCurrentTime (UseEffect Unit (UseState Time hooks))
 
 derive instance ntUseCurrentTime :: Newtype (UseCurrentTime hooks) _
 

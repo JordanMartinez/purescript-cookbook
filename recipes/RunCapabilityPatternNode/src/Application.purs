@@ -24,14 +24,13 @@ getUserName = Run.lift _getUserName $ GetUserName identity
 -- | A program which makes us of the dsls we defined earlier.
 program :: forall r. Run (LOGGER + GET_USER_NAME + r) String
 program = do
-    log "what is your name?"
-    name <- getUserName
-    log $ "Your name is " <> getName name
-    pure $ getName name
+  log "what is your name?"
+  name <- getUserName
+  log $ "Your name is " <> getName name
+  pure $ getName name
 
 -- Free monads increase the boilerplate for defining the dsls 
 -- but greatly reduce the boilerplate needed for writing different interpreters
-
 
 derive instance loggerFunctor :: Functor LoggerF
 derive instance getUserNameFunctor :: Functor GetUserNameF

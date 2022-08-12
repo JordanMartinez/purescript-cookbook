@@ -50,9 +50,20 @@ printWindowValues win = do
   currentScrollX <- scrollX win
   currentScrollY <- scrollY win
   log $ i
-    "inner width: "(show currentInnerWidth)"\n\
-    \inner height: "(show currentInnerHeight)"\n\
-    \outer width: "(show currentOuterWidth)"\n\
-    \outer height: "(show currentOuterHeight)"\n\
-    \scroll x: "(show currentScrollX)"\n\
-    \scroll y: "(show currentScrollY)
+    "inner width: "
+    (show currentInnerWidth)
+    "\n\
+    \inner height: "
+    (show currentInnerHeight)
+    "\n\
+    \outer width: "
+    (show currentOuterWidth)
+    "\n\
+    \outer height: "
+    (show currentOuterHeight)
+    "\n\
+    \scroll x: "
+    (show currentScrollX)
+    "\n\
+    \scroll y: "
+    (show currentScrollY)

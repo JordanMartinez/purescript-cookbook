@@ -1,10 +1,11 @@
 module App.Production.Sync where
+
 -- Layers One and Two have to be in same file due to orphan instance restriction
 
 import Prelude
 
+import App.Application (class GetUserName, class Logger)
 import App.Types (Name(..))
-import App.Application (class Logger, class GetUserName)
 import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks, runReaderT)
 import Effect (Effect)
 import Effect.Class (class MonadEffect, liftEffect)
@@ -21,15 +22,14 @@ newtype AppM a = AppM (ReaderT Environment Effect a)
 runApp :: forall a. AppM a -> Environment -> Effect a
 runApp (AppM reader_T) env = runReaderT reader_T env
 
-
 -- | Layer 1 Provide instances for all capabilities needed
 -- | Many of the instances are provided by deriving from the 
 -- | underlying ReaderT...
-derive newtype instance functorAppM     :: Functor AppM
-derive newtype instance applyAppM       :: Apply AppM
+derive newtype instance functorAppM :: Functor AppM
+derive newtype instance applyAppM :: Apply AppM
 derive newtype instance applicativeAppM :: Applicative AppM
-derive newtype instance bindAppM        :: Bind AppM
-derive newtype instance monadAppM       :: Monad AppM
+derive newtype instance bindAppM :: Bind AppM
+derive newtype instance monadAppM :: Monad AppM
 derive newtype instance monadEffectAppM :: MonadEffect AppM
 
 -- | Reader instance not quite as simple a derivation as "derive newtype",

@@ -16,7 +16,7 @@ import FRP.Behavior.Keyboard (keys)
 import FRP.Behavior.Time (seconds)
 import FRP.Event.Keyboard (Keyboard, getKeyboard)
 import Graphics.Canvas (Context2D, getCanvasElementById, getContext2D, setCanvasDimensions)
-import Graphics.Drawing (Color, Drawing, Shape, OutlineStyle, arc, circle, fillColor, filled, lineWidth, outlineColor, outlined, rectangle, render, rotate, text, translate)
+import Graphics.Drawing (Color, Drawing, OutlineStyle, Shape, arc, circle, fillColor, filled, lineWidth, outlineColor, outlined, rectangle, render, rotate, text, translate)
 import Graphics.Drawing.Font (font, monospace)
 import Math (cos, floor, sin, tau, (%))
 import Web.DOM.Document (createElement)
@@ -35,47 +35,40 @@ import Web.HTML.Window (document)
 -- | the last one fired.
 
 downToNearest :: Number -> Number -> Number
-downToNearest big small
-  = floor (big / small) * small
+downToNearest big small = floor (big / small) * small
 
 -- | Given a timestamp, we can work out the rotation of the obstacle. All
 -- | obstacles are 270-degree arcs, so we know that anything in the 90 degrees
 -- | before the rotation will be clear of the obstacle!
 
 timestampToObstacleRotation :: Number -> Number
-timestampToObstacleRotation time
-  = (17.0 * time) % tau
+timestampToObstacleRotation time = (17.0 * time) % tau
 
 -- | "Normalise" a rotation such that it falls within 0.0 and 360.0, by adding
 -- | or subtracting 360.0 as necessary.
 
 normalise :: Number -> Number
-normalise rotation
-  = ((rotation % tau) + tau) % tau
+normalise rotation = ((rotation % tau) + tau) % tau
 
 -- | Given the cursor's rotation, would it avoid the obstacle at its given
 -- | rotation? This is our simplified form of "collision detection".
 
 avoidsObstacle :: Number -> Number -> Boolean
-avoidsObstacle cursor obstacleStartTime
-  = if upperBound > lowerBound
-      then normalisedCursor < upperBound
-        && normalisedCursor > lowerBound
+avoidsObstacle cursor obstacleStartTime =
+  if upperBound > lowerBound then normalisedCursor < upperBound
+    && normalisedCursor > lowerBound
 
-      else normalisedCursor > lowerBound
-        || normalisedCursor < upperBound
+  else normalisedCursor > lowerBound
+    || normalisedCursor < upperBound
   where
-    normalisedCursor :: Number
-    normalisedCursor
-      = normalise cursor
+  normalisedCursor :: Number
+  normalisedCursor = normalise cursor
 
-    upperBound :: Number
-    upperBound
-      = timestampToObstacleRotation obstacleStartTime
+  upperBound :: Number
+  upperBound = timestampToObstacleRotation obstacleStartTime
 
-    lowerBound :: Number
-    lowerBound
-      = normalise (upperBound - tau / 4.0)
+  lowerBound :: Number
+  lowerBound = normalise (upperBound - tau / 4.0)
 
 -- | You can turn 0 or 1 into -1 or 1 by multiplying by 2 and taking 1. We'd
 -- | also like to generate some pseudo-randomness, so we multiply by one prime
@@ -83,70 +76,59 @@ avoidsObstacle cursor obstacleStartTime
 -- | should at least _seem_ random.
 
 scoreToDirection :: Number -> Number
-scoreToDirection score'
-  = 2.0 * (((score' * 31.0) % 17.0) % 2.0) - 1.0
+scoreToDirection score' = 2.0 * (((score' * 31.0) % 17.0) % 2.0) - 1.0
 
 -- | Every time we want to render a frame, we should update state accordingly.
 -- | To do this, we calculate the new score (if it has changed), new position
 -- | of the cursor (if it has changed), and where to draw the obstacle.
 
 update :: Seconds -> Maybe Controls -> State -> State
-update (Seconds timestamp) control previous
-  = { timestamp
-    , cursorRotation: normalise cursorRotation
-    , gameRotation: normalise gameRotation
-    , score:
-        if nextObstacleTriggered
-          then
-            if cursorRotation `avoidsObstacle` lastObstacleStart
-              then previous.score + 1
-              else 0
-          else
-            previous.score
-    }
+update (Seconds timestamp) control previous =
+  { timestamp
+  , cursorRotation: normalise cursorRotation
+  , gameRotation: normalise gameRotation
+  , score:
+      if nextObstacleTriggered then
+        if cursorRotation `avoidsObstacle` lastObstacleStart then previous.score + 1
+        else 0
+      else
+        previous.score
+  }
 
   where
-    -- The value of the score as a number, because we need it more than once.
-    scoreAsNumber :: Number
-    scoreAsNumber
-      = toNumber previous.score
+  -- The value of the score as a number, because we need it more than once.
+  scoreAsNumber :: Number
+  scoreAsNumber = toNumber previous.score
 
-    -- The "game" will rotate as the user's score increases, and this is the
-    -- number that does it!
-    gameRotation :: Number
-    gameRotation
-      = previous.gameRotation
-      + 0.1 * (scoreToDirection scoreAsNumber * scoreAsNumber * changeInTime)
+  -- The "game" will rotate as the user's score increases, and this is the
+  -- number that does it!
+  gameRotation :: Number
+  gameRotation = previous.gameRotation
+    + 0.1 * (scoreToDirection scoreAsNumber * scoreAsNumber * changeInTime)
 
-    -- What is our new rotation?
-    cursorRotation :: Number
-    cursorRotation
-      = previous.cursorRotation + changeInRotation
+  -- What is our new rotation?
+  cursorRotation :: Number
+  cursorRotation = previous.cursorRotation + changeInRotation
 
-    -- How much time has passed since we last rendered?
-    changeInTime :: Number
-    changeInTime
-      = timestamp - previous.timestamp
+  -- How much time has passed since we last rendered?
+  changeInTime :: Number
+  changeInTime = timestamp - previous.timestamp
 
-    -- How much has our rotation changed since last render?
-    changeInRotation :: Number
-    changeInRotation
-      = changeInTime * tau * controlToVelocity control
+  -- How much has our rotation changed since last render?
+  changeInRotation :: Number
+  changeInRotation = changeInTime * tau * controlToVelocity control
 
-    -- When did last render's obstacle fire?
-    lastObstacleStart :: Number
-    lastObstacleStart
-      = previous.timestamp `downToNearest` 2.0
+  -- When did last render's obstacle fire?
+  lastObstacleStart :: Number
+  lastObstacleStart = previous.timestamp `downToNearest` 2.0
 
-    -- When did _this_ render's obstacle fire?
-    currentObstacleStart :: Number
-    currentObstacleStart
-      = timestamp `downToNearest` 2.0
+  -- When did _this_ render's obstacle fire?
+  currentObstacleStart :: Number
+  currentObstacleStart = timestamp `downToNearest` 2.0
 
-    -- Given those last two values, has a new obstacle fired?
-    nextObstacleTriggered :: Boolean
-    nextObstacleTriggered
-       = currentObstacleStart /= lastObstacleStart
+  -- Given those last two values, has a new obstacle fired?
+  nextObstacleTriggered :: Boolean
+  nextObstacleTriggered = currentObstacleStart /= lastObstacleStart
 
 {- PAINT -}
 
@@ -164,58 +146,53 @@ eighthSize = size / 8.0
 -- | obstacle. This function does some ugly maths to tell us just that.
 
 timestampToObstacleRadius :: Number -> Number
-timestampToObstacleRadius time
-  = eighthSize + remainder * size * 3.0 / 16.0
+timestampToObstacleRadius time = eighthSize + remainder * size * 3.0 / 16.0
   where
-    -- 2.0 is "brand new", 0.0 is "just finished"
-    remainder :: Number
-    remainder = 2.0 - (time % 2.0)
+  -- 2.0 is "brand new", 0.0 is "just finished"
+  remainder :: Number
+  remainder = 2.0 - (time % 2.0)
 
 -- | The background of our application will always be the same: a purely-white
 -- | rectangle covering the entire canvas, with a circle in the middle to show
 -- | the "path" of the cursor.
 
 background :: Drawing
-background
-  = backdrop <> guideline
+background = backdrop <> guideline
   where
-    -- The backdrop is just behind everything else, and we only draw it to
-    -- cover up whatever was drawn in the last frame.
-    backdrop
-      = filled
-          (fillColor white)
-          (rectangle 0.0 0.0 size size)
+  -- The backdrop is just behind everything else, and we only draw it to
+  -- cover up whatever was drawn in the last frame.
+  backdrop = filled
+    (fillColor white)
+    (rectangle 0.0 0.0 size size)
 
-    -- The guideline shows the path of the cursor, but never actually moves.
-    guideline
-      = outlined
-          (outlineColor (graytone 0.8))
-          (circle halfSize halfSize eighthSize)
+  -- The guideline shows the path of the cursor, but never actually moves.
+  guideline = outlined
+    (outlineColor (graytone 0.8))
+    (circle halfSize halfSize eighthSize)
 
 -- | Given the value of the score, produce the display: simple text in the
 -- | top-right of the canvas.
 
 score :: Int -> Drawing
-score value
-  = text (font monospace 12 mempty) (size * 0.75) eighthSize
-      (fillColor black) (show value)
+score value = text (font monospace 12 mempty) (size * 0.75) eighthSize
+  (fillColor black)
+  (show value)
 
 -- | Given the cursor's current rotation, we can work out where to draw it on
 -- | the canvas using a little bit of trigonometry.
 
 rotationToCursorPosition :: Number -> { x :: Number, y :: Number }
-rotationToCursorPosition rotation
-  = { x: halfSize + eighthSize * cos rotation
-    , y: halfSize + eighthSize * sin rotation
-    }
+rotationToCursorPosition rotation =
+  { x: halfSize + eighthSize * cos rotation
+  , y: halfSize + eighthSize * sin rotation
+  }
 
 -- | Rotation is usually around the origin, which isn't really what we want. To
 -- | solve this problem, we translate our centre to the origin, perform the
 -- | rotation, and then translate back.
 
 rotateAroundCentre :: Number -> Drawing -> Drawing
-rotateAroundCentre angle
-    = translate halfSize halfSize
+rotateAroundCentre angle = translate halfSize halfSize
   <<< rotate angle
   <<< translate (-halfSize) (-halfSize)
 
@@ -224,61 +201,50 @@ rotateAroundCentre angle
 -- | display.
 
 paint :: State -> Drawing
-paint state
-   = background <> score state.score <> rotateGame (cursor <> obstacle)
+paint state = background <> score state.score <> rotateGame (cursor <> obstacle)
   where
-    -- Where to draw the cursor.
-    coordinates :: { x :: Number, y :: Number }
-    coordinates
-      = rotationToCursorPosition state.cursorRotation
+  -- Where to draw the cursor.
+  coordinates :: { x :: Number, y :: Number }
+  coordinates = rotationToCursorPosition state.cursorRotation
 
-    -- By how much to rotate the game.
-    rotateGame :: Drawing -> Drawing
-    rotateGame
-      = rotateAroundCentre state.gameRotation
+  -- By how much to rotate the game.
+  rotateGame :: Drawing -> Drawing
+  rotateGame = rotateAroundCentre state.gameRotation
 
-    -- This is some nonsense to make the colour change for extra jazziness.
-    obstacleColor :: Color
-    obstacleColor
-      = rotateHue (10.0 * (state.timestamp % 36.0)) red
+  -- This is some nonsense to make the colour change for extra jazziness.
+  obstacleColor :: Color
+  obstacleColor = rotateHue (10.0 * (state.timestamp % 36.0)) red
 
-    -- Centre the obstacle and rotate accordingly.
-    positionObstacle :: Drawing -> Drawing
-    positionObstacle
-        = translate halfSize halfSize
-      <<< rotate (timestampToObstacleRotation obstacleStart)
+  -- Centre the obstacle and rotate accordingly.
+  positionObstacle :: Drawing -> Drawing
+  positionObstacle = translate halfSize halfSize
+    <<< rotate (timestampToObstacleRotation obstacleStart)
 
-    -- When did this obstacle start?
-    obstacleStart :: Number
-    obstacleStart
-      = state.timestamp `downToNearest` 2.0
+  -- When did this obstacle start?
+  obstacleStart :: Number
+  obstacleStart = state.timestamp `downToNearest` 2.0
 
-    -- How big is it now?
-    obstacleRadius :: Number
-    obstacleRadius
-      = timestampToObstacleRadius state.timestamp
+  -- How big is it now?
+  obstacleRadius :: Number
+  obstacleRadius = timestampToObstacleRadius state.timestamp
 
-    -- The actual obstacle shape
-    obstacleArc :: Shape
-    obstacleArc
-      = arc 0.0 0.0 0.0 (tau * 0.75) obstacleRadius
+  -- The actual obstacle shape
+  obstacleArc :: Shape
+  obstacleArc = arc 0.0 0.0 0.0 (tau * 0.75) obstacleRadius
 
-    -- Styling for the obstacle
-    obstacleStyle :: OutlineStyle
-    obstacleStyle
-      = outlineColor obstacleColor <> lineWidth 6.0
+  -- Styling for the obstacle
+  obstacleStyle :: OutlineStyle
+  obstacleStyle = outlineColor obstacleColor <> lineWidth 6.0
 
-    -- All together now!
-    obstacle :: Drawing
-    obstacle
-      = positionObstacle (outlined obstacleStyle obstacleArc)
+  -- All together now!
+  obstacle :: Drawing
+  obstacle = positionObstacle (outlined obstacleStyle obstacleArc)
 
-    -- The cursor that we move
-    cursor :: Drawing
-    cursor
-      = filled
-          (fillColor (graytone 0.5))
-          (circle coordinates.x coordinates.y 10.0)
+  -- The cursor that we move
+  cursor :: Drawing
+  cursor = filled
+    (fillColor (graytone 0.5))
+    (circle coordinates.x coordinates.y 10.0)
 
 {- STATE -}
 
@@ -286,24 +252,24 @@ paint state
 -- | cursor at that moment, and the score. We need the timestamp to work out,
 -- | given a control, _how far_ the cursor needs to move per rendered frame.
 
-type State
-  = { timestamp      :: Number
-    , cursorRotation :: Number
-    , gameRotation   :: Number
-    , score          :: Int
-    }
+type State =
+  { timestamp :: Number
+  , cursorRotation :: Number
+  , gameRotation :: Number
+  , score :: Int
+  }
 
 -- | Initial state will be no great surprise to anyone. The timestamp doesn't
 -- | really matter, as we're redrawing immediately. Rotation could be any
 -- | value, so why not 0? As for the score, we'll of course start at 0.
 
 initialState :: State
-initialState
-  = { timestamp:      0.0
-    , cursorRotation: 0.0
-    , gameRotation:   0.0
-    , score:          0
-    }
+initialState =
+  { timestamp: 0.0
+  , cursorRotation: 0.0
+  , gameRotation: 0.0
+  , score: 0
+  }
 
 {- CONTROLS -}
 
@@ -323,14 +289,13 @@ keysToControls :: Set String -> Maybe Controls
 keysToControls keys
   | "ArrowLeft" `member` keys = Just Anticlockwise
   | "ArrowRight" `member` keys = Just Clockwise
-  | otherwise            = Nothing
+  | otherwise = Nothing
 
 -- | Applying the above function to the stream of pressed keys gives us a
 -- | stream of desired controls.
 
 controls :: Keyboard -> Behavior (Maybe Controls)
-controls keyboard
-  = map keysToControls (keys keyboard)
+controls keyboard = map keysToControls (keys keyboard)
 
 -- | Given that we're maybe making a move, we need to convert this move into a
 -- | "velocity". Honestly, I couldn't think of a better word for this: we're
@@ -340,8 +305,8 @@ controls keyboard
 controlToVelocity :: Maybe Controls -> Number
 controlToVelocity = case _ of
   Just Anticlockwise -> -1.0
-  Just Clockwise     ->  1.0
-  Nothing            ->  0.0
+  Just Clockwise -> 1.0
+  Nothing -> 0.0
 
 {- MAIN -}
 
@@ -355,16 +320,14 @@ controlToVelocity = case _ of
 -- | third argument is the state stream, so we can access previous state.
 
 loop :: Keyboard -> Behavior State
-loop keyboard
-  = fixB initialState (lift3 update seconds (controls keyboard))
+loop keyboard = fixB initialState (lift3 update seconds (controls keyboard))
 
 -- | Once we've got a stream of state updates, we can just apply each iteration
 -- | to the `paint` function to get each frame of our animation. `map` takes an
 -- | `a -> b` and transforms it into a `Behavior a -> Behavior b` function.
 
 renderLoop :: Keyboard -> Behavior Drawing
-renderLoop keyboard
-  = map paint (loop keyboard)
+renderLoop keyboard = map paint (loop keyboard)
 
 -- | The `main` function is our application's entry point: this is the function
 -- | that gets executed to run our javascript, so everything must stem from
@@ -398,5 +361,5 @@ getRenderNode = do
   setId "canvas" canvasElem
   void $ appendChild (Element.toNode canvasElem) (HTMLElement.toNode body)
   canvas <- maybe (throw "Could not find canvas") pure =<< getCanvasElementById "canvas"
-  _ <- setCanvasDimensions canvas { height: size, width: size}
+  _ <- setCanvasDimensions canvas { height: size, width: size }
   getContext2D canvas

@@ -14,7 +14,7 @@ import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class (class MonadEffect, liftEffect)
-import Foreign (F, Foreign, unsafeToForeign, readString)
+import Foreign (F, Foreign, readString, unsafeToForeign)
 import Halogen as H
 import Halogen.Aff as HA
 import Halogen.HTML as HH
@@ -43,7 +43,6 @@ main = do
     -- feeding queries back to our component as messages are received.
     CR.runProcess (wsProducer connection CR.$$ wsConsumer io.query)
 
-
 -- A producer coroutine that emits messages that arrive from the websocket.
 wsProducer :: WS.WebSocket -> CR.Producer String Aff Unit
 wsProducer socket = CRA.produce \emitter -> do
@@ -57,9 +56,9 @@ wsProducer socket = CRA.produce \emitter -> do
     false
     (WS.toEventTarget socket)
   where
-    readHelper :: forall a b. (Foreign -> F a) -> b -> Maybe a
-    readHelper read =
-      either (const Nothing) Just <<< runExcept <<< read <<< unsafeToForeign
+  readHelper :: forall a b. (Foreign -> F a) -> b -> Maybe a
+  readHelper read =
+    either (const Nothing) Just <<< runExcept <<< read <<< unsafeToForeign
 
 -- A consumer coroutine that takes the `query` function from our component IO
 -- record and sends `ReceiveMessage` queries in when it receives inputs from the
@@ -87,7 +86,7 @@ logComponent
    . MonadEffect anyMonad
   => H.Component Query unusedInput Message anyMonad
 logComponent = Hooks.component \rec _ -> Hooks.do
-  state /\ stateIdx <- Hooks.useState {inputText: "", messages: []}
+  state /\ stateIdx <- Hooks.useState { inputText: "", messages: [] }
   Hooks.useQuery rec.queryToken case _ of
     ReceiveMessage msg next -> do
       let incomingMessage = "Received: " <> msg
@@ -95,24 +94,24 @@ logComponent = Hooks.component \rec _ -> Hooks.do
       pure $ Just next
   Hooks.pure $
     HH.form
-    [ HE.onSubmit \ev -> Just do
-        liftEffect $ Event.preventDefault ev
-        st <- Hooks.get stateIdx
-        let outgoingMessage = st.inputText
-        Hooks.raise rec.outputToken $ OutputMessage outgoingMessage
-        Hooks.modify_ stateIdx \st' -> st'
-          { messages = st'.messages `snoc` ("Sending: " <> outgoingMessage)
-          , inputText = ""
-          }
-    ]
-    [ HH.ol_ $ map (\msg -> HH.li_ [ HH.text msg ]) state.messages
-    , HH.input
-        [ HP.type_ HP.InputText
-        , HP.value state.inputText
-        , HE.onValueInput \val -> Just do
-            Hooks.modify_ stateIdx (_ { inputText = val })
-        ]
-    , HH.button
-        [ HP.type_ HP.ButtonSubmit ]
-        [ HH.text "Send Message" ]
-    ]
+      [ HE.onSubmit \ev -> Just do
+          liftEffect $ Event.preventDefault ev
+          st <- Hooks.get stateIdx
+          let outgoingMessage = st.inputText
+          Hooks.raise rec.outputToken $ OutputMessage outgoingMessage
+          Hooks.modify_ stateIdx \st' -> st'
+            { messages = st'.messages `snoc` ("Sending: " <> outgoingMessage)
+            , inputText = ""
+            }
+      ]
+      [ HH.ol_ $ map (\msg -> HH.li_ [ HH.text msg ]) state.messages
+      , HH.input
+          [ HP.type_ HP.InputText
+          , HP.value state.inputText
+          , HE.onValueInput \val -> Just do
+              Hooks.modify_ stateIdx (_ { inputText = val })
+          ]
+      , HH.button
+          [ HP.type_ HP.ButtonSubmit ]
+          [ HH.text "Send Message" ]
+      ]

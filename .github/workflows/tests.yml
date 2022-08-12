@@ -48,3 +48,6 @@ jobs:
 
       - name: Run CI tests
         run: make testAllCI
+
+      - name: Check PureScript code is formatted
+        run: make formatCheck

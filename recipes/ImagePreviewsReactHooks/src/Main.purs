@@ -1,6 +1,7 @@
 module ImagePreviewsReactHooks.Main where
 
 import Prelude
+
 import Data.Array as Array
 import Data.Foldable as Foldable
 import Data.Maybe (Maybe(..))

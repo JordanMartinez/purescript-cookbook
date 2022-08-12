@@ -2,9 +2,9 @@ module CatGifsHalogenHooks.Main where
 
 import Prelude
 
-import Affjax.Web as AX
 import Affjax.ResponseFormat as AXRF
 import Affjax.StatusCode (StatusCode(..))
+import Affjax.Web as AX
 import CSS (block, display)
 import Data.Argonaut.Core (Json)
 import Data.Codec (decode)
@@ -75,29 +75,30 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
             HH.div_
               [ HH.text "I could not load a random cat for some reason. "
               , HH.button
-                [ HE.onClick \_ -> getNextGif
-                ]
-                [ HH.text "Try Again!" ]
+                  [ HE.onClick \_ -> getNextGif
+                  ]
+                  [ HH.text "Try Again!" ]
               ]
 
           RD.Success url ->
             HH.div_
               [ HH.button
-                [ HE.onClick \_ -> getNextGif
-                , HC.style $ display block
-                ]
-                [ HH.text "More Please!" ]
+                  [ HE.onClick \_ -> getNextGif
+                  , HC.style $ display block
+                  ]
+                  [ HH.text "More Please!" ]
               , HH.img [ HP.src url ]
               ]
       ]
 
 decodeJson :: Json -> Either JsonDecodeError { data :: { images :: { downsized :: { url :: String } } } }
-decodeJson = decode $
-  CA.object "data" $ CAR.record
-    { data: CA.object "images" $ CAR.record
-        { images: CA.object "downsized" $ CAR.record
-            { downsized: CA.object "url" $ CAR.record
-                { url: CA.string }
-            }
-        }
-    }
+decodeJson = decode
+  $ CA.object "data"
+  $ CAR.record
+      { data: CA.object "images" $ CAR.record
+          { images: CA.object "downsized" $ CAR.record
+              { downsized: CA.object "url" $ CAR.record
+                  { url: CA.string }
+              }
+          }
+      }

@@ -1,9 +1,10 @@
 module App.Production.Sync where
+
 -- Layer 1 & 2. You can split these in 2 different files if you feel the need to.
 
 import Prelude
 
-import App.Application (GetUserNameF(..), LOGGER, LoggerF(..), GET_USER_NAME, _getUserName, _logger)
+import App.Application (GET_USER_NAME, GetUserNameF(..), LOGGER, LoggerF(..), _getUserName, _logger)
 import App.Types (Name(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
@@ -25,7 +26,7 @@ runApp env = runLogger >>> runGetUserName env >>> runBaseEffect
 runLogger :: forall r. AppM (LOGGER + r) ~> AppM r
 runLogger = Run.interpret (on _logger handleLogger send)
   where
-  handleLogger :: LoggerF ~> AppM r 
+  handleLogger :: LoggerF ~> AppM r
   handleLogger (Log message a) = log message $> a
 
 runGetUserName :: forall r. Environment -> AppM (GET_USER_NAME + r) ~> AppM r

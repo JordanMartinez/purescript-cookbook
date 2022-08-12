@@ -1,9 +1,10 @@
 module HelloConcur.Main where
 
 import Prelude
-import Effect (Effect)
-import Concur.React.Run (runWidgetInDom)
+
 import Concur.React.DOM (text)
+import Concur.React.Run (runWidgetInDom)
+import Effect (Effect)
 
 main :: Effect Unit
 main = do

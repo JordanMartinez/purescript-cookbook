@@ -125,9 +125,10 @@ entireRecordCodec =
           encode :: IntBooleanString -> { key1 :: Int, key2 :: Boolean, key3 :: String }
           encode (IntBooleanString i b s) = { key1: i, key2: b, key3: s }
 
-          decode :: { key1 :: Int, key2 :: Boolean, key3 :: String }
-                 -> IntBooleanString
-          decode {key1, key2, key3} = (IntBooleanString key1 key2 key3)
+          decode
+            :: { key1 :: Int, key2 :: Boolean, key3 :: String }
+            -> IntBooleanString
+          decode { key1, key2, key3 } = (IntBooleanString key1 key2 key3)
 
         dimap encode decode $ CAR.object "productTypesWithLabels"
           { key1: CA.int
@@ -136,41 +137,41 @@ entireRecordCodec =
           }
     }
   where
-    sumTypesNoTags :: JsonCodec (Array (Maybe Int))
-    sumTypesNoTags = basicCodec decodeArray encodeArray
-      where
-        encodeArray :: Array (Maybe Int) -> Json
-        encodeArray arrayMaybeInt = do
-          let arrayOfString = arrayMaybeInt <#> case _ of
-                Nothing -> "Nothing"
-                Just i -> "Just " <> show i
-          encode (CA.array CA.string) arrayOfString
+  sumTypesNoTags :: JsonCodec (Array (Maybe Int))
+  sumTypesNoTags = basicCodec decodeArray encodeArray
+    where
+    encodeArray :: Array (Maybe Int) -> Json
+    encodeArray arrayMaybeInt = do
+      let
+        arrayOfString = arrayMaybeInt <#> case _ of
+          Nothing -> "Nothing"
+          Just i -> "Just " <> show i
+      encode (CA.array CA.string) arrayOfString
 
-        lmapFlipped :: forall f a b c. Bifunctor f => f a c -> (a -> b) -> f b c
-        lmapFlipped = flip lmap
+    lmapFlipped :: forall f a b c. Bifunctor f => f a c -> (a -> b) -> f b c
+    lmapFlipped = flip lmap
 
-        decodeArray :: Json -> Either JsonDecodeError (Array (Maybe Int))
-        decodeArray jsonArray = do
-          arrayOfJson <- decode (CA.array CA.json) jsonArray
-          forWithIndex arrayOfJson \idx jsonValue -> do
-            decodeValue jsonValue `lmapFlipped` \lowerLevelError ->
-              Named "decodeArray" $ Named "forWithIndex" $ AtIndex idx lowerLevelError
+    decodeArray :: Json -> Either JsonDecodeError (Array (Maybe Int))
+    decodeArray jsonArray = do
+      arrayOfJson <- decode (CA.array CA.json) jsonArray
+      forWithIndex arrayOfJson \idx jsonValue -> do
+        decodeValue jsonValue `lmapFlipped` \lowerLevelError ->
+          Named "decodeArray" $ Named "forWithIndex" $ AtIndex idx lowerLevelError
 
-        decodeValue :: Json -> Either JsonDecodeError (Maybe Int)
-        decodeValue jsonValue = do
-          str <- decode CA.string jsonValue
-          case str of
-            "Nothing" -> pure Nothing
-            somethingElse -> case splitAt 5 somethingElse of
-              { before: "Just ", after: intValue } ->
-                case Int.fromString intValue of
-                  Nothing -> Left $ TypeMismatch $
-                              "Expected 'Just <int>', \
-                              \but got 'Just " <> intValue <> "'"
-                  justI -> pure justI
-              _ ->
-                Left $ UnexpectedValue jsonValue
-
+    decodeValue :: Json -> Either JsonDecodeError (Maybe Int)
+    decodeValue jsonValue = do
+      str <- decode CA.string jsonValue
+      case str of
+        "Nothing" -> pure Nothing
+        somethingElse -> case splitAt 5 somethingElse of
+          { before: "Just ", after: intValue } ->
+            case Int.fromString intValue of
+              Nothing -> Left $ TypeMismatch $
+                "Expected 'Just <int>', \
+                \but got 'Just " <> intValue <> "'"
+              justI -> pure justI
+          _ ->
+            Left $ UnexpectedValue jsonValue
 
 exampleValue :: EntireRecord
 exampleValue =
@@ -178,7 +179,7 @@ exampleValue =
   , boolean: true
   , int: 4
   , number: 42.0
-  , array: ["elem 1", "elem 2", "elem 3"]
+  , array: [ "elem 1", "elem 2", "elem 3" ]
   , record: { foo: "bar", baz: 8 }
   , sumTypesNoTags: [ Nothing, Just 1 ]
   , sumTypeWithTags: [ Nothing, Just 1 ]
