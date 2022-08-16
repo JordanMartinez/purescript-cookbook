@@ -7,31 +7,36 @@ import Data.Foldable as Foldable
 import Data.Maybe (Maybe(..))
 import Data.String as String
 import Effect (Effect)
-import Effect.Exception as Exception
+import Effect.Exception (throw)
 import React.Basic (JSX)
-import React.Basic as R
-import React.Basic.DOM as R
+import React.Basic (fragment) as R
+import React.Basic.DOM (a, h1_, header_, li_, nav_, p_, text, ul_) as R
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.Hooks (Component, (/\))
 import React.Basic.Hooks as React
 import Routing.Hash as Hash
 import Routing.Match (Match)
 import Routing.Match as Match
+import Web.DOM.NonElementParentNode (getElementById)
+import Web.HTML (window)
 import Web.HTML as HTML
-import Web.HTML.HTMLDocument as HTMLDocument
-import Web.HTML.HTMLElement as HTMLElement
+import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.Location as Location
+import Web.HTML.Window (document)
 import Web.HTML.Window as Window
 
 main :: Effect Unit
 main = do
-  maybeBody <- HTMLDocument.body =<< Window.document =<< HTML.window
-  case maybeBody of
-    Nothing -> Exception.throw "Could not find body."
-    Just body -> do
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
       app <- mkApp
-      R.render (app unit) (HTMLElement.toElement body)
+      renderRoot reactRoot (app {})
 
-mkApp :: Component Unit
+mkApp :: Component {}
 mkApp = do
   postIndex <- mkPostIndex
   post <- mkPost
@@ -79,15 +84,14 @@ mkPostIndex =
     pure (R.ul_ postLinks)
   where
   postLinks =
-    Array.range 1 10
-      <#> \n ->
-        R.li_
-          [ R.a
-              { href: "#/posts/" <> show n
-              , children:
-                  [ R.text ("Post " <> show n) ]
-              }
-          ]
+    Array.range 1 10 <#> \n ->
+      R.li_
+        [ R.a
+            { href: "#/posts/" <> show n
+            , children:
+                [ R.text ("Post " <> show n) ]
+            }
+        ]
 
 mkPost :: Component Int
 mkPost =

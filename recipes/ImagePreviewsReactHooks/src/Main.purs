@@ -8,37 +8,41 @@ import Data.Maybe (Maybe(..))
 import Data.Nullable as Nullable
 import Data.Traversable as Traversable
 import Effect (Effect)
-import Effect.Exception as Exception
+import Effect.Exception (throw)
 import React.Basic.DOM as R
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.DOM.Events as DOM.Events
 import React.Basic.Events (SyntheticEvent)
 import React.Basic.Events as Events
 import React.Basic.Hooks (Component, (/\))
 import React.Basic.Hooks as React
 import Unsafe.Coerce as Coerce
+import Web.DOM.NonElementParentNode (getElementById)
 import Web.File.File as File
 import Web.File.FileList (FileList)
 import Web.File.FileList as FileList
 import Web.File.Url as Url
-import Web.HTML as HTML
+import Web.HTML (window)
 import Web.HTML.Event.DataTransfer as DataTransfer
 import Web.HTML.Event.DragEvent (DragEvent)
 import Web.HTML.Event.DragEvent as DragEvent
-import Web.HTML.HTMLDocument as HTMLDocument
+import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.HTMLElement as HTMLElement
 import Web.HTML.HTMLInputElement as HTMLInputElement
-import Web.HTML.Window as Window
+import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  maybeBody <- HTMLDocument.body =<< Window.document =<< HTML.window
-  case maybeBody of
-    Nothing -> Exception.throw "Could not find body."
-    Just body -> do
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
       app <- mkApp
-      R.render (app unit) (HTMLElement.toElement body)
+      renderRoot reactRoot (app {})
 
-mkApp :: Component Unit
+mkApp :: Component {}
 mkApp = do
   image <- mkImage
   React.component "App" \_ -> React.do
@@ -89,8 +93,7 @@ mkApp = do
         , onDrop:
             Events.handler DOM.Events.preventDefault \e -> do
               setHover false
-              let
-                maybeFileList = DataTransfer.files (DragEvent.dataTransfer (toDragEvent e))
+              let maybeFileList = DataTransfer.files (DragEvent.dataTransfer (toDragEvent e))
               handleFiles maybeFileList
         , children:
             [ R.button
@@ -139,8 +142,7 @@ mkImage = do
         , children:
             [ R.img
                 { src: url
-                , style:
-                    R.css { inlineSize: "100%" }
+                , style: R.css { inlineSize: "100%" }
                 }
             ]
         }

@@ -5,25 +5,28 @@ import Prelude
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
-import React.Basic.DOM (render, text)
+import React.Basic.DOM (text)
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.DOM.SVG as R
 import React.Basic.Hooks (Component, component)
+import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (body)
-import Web.HTML.HTMLElement (toElement)
+import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  body <- body =<< document =<< window
-  case body of
-    Nothing -> throw "Could not find body."
-    Just b -> do
-      shapesComponent <- mkShapesComponent
-      render (shapesComponent unit) (toElement b)
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
+      app <- mkApp
+      renderRoot reactRoot (app {})
 
-mkShapesComponent :: Component Unit
-mkShapesComponent = do
+mkApp :: Component {}
+mkApp =
   component "ShapesComponent" \_ -> React.do
     pure
       $ R.svg

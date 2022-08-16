@@ -15,25 +15,27 @@ import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Show.Generic (genericShow)
 import Effect (Effect)
 import Effect.Exception (throw)
-import React.Basic.DOM (CSS, css, render)
+import React.Basic.DOM (CSS, css)
 import React.Basic.DOM as R
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.Events (EventHandler, handler_)
 import React.Basic.Hooks (Component, JSX, Reducer, component, keyed, mkReducer, useReducer, (/\))
 import React.Basic.Hooks as React
+import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
-import Web.HTML.HTMLDocument (body)
-import Web.HTML.HTMLElement (toElement)
+import Web.HTML.HTMLDocument (toNonElementParentNode)
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  body <- body =<< document =<< window
-  case body of
-    Nothing -> throw "Could not find body."
-    Just b -> do
-      game <- mkGame
-      render (game unit) (toElement b)
-      mempty
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
+      app <- mkApp
+      renderRoot reactRoot (app {})
 
 mkSquare :: Component { onClick :: EventHandler, value :: Square }
 mkSquare =
@@ -71,8 +73,7 @@ mkBoard
 mkBoard = do
   square <- mkSquare
   component "Board" \props -> React.do
-    let
-      renderSquare i j = square { value: props.squares i j, onClick: props.onClick i j }
+    let renderSquare i j = square { value: props.squares i j, onClick: props.onClick i j }
     pure
       $ R.div_
           [ R.div
@@ -142,8 +143,8 @@ initialState =
   , xIsNext: true
   }
 
-mkGame :: Component Unit
-mkGame = do
+mkApp :: Component {}
+mkApp = do
   board <- mkBoard
   reducer <- reducerFn
   component "Game" \_ -> React.do
@@ -168,7 +169,9 @@ mkGame = do
       moves :: Array JSX
       moves =
         renderMove "Go to start" 0
-          : Array.mapWithIndex (\i _ -> renderMove ("Go to move #" <> show (i + 1)) (i + 1)) (NonEmpty.tail state.history)
+          : Array.mapWithIndex
+              (\i _ -> renderMove ("Go to move #" <> show (i + 1)) (i + 1))
+              (NonEmpty.tail state.history)
 
       status :: String
       status = case calculateWinner current of
@@ -222,13 +225,7 @@ calculateWinner f =
 
 -- These styles could be provided by a proper stylesheet, we are only
 -- defining them here for the sake of compatibility with TryPureScript
-styles
-  :: { list :: CSS
-     , boardRow :: CSS
-     , square :: CSS
-     , game :: CSS
-     , gameInfo :: CSS
-     }
+styles :: { list :: CSS, boardRow :: CSS, square :: CSS, game :: CSS, gameInfo :: CSS }
 styles =
   { list:
       css

@@ -13,6 +13,7 @@
   , "react-basic-hooks"
   , "routing"
   , "transformers"
+  , "web-dom"
   , "web-html"
   ]
 , packages = ../../packages.dhall

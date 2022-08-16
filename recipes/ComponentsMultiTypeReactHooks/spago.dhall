@@ -8,6 +8,7 @@
   , "react-basic-dom"
   , "react-basic-hooks"
   , "tuples"
+  , "web-dom"
   , "web-html"
   ]
 , packages = ../../packages.dhall

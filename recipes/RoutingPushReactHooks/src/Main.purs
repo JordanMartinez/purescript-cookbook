@@ -9,12 +9,13 @@ import Data.Foldable as Foldable
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Class as Effect.Class
-import Effect.Exception as Exception
+import Effect.Exception (throw)
 import Foreign as Foreign
 import Partial.Unsafe as Partial.Unsafe
 import React.Basic (JSX, ReactContext)
 import React.Basic as React.Basic
 import React.Basic.DOM as R
+import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.DOM.Events as DOM.Events
 import React.Basic.Events as Events
 import React.Basic.Hooks (Hook, Render, UseContext, (/\))
@@ -23,23 +24,23 @@ import Routing.Match (Match)
 import Routing.Match as Match
 import Routing.PushState (PushStateInterface)
 import Routing.PushState as PushState
-import Web.HTML as HTML
-import Web.HTML.HTMLDocument as HTMLDocument
-import Web.HTML.HTMLElement as HTMLElement
-import Web.HTML.Window as Window
+import Web.DOM.NonElementParentNode (getElementById)
+import Web.HTML (window)
+import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  maybeBody <- HTMLDocument.body =<< Window.document =<< HTML.window
-  case maybeBody of
-    Nothing -> Exception.throw "Could not find body."
-    Just body -> do
+  doc <- document =<< window
+  root <- getElementById "root" $ toNonElementParentNode doc
+  case root of
+    Nothing -> throw "Could not find root."
+    Just container -> do
+      reactRoot <- createRoot container
       routerContext <- mkRouterContext
       routerProvider <- Reader.runReaderT mkRouterProvider routerContext
       app <- Reader.runReaderT mkApp routerContext
-      R.render
-        (routerProvider [ app unit ])
-        (HTMLElement.toElement body)
+      renderRoot reactRoot (routerProvider [ app {} ])
 
 -- | Note that we are not using `React.Basic.Hooks.Component` here, replacing it
 -- | instead with a very similar type, that has some extra "environment"
@@ -56,7 +57,7 @@ component
   -> Component props
 component name render = ReaderT \_ -> React.component name render
 
-mkApp :: Component Unit
+mkApp :: Component {}
 mkApp = do
   routerContext <- Reader.ask
   postIndex <- mkPostIndex
@@ -99,15 +100,14 @@ mkPostIndex = do
   component "PostIndex" \_ ->
     pure do
       R.ul_
-        ( Array.range 1 10
-            <#> \n ->
-              R.li_
-                [ link
-                    { to: "/posts/" <> show n
-                    , children:
-                        [ R.text ("Post " <> show n) ]
-                    }
-                ]
+        ( Array.range 1 10 <#> \n ->
+            R.li_
+              [ link
+                  { to: "/posts/" <> show n
+                  , children:
+                      [ R.text ("Post " <> show n) ]
+                  }
+              ]
         )
 
 mkPost :: Component Int
@@ -203,13 +203,11 @@ mkRouterProvider = do
   routerContext <- Reader.ask
   nav <- Effect.Class.liftEffect PushState.makeInterface
   component "Router" \children -> React.do
-    let
-      routerProvider = React.Basic.provider routerContext
+    let routerProvider = React.Basic.provider routerContext
     route /\ setRoute <- React.useState' (Just Home)
     React.useEffectOnce do
-      nav
-        # PushState.matches appRoute \_ newRoute -> do
-            setRoute newRoute
+      nav # PushState.matches appRoute \_ newRoute -> do
+        setRoute newRoute
     pure (routerProvider (Just { nav, route }) children)
 
 mkLink :: Component { to :: String, children :: Array JSX }
@@ -221,9 +219,7 @@ mkLink = do
       R.a
         { href: to
         , onClick:
-            Events.handler
-              DOM.Events.preventDefault
-              \_ -> do
-                nav.pushState (Foreign.unsafeToForeign unit) to
+            Events.handler DOM.Events.preventDefault \_ -> do
+              nav.pushState (Foreign.unsafeToForeign unit) to
         , children
         }
