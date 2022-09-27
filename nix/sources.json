@@ -1,0 +1,26 @@
+{
+    "easy-purescript-nix": {
+        "branch": "master",
+        "description": "Easy PureScript (and other tools) with Nix",
+        "homepage": "",
+        "owner": "justinwoo",
+        "repo": "easy-purescript-nix",
+        "rev": "ee51a6d459b8fecfcb10f24ca9728e649c6a9e00",
+        "sha256": "1w4k6mcayyg6388na0cca5qx94sm99xn3na26x2w34jlyz3bwl3m",
+        "type": "tarball",
+        "url": "https://github.com/justinwoo/easy-purescript-nix/archive/ee51a6d459b8fecfcb10f24ca9728e649c6a9e00.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "nixos-22.05",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "72783a2d0dbbf030bff1537873dd5b85b3fb332f",
+        "sha256": "1xggh6cim9kxl7nr6fwmsxzqqlnazyddak30xcd4api3f9g3slnz",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/72783a2d0dbbf030bff1537873dd5b85b3fb332f.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
