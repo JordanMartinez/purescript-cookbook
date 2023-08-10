@@ -4,6 +4,7 @@
   , "affjax"
   , "affjax-web"
   , "argonaut-codecs"
+  , "bifunctors"
   , "effect"
   , "either"
   , "exceptions"
