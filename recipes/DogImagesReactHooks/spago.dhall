@@ -1,4 +1,4 @@
-{ name = "CatGifsReactHooks"
+{ name = "DogImagesReactHooks"
 , dependencies =
   [ "aff"
   , "affjax"
@@ -17,5 +17,5 @@
   , "web-html"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/CatGifsReactHooks/src/**/*.purs" ]
+, sources = [ "recipes/DogImagesReactHooks/src/**/*.purs" ]
 }

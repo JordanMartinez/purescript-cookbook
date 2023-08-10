@@ -1,4 +1,4 @@
-module CatGifsReactHooks.Main where
+module DogImagesReactHooks.Main where
 
 import Prelude
 
@@ -11,7 +11,6 @@ import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Exception (throw)
-import React.Basic.DOM (css)
 import React.Basic.DOM as R
 import React.Basic.DOM.Client (createRoot, renderRoot)
 import React.Basic.Events (handler_)
@@ -37,7 +36,7 @@ main = do
 
 mkApp :: Component {}
 mkApp = do
-  component "CatGifs" \_ -> React.do
+  component "DogImages" \_ -> React.do
     resetToken /\ reset <- useResetToken
     response <- useAff resetToken getRandomCatGif
 
@@ -46,12 +45,12 @@ mkApp = do
 
     pure
       $ R.div_
-          [ R.h2_ [ R.text "Random Cats" ]
+          [ R.h2_ [ R.text "Random Dogs" ]
           , case response of
               Nothing -> R.text "Loading..."
               Just (Left reason) ->
                 R.div_
-                  [ R.text "I could not load a random cat for some reason."
+                  [ R.text "I could not load a random dog for some reason."
                   , R.pre_ [ R.text reason ]
                   , R.button { onClick, children: [ R.text "Try Again!" ] }
                   ]
@@ -59,10 +58,10 @@ mkApp = do
                 R.div_
                   [ R.button
                       { onClick
-                      , style: css { display: "block" }
+                      , style: R.css { display: "block", marginBlock: "1rem" }
                       , children: [ R.text "More Please!" ]
                       }
-                  , R.img { src: url }
+                  , R.img { style: R.css { maxWidth: 400 }, src: url }
                   ]
           ]
 
