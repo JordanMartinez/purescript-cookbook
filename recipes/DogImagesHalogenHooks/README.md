@@ -1,6 +1,6 @@
 # CatGifsHalogenHooks
 
-A Halogen port of the (now defunct) ["HTTP - Cat GIFs" Elm Example](https://elm-lang.org/examples/cat-gifs), refactored to use the [Dog API](https://dog.ceo/dog-api/).
+Fetches random dog images from the [Dog API](https://dog.ceo/dog-api/).
 
 ## Expected Behavior:
 
