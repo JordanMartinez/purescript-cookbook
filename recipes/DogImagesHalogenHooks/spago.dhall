@@ -1,4 +1,4 @@
-{ name = "CatGifsHalogenHooks"
+{ name = "DogImagesHalogenHooks"
 , dependencies =
   [ "aff"
   , "affjax"
@@ -19,5 +19,5 @@
   , "tuples"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/CatGifsHalogenHooks/src/**/*.purs" ]
+, sources = [ "recipes/DogImagesHalogenHooks/src/**/*.purs" ]
 }

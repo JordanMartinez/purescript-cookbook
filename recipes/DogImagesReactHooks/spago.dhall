@@ -1,9 +1,10 @@
-{ name = "CatGifsReactHooks"
+{ name = "DogImagesReactHooks"
 , dependencies =
   [ "aff"
   , "affjax"
   , "affjax-web"
   , "argonaut-codecs"
+  , "bifunctors"
   , "effect"
   , "either"
   , "exceptions"
@@ -16,5 +17,5 @@
   , "web-html"
   ]
 , packages = ../../packages.dhall
-, sources = [ "recipes/CatGifsReactHooks/src/**/*.purs" ]
+, sources = [ "recipes/DogImagesReactHooks/src/**/*.purs" ]
 }

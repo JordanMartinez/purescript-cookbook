@@ -1,11 +1,11 @@
-module CatGifsHalogenHooks.Main where
+module DogImagesHalogenHooks.Main where
 
 import Prelude
 
 import Affjax.ResponseFormat as AXRF
 import Affjax.StatusCode (StatusCode(..))
 import Affjax.Web as AX
-import CSS (block, display)
+import CSS (block, display, marginBottom, maxWidth, px, rem)
 import Data.Argonaut.Core (Json)
 import Data.Codec (decode)
 import Data.Codec.Argonaut (JsonDecodeError)
@@ -41,10 +41,10 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
   content /\ contentIdx <- Hooks.useState RD.NotAsked
 
   let
-    getNextGif = do
+    getNextImage = do
       Hooks.put contentIdx RD.Loading
       errorOrResponse <- liftAff $ AX.request $ AX.defaultRequest
-        { url = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cat"
+        { url = "https://dog.ceo/api/breeds/image/random"
         , method = Left GET
         , responseFormat = AXRF.json
         }
@@ -52,7 +52,7 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
         httpResult = case errorOrResponse of
           Right jsonRec | jsonRec.status == StatusCode 200 ->
             case decodeJson jsonRec.body of
-              Right rec -> RD.Success rec.data.images.downsized.url
+              Right rec -> RD.Success rec.message
               _ -> RD.Failure "decode error"
           _ ->
             RD.Failure "http error"
@@ -60,45 +60,47 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
       Hooks.put contentIdx httpResult
 
   Hooks.useLifecycleEffect do
-    getNextGif
+    getNextImage
     pure Nothing
 
   Hooks.pure $
     HH.div_
-      [ HH.h2_ [ HH.text "Random Cats" ]
+      [ HH.h2_ [ HH.text "Random Dogs" ]
       , case content of
           RD.NotAsked ->
             HH.text "Loading page..."
           RD.Loading ->
             HH.text "Loading..."
-          RD.Failure _ ->
+          RD.Failure reason ->
             HH.div_
-              [ HH.text "I could not load a random cat for some reason. "
+              [ HH.text "I could not load a random dog for some reason. "
+              , HH.pre_ [ HH.text reason ]
               , HH.button
-                  [ HE.onClick \_ -> getNextGif
-                  ]
+                  [ HE.onClick \_ -> getNextImage ]
                   [ HH.text "Try Again!" ]
               ]
 
           RD.Success url ->
             HH.div_
               [ HH.button
-                  [ HE.onClick \_ -> getNextGif
-                  , HC.style $ display block
+                  [ HE.onClick \_ -> getNextImage
+                  , HC.style do
+                      display block
+                      marginBottom (1.0 # rem)
                   ]
                   [ HH.text "More Please!" ]
-              , HH.img [ HP.src url ]
+              , HH.img
+                  [ HP.src url
+                  , HC.style do
+                      maxWidth (400.0 # px)
+                  ]
               ]
       ]
 
-decodeJson :: Json -> Either JsonDecodeError { data :: { images :: { downsized :: { url :: String } } } }
+decodeJson :: Json -> Either JsonDecodeError { message :: String, status :: String }
 decodeJson = decode
-  $ CA.object "data"
+  $ CA.object "response"
   $ CAR.record
-      { data: CA.object "images" $ CAR.record
-          { images: CA.object "downsized" $ CAR.record
-              { downsized: CA.object "url" $ CAR.record
-                  { url: CA.string }
-              }
-          }
+      { message: CA.string
+      , status: CA.string
       }
