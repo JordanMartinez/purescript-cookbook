@@ -1,6 +1,14 @@
 { name = "RoutingPushHalogenClassic"
 , dependencies =
-  [ "console", "effect", "halogen", "psci-support", "routing" ]
+  [ "aff"
+  , "console"
+  , "effect"
+  , "foldable-traversable"
+  , "halogen"
+  , "maybe"
+  , "prelude"
+  , "routing"
+  ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/RoutingPushHalogenClassic/src/**/*.purs" ]
 }

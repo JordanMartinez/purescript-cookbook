@@ -26,4 +26,4 @@ main =
           nav
             # matches myRoute \oldRoute newRoute -> do
                 log $ show oldRoute <> " -> " <> show newRoute
-                launchAff_ $ halogenIO.query $ H.tell $ Nav newRoute
+                launchAff_ $ void $ halogenIO.query $ H.mkTell $ Nav newRoute

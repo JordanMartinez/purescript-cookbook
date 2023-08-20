@@ -140,6 +140,7 @@ Running a web-compatible recipe:
 |   | :heavy_check_mark: | [RoutingHashHalogenClassic](recipes/RoutingHashHalogenClassic) | This recipe shows how to use `purescript-routing` to do client-side hash-based routing in a Halogen-based single-page application (SPA). |
 |   | :heavy_check_mark: | [RoutingHashLog](recipes/RoutingHashLog) | This recipe demonstrates hash-based routing with `purescript-routing`. No web framework is used. |
 |   | :heavy_check_mark: | [RoutingHashReactHooks](recipes/RoutingHashReactHooks) | This recipe shows how to use `purescript-routing` to do client-side hash-based routing in a React-based single-page application (SPA). |
+|   | :heavy_check_mark: | [RoutingPushHalogenClassic](recipes/RoutingPushHalogenClassic) | This recipe shows how to use `purescript-routing` to do client-side push-state routing in a Halogen-based single-page application (SPA). |
 |   | :heavy_check_mark: | [RoutingPushReactHooks](recipes/RoutingPushReactHooks) | This recipe shows how to use `purescript-routing` to do client-side push-state routing in a React-based single-page application (SPA). |
 | :heavy_check_mark: |   | [RunCapabilityPatternNode](recipes/RunCapabilityPatternNode) | A skeletal version of an application structuring pattern using purescript-run and free dsls. |
 |   | :heavy_check_mark: ([try](https://try.purescript.org/?github=/JordanMartinez/purescript-cookbook/master/recipes/ShapesHalogenHooks/src/Main.purs)) | [ShapesHalogenHooks](recipes/ShapesHalogenHooks) | Demonstrates rendering of SVG shapes. |
