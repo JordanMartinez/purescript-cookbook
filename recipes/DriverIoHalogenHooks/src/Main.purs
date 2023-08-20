@@ -2,7 +2,6 @@ module DriverIoHalogenHooks.Main where
 
 import Prelude
 
-import Control.Coroutine as CR
 import Data.Maybe (Maybe(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
@@ -14,6 +13,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Hooks as Hooks
+import Halogen.Subscription as HS
 import Halogen.VDom.Driver (runUI)
 
 main :: Effect Unit
@@ -21,16 +21,16 @@ main = HA.runHalogenAff do
   body <- HA.awaitBody
   io <- runUI buttonComponent unit body
 
-  io.subscribe $ CR.consumer \(Toggled newState) -> do
+  _ <- liftEffect $ HS.subscribe io.messages \(Toggled newState) -> do
     liftEffect $ log $ "Button was internally toggled to: " <> show newState
     pure Nothing
 
-  state0 <- io.query $ H.request IsOn
+  state0 <- io.query $ H.mkRequest IsOn
   liftEffect $ log $ "The button state is currently: " <> show state0
 
-  void $ io.query $ H.tell (SetState true)
+  void $ io.query $ H.mkTell (SetState true)
 
-  state1 <- io.query $ H.request IsOn
+  state1 <- io.query $ H.mkRequest IsOn
   liftEffect $ log $ "The button state is now: " <> show state1
 
 data ButtonQuery a
@@ -55,7 +55,7 @@ buttonComponent = Hooks.component \rec _ -> Hooks.do
   Hooks.pure $
     HH.button
       [ HP.title label
-      , HE.onClick \_ -> Just do
+      , HE.onClick \_ -> do
           newState <- Hooks.modify enabledIdx not
           Hooks.raise rec.outputToken $ Toggled newState
       ]
