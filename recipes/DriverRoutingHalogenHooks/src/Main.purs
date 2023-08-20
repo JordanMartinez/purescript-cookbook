@@ -53,7 +53,7 @@ hashChangeConsumer
   -> CR.Consumer HCE.HashChangeEvent Aff Unit
 hashChangeConsumer query = CR.consumer \event -> do
   let hash = Str.drop 1 $ Str.dropWhile (_ /= '#') $ HCE.newURL event
-  void $ query $ H.tell $ ChangeRoute hash
+  void $ query $ H.mkTell $ ChangeRoute hash
   pure Nothing
 
 data Query a = ChangeRoute String a
