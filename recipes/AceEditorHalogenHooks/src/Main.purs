@@ -8,7 +8,6 @@ import Ace.EditSession as Session
 import Ace.Editor as Editor
 import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..))
-import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Aff.Class (class MonadAff)
@@ -19,8 +18,9 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Hooks as Hooks
-import Halogen.Query.EventSource as ES
+import Halogen.Subscription as HS
 import Halogen.VDom.Driver (runUI)
+import Type.Proxy (Proxy(..))
 
 main :: Effect Unit
 main =
@@ -28,7 +28,7 @@ main =
     body <- HA.awaitBody
     void $ runUI containerComponent unit body
 
-_ace = SProxy :: SProxy "ace"
+_ace = Proxy :: Proxy "ace"
 
 containerComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
@@ -43,14 +43,14 @@ containerComponent = Hooks.component \rec _ -> Hooks.do
       , HH.div_
           [ HH.p_
               [ HH.button
-                  [ HE.onClick \_ -> Just do
-                      void $ Hooks.query rec.slotToken _ace unit $ H.tell (ChangeText "")
+                  [ HE.onClick \_ -> do
+                      void $ Hooks.tell rec.slotToken _ace unit (ChangeText "")
                   ]
                   [ HH.text "Clear" ]
               ]
           ]
       , HH.div_
-          [ HH.slot _ace unit aceComponent unit \(TextChanged t) -> Just do
+          [ HH.slot _ace unit aceComponent unit \(TextChanged t) -> do
               Hooks.put msgIdx t
           ]
       , HH.p_
@@ -73,18 +73,19 @@ aceComponent
    . MonadAff anyMonad
   => H.Component AceQuery unusedInput AceOutput anyMonad
 aceComponent = Hooks.component \rec _ -> Hooks.do
-  state /\ stateIdx <- Hooks.useState (Nothing :: Maybe Editor)
+  _state /\ stateIdx <- Hooks.useState (Nothing :: Maybe Editor)
   Hooks.useLifecycleEffect do
     Hooks.getHTMLElementRef aceElemLabel >>= traverse_ \element -> do
       editor <- liftEffect $ Ace.editNode element Ace.ace
       session <- liftEffect $ Editor.getSession editor
       Hooks.put stateIdx $ Just editor
-      void $ Hooks.subscribe $ ES.effectEventSource \emitter -> do
-        Session.onChange session \_ -> ES.emit emitter do
+      { emitter, listener } <- H.liftEffect HS.create
+      void $ Hooks.subscribe emitter
+      H.liftEffect $ Session.onChange session \_ ->
+        HS.notify listener do
           Hooks.get stateIdx >>= traverse_ \editor' -> do
             text <- liftEffect (Editor.getValue editor')
             Hooks.raise rec.outputToken $ TextChanged text
-        pure mempty
     pure $ Just do
       Hooks.put stateIdx Nothing
 

@@ -87,6 +87,7 @@ Running a web-compatible recipe:
 
 | Node | Web Browser | Recipe | Description |
 | :-: | :-: | - | - |
+|   | :heavy_check_mark: ([try](https://try.purescript.org/?github=/JordanMartinez/purescript-cookbook/master/recipes/AceEditorHalogenHooks/src/Main.purs)) | [AceEditorHalogenHooks](recipes/AceEditorHalogenHooks) | A Halogen Hooks port of the ["Ace Editor" Halogen Example](https://github.com/purescript-halogen/purescript-halogen/tree/master/examples/ace). |
 |   | :heavy_check_mark: ([try](https://try.purescript.org/?github=/JordanMartinez/purescript-cookbook/master/recipes/AddRemoveEventListenerJs/src/Main.purs) - [fixme](recipes/AddRemoveEventListenerJs/tryFixMe.md)) | [AddRemoveEventListenerJs](recipes/AddRemoveEventListenerJs) | This recipe shows how to add and remove an event listener to an HTML element. |
 | :heavy_check_mark: |   | [AffjaxPostNode](recipes/AffjaxPostNode) | Performs a simple HTTP Post request using the [Affjax](https://pursuit.purescript.org/packages/purescript-affjax/) library. |
 |   | :heavy_check_mark: ([try](https://try.purescript.org/?github=/JordanMartinez/purescript-cookbook/master/recipes/BasicHalogenHooks/src/Main.purs)) | [BasicHalogenHooks](recipes/BasicHalogenHooks) | Displays a button that toggles the label to "On" and "Off". |
