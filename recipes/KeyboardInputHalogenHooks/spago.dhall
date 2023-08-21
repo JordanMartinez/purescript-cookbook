@@ -1,9 +1,16 @@
 { name = "KeyboardInputHalogenHooks"
 , dependencies =
-  [ "console"
+  [ "aff"
   , "effect"
+  , "halogen"
   , "halogen-hooks"
-  , "psci-support"
+  , "maybe"
+  , "prelude"
+  , "strings"
+  , "tuples"
+  , "web-events"
+  , "web-html"
+  , "web-uievents"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/KeyboardInputHalogenHooks/src/**/*.purs" ]

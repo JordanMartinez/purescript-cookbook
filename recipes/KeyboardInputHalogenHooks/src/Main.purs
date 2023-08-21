@@ -12,7 +12,7 @@ import Halogen as H
 import Halogen.Aff as HA
 import Halogen.HTML as HH
 import Halogen.Hooks as Hooks
-import Halogen.Query.EventSource as ES
+import Halogen.Query.Event as HE
 import Halogen.VDom.Driver (runUI)
 import Web.Event.Event as E
 import Web.HTML (window) as Web
@@ -30,14 +30,14 @@ component
   :: forall unusedInput unusedQuery unusedOutput anyMonad
    . MonadAff anyMonad
   => H.Component unusedQuery unusedInput unusedOutput anyMonad
-component = Hooks.component \rec _ -> Hooks.do
+component = Hooks.component \_ _ -> Hooks.do
   chars /\ charsIdx <- Hooks.useState ""
   Hooks.useLifecycleEffect do
     document <- liftEffect $ Web.document =<< Web.window
     let target = HTMLDocument.toEventTarget document
     Hooks.subscribe' \sid -> do
       let
-        handleKey subId keyEvent
+        handleKey _subId keyEvent
           | KE.shiftKey keyEvent = do
               liftEffect $ E.preventDefault (KE.toEvent keyEvent)
               let char = KE.key keyEvent
@@ -50,7 +50,7 @@ component = Hooks.component \rec _ -> Hooks.do
           | otherwise = do
               pure unit
 
-      ES.eventListenerEventSource KET.keyup target \e ->
+      HE.eventListener KET.keyup target \e ->
         handleKey sid <$> KE.fromEvent e
 
     pure Nothing
