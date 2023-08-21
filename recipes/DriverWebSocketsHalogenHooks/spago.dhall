@@ -1,10 +1,18 @@
 { name = "DriverWebSocketsHalogenHooks"
 , dependencies =
-  [ "console"
+  [ "aff"
+  , "arrays"
   , "effect"
+  , "either"
+  , "foreign"
+  , "halogen"
   , "halogen-hooks"
-  , "psci-support"
-  , "aff-coroutines"
+  , "halogen-subscriptions"
+  , "maybe"
+  , "prelude"
+  , "transformers"
+  , "tuples"
+  , "web-events"
   , "web-socket"
   ]
 , packages = ../../packages.dhall
