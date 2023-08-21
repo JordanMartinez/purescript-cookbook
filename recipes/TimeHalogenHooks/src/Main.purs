@@ -12,20 +12,18 @@ import Effect (Effect)
 import Effect.Aff (Milliseconds(..), error)
 import Effect.Aff as Aff
 import Effect.Aff.Class (class MonadAff)
-import Halogen (liftEffect)
 import Halogen as H
 import Halogen.Aff as HA
 import Halogen.HTML as HH
 import Halogen.Hooks as Hooks
-import Halogen.Query.EventSource (affEventSource)
-import Halogen.Query.EventSource as EventSource
+import Halogen.Subscription as HS
 import Halogen.VDom.Driver (runUI)
 
 main :: Effect Unit
 main =
   HA.runHalogenAff do
     body <- HA.awaitBody
-    void $ runUI hookComponent Nothing body
+    void $ runUI hookComponent unit body
 
 hookComponent
   :: forall unusedQuery unusedInput unusedOutput anyMonad
@@ -36,27 +34,26 @@ hookComponent = Hooks.component \_ _ -> Hooks.do
     { hour: 0, minute: 0, second: 0 }
 
   Hooks.useLifecycleEffect do
-    subId <- Hooks.subscribe $ affEventSource \emitter -> do
-      fiber <- Aff.forkAff $ forever do
-        -- update time
-        EventSource.emit emitter do
-          nextTime <- getTime
-          Hooks.put timeIdx nextTime
+    { emitter, listener } <- H.liftEffect HS.create
+    subId <- Hooks.subscribe emitter
+    fiber <- H.liftAff $ Aff.forkAff $ forever do
+      -- update time
+      H.liftEffect $ HS.notify listener do
+        nextTime <- getTime
+        Hooks.put timeIdx nextTime
 
-        -- wait 1 second and then do it forever
-        Aff.delay $ Milliseconds 1000.0
-
-      pure $ EventSource.Finalizer do
-        Aff.killFiber (error "Event source finalized") fiber
+      -- wait 1 second and then do it forever
+      Aff.delay $ Milliseconds 1000.0
 
     pure $ Just do
+      H.liftAff $ Aff.killFiber (error "Event source finalized") fiber
       Hooks.unsubscribe subId
 
   Hooks.pure $
     HH.h1_ [ HH.text $ i hour ":" minute ":" second ]
 
   where
-  getTime = liftEffect do
+  getTime = H.liftEffect do
     now <- JSDate.now
     hour <- floor <$> JSDate.getHours now
     minute <- floor <$> JSDate.getMinutes now

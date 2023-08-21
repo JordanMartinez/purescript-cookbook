@@ -1,11 +1,17 @@
 { name = "TimeHalogenHooks"
 , dependencies =
-  [ "console"
+  [ "aff"
   , "effect"
+  , "halogen"
   , "halogen-hooks"
-  , "js-date"
+  , "halogen-subscriptions"
+  , "integers"
   , "interpolate"
-  , "psci-support"
+  , "js-date"
+  , "maybe"
+  , "prelude"
+  , "tailrec"
+  , "tuples"
   ]
 , packages = ../../packages.dhall
 , sources = [ "recipes/TimeHalogenHooks/src/**/*.purs" ]
