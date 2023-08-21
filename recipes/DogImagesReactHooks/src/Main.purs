@@ -38,7 +38,7 @@ mkApp :: Component {}
 mkApp = do
   component "DogImages" \_ -> React.do
     resetToken /\ reset <- useResetToken
-    response <- useAff resetToken getRandomCatGif
+    response <- useAff resetToken getRandomDogImage
 
     let
       onClick = handler_ reset
@@ -65,8 +65,8 @@ mkApp = do
                   ]
           ]
 
-getRandomCatGif :: Aff (Either String String)
-getRandomCatGif = do
+getRandomDogImage :: Aff (Either String String)
+getRandomDogImage = do
   response <-
     Affjax.get
       ResponseFormat.json
